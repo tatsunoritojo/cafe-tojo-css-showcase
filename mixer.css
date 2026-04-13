@@ -4,13 +4,36 @@
 
 * { box-sizing: border-box; }
 
+/* showcase CSS の body/layout 指定を mixer 文脈で無効化 */
 body {
-    font-family: 'Noto Sans JP', sans-serif;
+    font-family: 'Noto Sans JP', sans-serif !important;
+    margin: 0 !important;
+    padding: 0 0 70px 0 !important;           /* 下部FABバー分のpadding */
+    max-width: none !important;
+    background-color: #fdfaf4 !important;
+    color: #333 !important;
+    line-height: 1.6 !important;
+}
+
+/* showcase CSS の .group スタイルが mixer 本文に影響しないように */
+main > section.group,
+main > section:not(.group) {
+    /* mixerのsectionはshowcaseの.groupと区別する */
+}
+
+/* showcase側の共通レイアウトを content-item 内でのみ有効化 */
+.content-item-body .group,
+.content-item-body .gallery,
+.content-item-body .effect-item,
+.content-item-body .btn-item,
+.content-item-body .text-item {
     margin: 0;
-    padding: 0 0 70px 0;           /* 下部FABバー分のpadding */
-    background-color: #fdfaf4;
-    color: #333;
-    line-height: 1.6;
+    padding: 0;
+    background: transparent;
+    border: none;
+    min-height: 0;
+    display: block;
+    box-shadow: none;
 }
 
 .page-header {
@@ -193,6 +216,98 @@ main {
     border-radius: 4px;
     font-size: 1rem;
     font-family: inherit;
+}
+
+/* ==========================================
+   コンテンツベースプレビュー（各アイテム個別表示）
+   ========================================== */
+
+.preview-content-based {
+    background: white;
+    border: 2px solid #00c853;
+    margin-bottom: 1.5em;
+}
+
+.preview-content-based h3 {
+    color: #00723d;
+    font-size: 1.1rem;
+    margin-bottom: 0.8em;
+}
+
+.content-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1em;
+    margin-bottom: 0.8em;
+}
+
+.content-item {
+    background: #fafafa;
+    border: 1px solid #eee;
+    border-radius: 6px;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6em;
+    min-height: 200px;
+}
+
+.content-item-head {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid #eee;
+}
+
+.content-item-head .content-cat {
+    background: #00c853;
+    color: white;
+    padding: 0.1em 0.5em;
+    border-radius: 3px;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+.content-item-head strong {
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.content-item-body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1em;
+    background: white;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    contain: layout paint;
+}
+
+.content-item-body > * {
+    max-width: 100%;
+}
+
+.content-item-body img {
+    max-width: 100%;
+    max-height: 150px;
+}
+
+.no-preview {
+    font-size: 0.85rem;
+    color: #999;
+    font-style: italic;
+    text-align: center;
+}
+
+.preview-hint-note {
+    font-size: 0.85rem;
+    color: #666;
+    margin: 0.5em 0 0;
+    font-style: italic;
 }
 
 /* 組み合わせプレビュー（強調表示） */

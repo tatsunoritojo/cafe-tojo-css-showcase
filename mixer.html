@@ -27,6 +27,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@100;400;700;900&family=M+PLUS+Rounded+1c:wght@400;700&family=Shippori+Mincho:wght@400;700&family=Yuji+Syuku&family=Klee+One:wght@400;600&family=Rampart+One&display=swap" rel="stylesheet">
+    <!-- 見本のクラス定義をプレビュー用に読み込み -->
+    <link rel="stylesheet" href="sample_button_showcase.css">
+    <link rel="stylesheet" href="sample_text_showcase.css">
+    <link rel="stylesheet" href="sample_image_effects.css">
     <link rel="stylesheet" href="mixer.css">
     <script src="mixer.js" defer></script>
 </head>
@@ -80,9 +84,16 @@
             </label>
         </div>
 
+        <!-- コンテンツベースプレビュー：各アイテムを個別に表示 -->
+        <div class="preview-zone preview-content-based" id="zone-content" style="display:none;">
+            <h3>🖼️ 見本そのままプレビュー（各アイテム個別）</h3>
+            <div class="content-preview-grid" id="content-preview-grid"></div>
+            <p class="preview-hint-note">各見本の実際の見た目を、選んだCSSそのままで表示します。</p>
+        </div>
+
         <!-- 組み合わせプレビュー（全選択を1要素に適用） -->
         <div class="preview-zone preview-combined" id="zone-combined" style="display:none;">
-            <h3>🎨 組み合わせプレビュー ★全選択を1要素に統合適用</h3>
+            <h3>🎨 組み合わせプレビュー ★全CSSを1要素に統合</h3>
             <div class="element-toggle">
                 <label>プレビュー要素を選択:</label>
                 <div class="toggle-buttons">
@@ -94,7 +105,7 @@
             <div class="preview-area preview-area-large" id="combined-preview-area">
                 <button id="combined-preview-el">カートに追加</button>
             </div>
-            <p class="combined-hint">ボタン + 文字装飾 + アニメ を組み合わせると、1つのボタンに全て適用されます。</p>
+            <p class="combined-hint">ボタン + 文字装飾 + アニメ を組み合わせると、1つのボタンに全て適用されます（単純要素向け）</p>
         </div>
 
         <h3 class="zones-subheader">カテゴリ別プレビュー</h3>
@@ -212,10 +223,13 @@
                                  || item.querySelector('figcaption code');
                     const labelEl = item.querySelector('.label, figcaption strong');
                     if (!codeEl) return;
+                    const demoEl = Array.from(item.children).find(ch =>
+                        !ch.matches('figcaption, pre.code, pre.code-block-wide, .add-to-mixer, .label'));
                     catalog[page.key].push({
                         id: `${page.key}-${idx}`,
                         name: labelEl ? labelEl.textContent.trim() : `${page.key}項目${idx + 1}`,
                         css: codeEl.textContent.trim(),
+                        html: demoEl ? demoEl.outerHTML : '',
                         category: page.key
                     });
                 });
@@ -760,6 +774,15 @@
         const genericZone = document.getElementById('zone-generic');
         if (genericZone) genericZone.style.display = 'none';
 
+        // コンテンツベースプレビュー（メイン）
+        const contentZone = document.getElementById('zone-content');
+        if (selections.length >= 1) {
+            contentZone.style.display = 'block';
+            renderContentBasedPreview(selections);
+        } else {
+            contentZone.style.display = 'none';
+        }
+
         // 組み合わせプレビュー
         const combinedZone = document.getElementById('zone-combined');
         if (selections.length >= 1) {
@@ -780,6 +803,40 @@
         document.getElementById('mixer-injected-css').textContent = injectedStyles.join('\n\n');
 
         updatePreviewTexts();
+    }
+
+    function renderContentBasedPreview(selections) {
+        const grid = document.getElementById('content-preview-grid');
+        grid.innerHTML = '';
+
+        selections.forEach(item => {
+            const wrap = document.createElement('div');
+            wrap.className = 'content-item';
+
+            const label = document.createElement('div');
+            label.className = 'content-item-head';
+            label.innerHTML = `<span class="content-cat">${escapeHtml(item.category)}</span><strong>${escapeHtml(item.name)}</strong>`;
+            wrap.appendChild(label);
+
+            const body = document.createElement('div');
+            body.className = 'content-item-body';
+
+            // 優先度: item.html > カタログから取得 > フォールバック
+            let html = item.html;
+            if (!html && CATALOG && CATALOG[item.category]) {
+                const catItem = CATALOG[item.category].find(c => c.id === item.id);
+                html = catItem ? catItem.html : '';
+            }
+
+            if (html) {
+                body.innerHTML = html;
+            } else {
+                body.innerHTML = '<span class="no-preview">プレビュー不可（見本市ページで + ボタン再押下で更新できます）</span>';
+            }
+
+            wrap.appendChild(body);
+            grid.appendChild(wrap);
+        });
     }
 
     function renderCombinedPreview(selections) {

@@ -111,7 +111,11 @@ function instrumentShowcase() {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            toggleSelection({ id, name, css, category: pageKey });
+            // デモ要素のHTMLも保存（プレビュー時の正確な再現のため）
+            const demoEl = Array.from(item.children).find(ch =>
+                !ch.matches('figcaption, pre.code, pre.code-block-wide, .add-to-mixer, .label'));
+            const html = demoEl ? demoEl.outerHTML : '';
+            toggleSelection({ id, name, css, category: pageKey, html });
         });
 
         item.style.position = 'relative';
