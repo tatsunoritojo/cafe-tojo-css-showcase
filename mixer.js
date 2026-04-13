@@ -1,8 +1,8 @@
 /**
- * CSS見本市 ミキサー機能（MVP / モック版）
- * - 各見本に「+」ボタンを自動付与
- * - localStorageで選択状態を保存
- * - ページ遷移しても選択が保持される
+ * CSS見本市 ミキサー機能
+ * - 見本ページに右サイドバー（カート）を常時表示
+ * - プレビューは現在のページのカテゴリで即時反映
+ * - mixer.html は「レジ」（コードコピー用）
  */
 
 const STORAGE_KEY = 'cssMixer.selections';
@@ -19,7 +19,7 @@ function getSelections() {
 
 function setSelections(arr) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
-    updateAllBadges();
+    updateAll();
 }
 
 function toggleSelection(item) {
@@ -31,7 +31,7 @@ function toggleSelection(item) {
         selections.push(item);
     }
     setSelections(selections);
-    return idx < 0; // true = added, false = removed
+    return idx < 0;
 }
 
 function isSelected(id) {
@@ -46,9 +46,14 @@ function removeById(id) {
     setSelections(getSelections().filter(s => s.id !== id));
 }
 
-/* ---------------- UI更新 ---------------- */
+/* ---------------- UI共通更新 ---------------- */
 
-function updateAllBadges() {
+function updateAll() {
+    updateCards();
+    updateSidebar();
+}
+
+function updateCards() {
     const count = getSelections().length;
     document.querySelectorAll('.mixer-badge').forEach(el => {
         el.textContent = count;
@@ -59,8 +64,7 @@ function updateAllBadges() {
         const selected = isSelected(id);
         btn.classList.toggle('added', selected);
         btn.innerHTML = selected ? '✓' : '＋';
-        btn.title = selected ? 'ミキサーから削除' : 'ミキサーに追加';
-        // カード自体にも選択状態のクラスを付ける
+        btn.title = selected ? 'カートから削除' : 'カートに追加';
         const card = btn.closest('.btn-item, .text-item, .effect-item');
         if (card) card.classList.toggle('mixer-selected', selected);
     });
@@ -71,9 +75,7 @@ function updateAllBadges() {
 function instrumentShowcase() {
     injectStyles();
 
-    // 対象となるセル（各見本市ページの共通クラス）
     const items = document.querySelectorAll('.btn-item, .text-item, .effect-item');
-
     const pageKey = getPageKey();
 
     items.forEach((item, idx) => {
@@ -89,7 +91,7 @@ function instrumentShowcase() {
         btn.className = 'add-to-mixer';
         btn.dataset.itemId = id;
         btn.innerHTML = isSelected(id) ? '✓' : '＋';
-        btn.title = isSelected(id) ? 'ミキサーから削除' : 'ミキサーに追加';
+        btn.title = isSelected(id) ? 'カートから削除' : 'カートに追加';
         if (isSelected(id)) {
             btn.classList.add('added');
             item.classList.add('mixer-selected');
@@ -105,7 +107,10 @@ function instrumentShowcase() {
         item.appendChild(btn);
     });
 
-    injectMixerFloat();
+    // mixer.htmlではサイドバーを出さない
+    if (!location.pathname.includes('mixer.html')) {
+        injectSidebar();
+    }
 }
 
 function getPageKey() {
@@ -117,16 +122,197 @@ function getPageKey() {
     return 'その他';
 }
 
-function injectMixerFloat() {
-    // 既にミキサーページならスキップ
-    if (location.pathname.includes('mixer.html')) return;
+/* ---------------- サイドバー ---------------- */
 
-    const link = document.createElement('a');
-    link.href = 'mixer.html';
-    link.className = 'mixer-float';
-    link.innerHTML = `🎨 ミキサー <span class="mixer-badge ${getSelections().length > 0 ? 'has-items' : ''}">${getSelections().length}</span>`;
-    document.body.appendChild(link);
+function injectSidebar() {
+    const sidebar = document.createElement('aside');
+    sidebar.className = 'mixer-sidebar';
+    sidebar.id = 'mixer-sidebar';
+    sidebar.innerHTML = `
+        <div class="sb-head">
+            <h2>🛒 デザインカート</h2>
+            <button class="sb-close" id="sb-close" aria-label="閉じる">✕</button>
+        </div>
+
+        <div class="sb-status">
+            <strong><span id="sb-count">0</span></strong> 個のスタイル
+        </div>
+
+        <div class="sb-preview-block">
+            <h3>👀 ライブプレビュー</h3>
+            <label class="sb-input-label">
+                <span>プレビューテキスト</span>
+                <input type="text" id="sb-text" value="カフェ東城">
+            </label>
+            <div class="sb-preview-area" id="sb-preview-area">
+                <span id="sb-preview-el">カフェ東城</span>
+            </div>
+            <p class="sb-preview-hint" id="sb-preview-hint">このページの効果を追加するとプレビューされます</p>
+        </div>
+
+        <div class="sb-list-block">
+            <h3>📋 カート内</h3>
+            <div class="sb-list" id="sb-list">
+                <p class="empty-note">「＋」ボタンで追加</p>
+            </div>
+        </div>
+
+        <div class="sb-actions">
+            <a class="sb-btn sb-btn-primary" href="mixer.html">
+                レジへ進む →
+            </a>
+            <button class="sb-btn sb-btn-ghost" id="sb-clear">全クリア</button>
+        </div>
+
+        <style id="mixer-sb-injected"></style>
+    `;
+    document.body.appendChild(sidebar);
+    document.body.classList.add('has-mixer-sidebar');
+
+    // モバイル用トグル
+    const toggle = document.createElement('button');
+    toggle.className = 'mixer-sb-toggle';
+    toggle.innerHTML = `🛒 カート <span class="mixer-badge">0</span>`;
+    toggle.addEventListener('click', () => {
+        sidebar.classList.toggle('open');
+    });
+    document.body.appendChild(toggle);
+
+    sidebar.querySelector('#sb-close').addEventListener('click', () => {
+        sidebar.classList.remove('open');
+    });
+
+    sidebar.querySelector('#sb-clear').addEventListener('click', () => {
+        if (confirm('全ての選択を削除しますか?')) clearAll();
+    });
+
+    sidebar.querySelector('#sb-text').addEventListener('input', updateSidebarPreview);
+
+    updateSidebar();
 }
+
+function updateSidebar() {
+    const sidebar = document.getElementById('mixer-sidebar');
+    if (!sidebar) return;
+
+    const selections = getSelections();
+    const countEl = document.getElementById('sb-count');
+    if (countEl) countEl.textContent = selections.length;
+
+    document.querySelectorAll('.mixer-badge').forEach(b => {
+        b.textContent = selections.length;
+        b.classList.toggle('has-items', selections.length > 0);
+    });
+
+    const list = document.getElementById('sb-list');
+    if (list) {
+        if (selections.length === 0) {
+            list.innerHTML = '<p class="empty-note">「＋」ボタンで追加</p>';
+        } else {
+            list.innerHTML = selections.map(s => `
+                <div class="sb-item">
+                    <span class="sb-item-cat">${escapeHtmlStr(s.category)}</span>
+                    <span class="sb-item-name">${escapeHtmlStr(s.name)}</span>
+                    <button class="sb-item-remove" data-id="${escapeHtmlStr(s.id)}" title="削除">×</button>
+                </div>
+            `).join('');
+
+            list.querySelectorAll('.sb-item-remove').forEach(btn => {
+                btn.addEventListener('click', () => removeById(btn.dataset.id));
+            });
+        }
+    }
+
+    updateSidebarPreview();
+}
+
+function updateSidebarPreview() {
+    const previewEl = document.getElementById('sb-preview-el');
+    const hintEl = document.getElementById('sb-preview-hint');
+    const previewArea = document.getElementById('sb-preview-area');
+    if (!previewEl) return;
+
+    const text = (document.getElementById('sb-text')?.value) || 'カフェ東城';
+    const pageKey = getPageKey();
+    const selections = getSelections();
+    const relevant = selections.filter(s => s.category === pageKey);
+
+    // プレビュー要素をページに合わせて切り替え
+    previewArea.innerHTML = ''; // リセット
+    let el;
+
+    if (pageKey === 'ボタン') {
+        el = document.createElement('button');
+        el.textContent = text;
+    } else if (pageKey === '画像エフェクト') {
+        el = document.createElement('img');
+        el.src = 'https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=400&q=80';
+        el.alt = 'プレビュー';
+        el.style.maxWidth = '100%';
+        el.style.maxHeight = '160px';
+    } else {
+        el = document.createElement('span');
+        el.textContent = text;
+    }
+    el.id = 'sb-preview-el';
+    previewArea.appendChild(el);
+
+    if (relevant.length === 0) {
+        if (hintEl) hintEl.textContent = `このページの効果を追加するとプレビューに反映されます`;
+        return;
+    }
+
+    // プロパティをマージ
+    const merged = {};
+    const blocks = [];
+    relevant.forEach(item => {
+        const parsed = parseCSSSimple(item.css);
+        Object.assign(merged, parsed.properties);
+        parsed.blocks.forEach(b => { if (!blocks.includes(b)) blocks.push(b); });
+    });
+
+    Object.entries(merged).forEach(([prop, val]) => {
+        try { el.style.setProperty(prop, val); } catch (e) {}
+    });
+
+    const injStyle = document.getElementById('mixer-sb-injected');
+    if (injStyle) injStyle.textContent = blocks.join('\n\n');
+
+    if (hintEl) hintEl.textContent = `${pageKey}の効果を ${relevant.length} 個適用中`;
+}
+
+function parseCSSSimple(code) {
+    let clean = code.replace(/\/\*[\s\S]*?\*\//g, '');
+    const blocks = [];
+
+    const atRuleRegex = /@[-\w]+\s+[^{]*\{(?:[^{}]|\{[^{}]*\})*\}/g;
+    clean = clean.replace(atRuleRegex, m => { blocks.push(m); return ''; });
+
+    const selectorBlockRegex = /[^{};]+\{[^}]*\}/g;
+    clean = clean.replace(selectorBlockRegex, m => { blocks.push(m); return ''; });
+
+    const properties = {};
+    clean.split(/[\n;]/).forEach(line => {
+        line = line.trim();
+        if (!line || !line.includes(':')) return;
+        const colonIdx = line.indexOf(':');
+        const prop = line.substring(0, colonIdx).trim();
+        const val = line.substring(colonIdx + 1).trim().replace(/;$/, '');
+        if (prop && val && !prop.startsWith('//')) {
+            properties[prop] = val;
+        }
+    });
+
+    return { properties, blocks };
+}
+
+function escapeHtmlStr(str) {
+    const div = document.createElement('div');
+    div.textContent = str || '';
+    return div.innerHTML;
+}
+
+/* ---------------- スタイル注入 ---------------- */
 
 function injectStyles() {
     if (document.getElementById('mixer-injected-styles')) return;
@@ -134,6 +320,7 @@ function injectStyles() {
     const style = document.createElement('style');
     style.id = 'mixer-injected-styles';
     style.textContent = `
+        /* ＋ボタン */
         .add-to-mixer {
             position: absolute;
             top: 8px;
@@ -164,14 +351,224 @@ function injectStyles() {
             background: #6b4423;
             color: white;
         }
-
-        /* カード選択時のハイライト */
         .mixer-selected {
             outline: 3px solid #ffd700 !important;
             outline-offset: 2px;
         }
 
-        .mixer-float {
+        /* デスクトップ: サイドバー分のpadding */
+        @media (min-width: 1000px) {
+            body.has-mixer-sidebar {
+                padding-right: 360px;
+            }
+            body.has-mixer-sidebar .mixer-sidebar {
+                transform: none !important;
+            }
+        }
+
+        /* サイドバー */
+        .mixer-sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 340px;
+            height: 100vh;
+            background: white;
+            border-left: 2px solid #6b4423;
+            padding: 1.5em 1.2em;
+            overflow-y: auto;
+            z-index: 900;
+            box-shadow: -6px 0 20px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+            transform: translateX(100%);
+            transition: transform 0.3s;
+            font-family: sans-serif;
+        }
+        .mixer-sidebar.open {
+            transform: translateX(0);
+        }
+
+        .sb-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .sb-head h2 {
+            margin: 0;
+            color: #6b4423;
+            font-size: 1.2rem;
+        }
+        .sb-close {
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            color: #999;
+            padding: 0 0.4em;
+        }
+        @media (min-width: 1000px) {
+            .sb-close { display: none; }
+        }
+
+        .sb-status {
+            background: #f5efe6;
+            padding: 0.6em 0.9em;
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+        .sb-status strong {
+            color: #6b4423;
+            font-size: 1.4rem;
+        }
+
+        .sb-preview-block h3,
+        .sb-list-block h3 {
+            margin: 0 0 0.5em;
+            font-size: 0.95rem;
+            color: #6b4423;
+        }
+
+        .sb-input-label {
+            display: block;
+            margin-bottom: 0.5em;
+        }
+        .sb-input-label span {
+            display: block;
+            font-size: 0.8rem;
+            color: #555;
+            margin-bottom: 0.2em;
+        }
+        .sb-input-label input {
+            width: 100%;
+            padding: 0.45em 0.6em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+
+        .sb-preview-area {
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1em;
+            background: #fafafa;
+            border: 1px dashed #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        #sb-preview-el {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #6b4423;
+        }
+        .sb-preview-area button {
+            padding: 0.6em 1.2em;
+            border: none;
+            background: #6b4423;
+            color: white;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .sb-preview-hint {
+            margin: 0.5em 0 0;
+            font-size: 0.8rem;
+            color: #888;
+            font-style: italic;
+        }
+
+        .sb-list {
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .sb-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4em;
+            padding: 0.4em 0.6em;
+            background: #fafafa;
+            border-radius: 4px;
+            margin-bottom: 0.3em;
+            font-size: 0.85rem;
+        }
+        .sb-item-cat {
+            background: #6b4423;
+            color: white;
+            padding: 0.1em 0.4em;
+            border-radius: 3px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+        .sb-item-name {
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 0.85rem;
+        }
+        .sb-item-remove {
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 0 0.2em;
+        }
+        .sb-item-remove:hover { color: #c44; }
+
+        .empty-note {
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            font-size: 0.9rem;
+            margin: 1em 0;
+        }
+
+        .sb-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5em;
+            margin-top: auto;
+        }
+        .sb-btn {
+            padding: 0.8em 1em;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: all 0.2s;
+            display: block;
+        }
+        .sb-btn-primary {
+            background: #6b4423;
+            color: white;
+        }
+        .sb-btn-primary:hover {
+            background: #8a5a30;
+            transform: translateY(-2px);
+        }
+        .sb-btn-ghost {
+            background: transparent;
+            color: #c44;
+            border: 1px solid #c44;
+        }
+        .sb-btn-ghost:hover {
+            background: #fff0f0;
+        }
+
+        /* モバイル用トグル */
+        .mixer-sb-toggle {
             position: fixed;
             bottom: 20px;
             right: 20px;
@@ -179,18 +576,21 @@ function injectStyles() {
             color: white;
             padding: 0.8em 1.3em;
             border-radius: 999px;
-            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
             font-weight: bold;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
             display: flex;
             align-items: center;
             gap: 0.5em;
             z-index: 1000;
-            transition: transform 0.2s;
+            font-family: inherit;
         }
-        .mixer-float:hover {
-            transform: translateY(-3px);
+        @media (min-width: 1000px) {
+            .mixer-sb-toggle { display: none; }
         }
+
         .mixer-badge {
             background: white;
             color: #6b4423;
