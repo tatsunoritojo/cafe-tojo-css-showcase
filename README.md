@@ -4,7 +4,8 @@ CSSのデザインパターンを1ページに1テーマで集めた、新入社
 
 ## 公開URL
 
-（デプロイ後に記載）
+- 本番: https://css-showcase-tan.vercel.app
+- GitHub: https://github.com/tatsunoritojo/cafe-tojo-css-showcase
 
 ## ページ構成
 
