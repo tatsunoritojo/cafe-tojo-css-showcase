@@ -138,6 +138,29 @@
 
 </main>
 
+<!-- ボトムドロワー (D案) -->
+<button class="drawer-fab" id="drawer-fab">
+    🛒 サンプル棚を開く <span class="fab-arrow">▲</span>
+</button>
+
+<div class="drawer" id="drawer">
+    <div class="drawer-handle"></div>
+    <div class="drawer-head">
+        <div class="drawer-tabs">
+            <button class="tab-btn active" data-cat="ボタン">🔘 ボタン</button>
+            <button class="tab-btn" data-cat="文字装飾">📝 文字装飾</button>
+            <button class="tab-btn" data-cat="画像エフェクト">🖼️ 画像</button>
+            <button class="tab-btn" data-cat="CSS基礎">🎨 CSS基礎</button>
+        </div>
+        <button class="drawer-close" id="drawer-close" aria-label="閉じる">✕</button>
+    </div>
+    <div class="drawer-body" id="drawer-body">
+        <p class="drawer-loading">読み込み中...</p>
+    </div>
+</div>
+
+<div class="drawer-backdrop" id="drawer-backdrop"></div>
+
 <footer class="page-footer">
     <p><a href="index.html">← ポータルに戻る</a></p>
 </footer>
@@ -147,9 +170,156 @@
 
 <script>
     let INJECTED_ANIMS = new Set();
+    let CATALOG = null;
+
+    /* ==================== カタログ読み込み ==================== */
+
+    async function buildCatalog() {
+        const pages = [
+            { url: 'sample_button_showcase.html', key: 'ボタン' },
+            { url: 'sample_text_showcase.html', key: '文字装飾' },
+            { url: 'sample_image_effects.html', key: '画像エフェクト' },
+            { url: 'sample_css_showcase.html', key: 'CSS基礎' }
+        ];
+        const catalog = {};
+        for (const page of pages) {
+            try {
+                const res = await fetch(page.url);
+                if (!res.ok) continue;
+                const html = await res.text();
+                const doc = new DOMParser().parseFromString(html, 'text/html');
+                const items = doc.querySelectorAll('.btn-item, .text-item, .effect-item');
+                catalog[page.key] = [];
+                items.forEach((item, idx) => {
+                    const codeEl = item.querySelector('pre.code, pre.code-block-wide');
+                    const labelEl = item.querySelector('.label, figcaption strong');
+                    if (!codeEl) return;
+                    catalog[page.key].push({
+                        id: `${page.key}-${idx}`,
+                        name: labelEl ? labelEl.textContent.trim() : `${page.key}項目${idx + 1}`,
+                        css: codeEl.textContent.trim(),
+                        category: page.key
+                    });
+                });
+            } catch (e) {
+                console.warn(`Failed to load ${page.url}`, e);
+                catalog[page.key] = [];
+            }
+        }
+        CATALOG = catalog;
+        return catalog;
+    }
+
+    /* ==================== 矢印スワップ (C案) ==================== */
+
+    function swapItem(itemId, direction) {
+        if (!CATALOG) return;
+        const selections = getSelections();
+        const item = selections.find(s => s.id === itemId);
+        if (!item) return;
+
+        const list = CATALOG[item.category];
+        if (!list || list.length === 0) return;
+
+        const currentIdx = list.findIndex(c => c.id === item.id);
+        const safeIdx = currentIdx >= 0 ? currentIdx : 0;
+        const newIdx = (safeIdx + direction + list.length) % list.length;
+        const newItem = list[newIdx];
+
+        const pos = selections.indexOf(item);
+        selections[pos] = { ...newItem };
+        setSelections(selections);
+        render();
+    }
+
+    function getItemSwapInfo(item) {
+        if (!CATALOG) return { idx: 0, total: 0 };
+        const list = CATALOG[item.category] || [];
+        const idx = list.findIndex(c => c.id === item.id);
+        return { idx: idx >= 0 ? idx + 1 : 1, total: list.length };
+    }
+
+    /* ==================== ドロワー (D案) ==================== */
+
+    function openDrawer() {
+        document.getElementById('drawer').classList.add('open');
+        document.getElementById('drawer-backdrop').classList.add('open');
+        renderDrawer();
+    }
+
+    function closeDrawer() {
+        document.getElementById('drawer').classList.remove('open');
+        document.getElementById('drawer-backdrop').classList.remove('open');
+    }
+
+    function renderDrawer() {
+        if (!CATALOG) return;
+        const activeTab = document.querySelector('.tab-btn.active');
+        const category = activeTab ? activeTab.dataset.cat : 'ボタン';
+        const items = CATALOG[category] || [];
+        const selectedIds = new Set(getSelections().map(s => s.id));
+
+        const body = document.getElementById('drawer-body');
+        if (items.length === 0) {
+            body.innerHTML = '<p class="drawer-loading">サンプルが見つかりません</p>';
+            return;
+        }
+
+        body.innerHTML = items.map(item => {
+            const inCart = selectedIds.has(item.id);
+            return `
+                <div class="drawer-item ${inCart ? 'in-cart' : ''}" data-id="${escapeHtml(item.id)}">
+                    <div class="drawer-preview" data-cat="${escapeHtml(category)}">
+                        ${renderDrawerVisual(item, category)}
+                    </div>
+                    <p class="drawer-item-name">${escapeHtml(item.name)}</p>
+                    <button class="drawer-add" data-id="${escapeHtml(item.id)}">
+                        ${inCart ? '✓ カート内' : '＋ 追加'}
+                    </button>
+                </div>
+            `;
+        }).join('');
+
+        // スタイル適用（@keyframesやhoverは省略）
+        body.querySelectorAll('.drawer-item').forEach(el => {
+            const id = el.dataset.id;
+            const item = items.find(i => i.id === id);
+            if (!item) return;
+            const previewEl = el.querySelector('.drawer-preview > *');
+            if (previewEl) applyInlineProperties(previewEl, item.css);
+        });
+
+        body.querySelectorAll('.drawer-add').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.dataset.id;
+                const item = items.find(i => i.id === id);
+                if (!item) return;
+                toggleSelection(item);
+                renderDrawer();
+                render();
+            });
+        });
+    }
+
+    function renderDrawerVisual(item, category) {
+        if (category === 'ボタン') return `<button class="dp-btn">サンプル</button>`;
+        if (category === '文字装飾') return `<span class="dp-text">カフェ</span>`;
+        if (category === '画像エフェクト') return `<img class="dp-img" src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=200&q=80" alt="">`;
+        return `<div class="dp-generic">カフェ</div>`;
+    }
+
+    function applyInlineProperties(el, css) {
+        const parsed = parseCSS(css);
+        Object.entries(parsed.properties).forEach(([prop, val]) => {
+            try { el.style.setProperty(prop, val); } catch (e) {}
+        });
+    }
 
     document.addEventListener('DOMContentLoaded', () => {
-        render();
+        buildCatalog().then(() => {
+            render();
+        });
+
 
         document.getElementById('btn-clear').addEventListener('click', () => {
             if (confirm('全ての選択を削除しますか?')) {
@@ -179,6 +349,20 @@
                 renderCombinedPreview(getSelections());
             });
         });
+
+        // ドロワー開閉
+        document.getElementById('drawer-fab').addEventListener('click', openDrawer);
+        document.getElementById('drawer-close').addEventListener('click', closeDrawer);
+        document.getElementById('drawer-backdrop').addEventListener('click', closeDrawer);
+
+        // カテゴリタブ
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderDrawer();
+            });
+        });
     });
 
     function render() {
@@ -198,6 +382,7 @@
 
         selections.forEach(item => {
             const params = extractParameters(item.css);
+            const swapInfo = getItemSwapInfo(item);
             const card = document.createElement('div');
             card.className = 'selection-card';
             card.dataset.itemId = item.id;
@@ -206,6 +391,12 @@
                     <span class="category-badge">${escapeHtml(item.category)}</span>
                     <strong>${escapeHtml(item.name)}</strong>
                     <button class="remove-btn" data-id="${escapeHtml(item.id)}" title="削除">×</button>
+                </div>
+                <div class="swap-controls">
+                    <button class="swap-btn" data-id="${escapeHtml(item.id)}" data-dir="-1" title="前のサンプル">◀</button>
+                    <span class="swap-position">${swapInfo.idx} / ${swapInfo.total}</span>
+                    <button class="swap-btn" data-id="${escapeHtml(item.id)}" data-dir="1" title="次のサンプル">▶</button>
+                    <span class="swap-hint">同カテゴリ内で切替</span>
                 </div>
                 <pre class="code-display"><code>${escapeHtml(item.css)}</code></pre>
                 <div class="card-actions">
@@ -222,6 +413,14 @@
                 </div>
             `;
             list.appendChild(card);
+        });
+
+        // 矢印スワップボタン
+        list.querySelectorAll('.swap-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const dir = parseInt(btn.dataset.dir);
+                swapItem(btn.dataset.id, dir);
+            });
         });
 
         list.querySelectorAll('.remove-btn').forEach(btn => {
