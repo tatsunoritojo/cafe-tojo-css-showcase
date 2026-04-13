@@ -108,38 +108,6 @@
             <p class="combined-hint">ボタン + 文字装飾 + アニメ を組み合わせると、1つのボタンに全て適用されます（単純要素向け）</p>
         </div>
 
-        <h3 class="zones-subheader">カテゴリ別プレビュー</h3>
-        <div class="preview-zones">
-            <div class="preview-zone" id="zone-text" style="display:none;">
-                <h3>📝 文字プレビュー</h3>
-                <div class="preview-area">
-                    <span id="preview-text-el">カフェ東城</span>
-                </div>
-            </div>
-
-            <div class="preview-zone" id="zone-button" style="display:none;">
-                <h3>🔘 ボタンプレビュー</h3>
-                <div class="preview-area">
-                    <button id="preview-button-el">カートに追加</button>
-                </div>
-            </div>
-
-            <div class="preview-zone" id="zone-image" style="display:none;">
-                <h3>🖼️ 画像プレビュー</h3>
-                <div class="preview-area">
-                    <img id="preview-image-el"
-                         src="images/cafe-exterior.jpg"
-                         alt="プレビュー画像">
-                </div>
-            </div>
-
-            <div class="preview-zone" id="zone-generic" style="display:none;">
-                <h3>🎨 CSS基礎プレビュー</h3>
-                <div class="preview-area">
-                    <div id="preview-generic-el">カフェ東城</div>
-                </div>
-            </div>
-        </div>
 
         <p class="preview-warning" id="preview-warning" style="display:none;"></p>
     </section>
@@ -767,12 +735,7 @@
             if (byCategory[s.category]) byCategory[s.category].push(s);
         });
 
-        // ゾーンごとに表示
-        toggleZone('zone-text', byCategory['文字装飾'], 'preview-text-el');
-        toggleZone('zone-button', byCategory['ボタン'], 'preview-button-el');
-        toggleZone('zone-image', byCategory['画像活用'], 'preview-image-el');
-        const genericZone = document.getElementById('zone-generic');
-        if (genericZone) genericZone.style.display = 'none';
+        // カテゴリ別プレビューは廃止（見本そのままプレビューで代替）
 
         // コンテンツベースプレビュー（メイン）
         const contentZone = document.getElementById('zone-content');
@@ -907,10 +870,7 @@
     function updatePreviewTexts() {
         const txt = document.getElementById('preview-text').value || 'カフェ東城';
         const btnTxt = document.getElementById('preview-button-text').value || 'クリック';
-        document.getElementById('preview-text-el').textContent = txt;
-        document.getElementById('preview-button-el').textContent = btnTxt;
-        document.getElementById('preview-generic-el').textContent = txt;
-        // 組み合わせプレビューのテキストも更新
+        // 組み合わせプレビューのテキストを更新
         const combinedEl = document.getElementById('combined-preview-el');
         if (combinedEl) {
             const activeBtn = document.querySelector('.toggle-btn.active');
