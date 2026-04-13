@@ -33,16 +33,17 @@
     <link rel="stylesheet" href="sample_image_effects.css">
     <link rel="stylesheet" href="mixer.css">
     <script src="mixer.js" defer></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
 
 <header class="page-header">
-    <h1>📋 コード確認 & コピー</h1>
+    <h1><i data-lucide="clipboard" class="icn"></i> コード確認 & コピー</h1>
     <p>カートに入れた見本を確認して、組み合わせCSSをコピー</p>
     <p>
         <a href="index.html">← ポータルに戻る</a>
         &nbsp;|&nbsp;
-        <a href="sample_button_showcase.html">🛒 買い物を続ける</a>
+        <a href="sample_button_showcase.html"><i data-lucide="shopping-cart" class="icn"></i> 買い物を続ける</a>
     </p>
 </header>
 
@@ -52,16 +53,16 @@
     <section class="toolbar">
         <span class="status"><strong id="count">0</strong> 個のスタイルを選択中</span>
         <div class="actions">
-            <button id="btn-copy" class="btn-action">📋 全コードをコピー</button>
-            <button id="btn-clear" class="btn-action btn-danger">🗑️ 全クリア</button>
+            <button id="btn-copy" class="btn-action"><i data-lucide="clipboard" class="icn"></i> 全コードをコピー</button>
+            <button id="btn-clear" class="btn-action btn-danger"><i data-lucide="trash-2" class="icn"></i> 全クリア</button>
         </div>
     </section>
 
     <!-- 空状態 -->
     <section class="empty-state" id="empty">
-        <h2>🛒 カートは空です</h2>
-        <p>各見本市のページで、右上の <strong class="add-hint">＋</strong> ボタンを押してカートに追加してください。</p>
-        <p class="small-note">★ 画像活用・ボタン・文字装飾 の <strong>3つの見本市から選択</strong> できます。</p>
+        <h2><i data-lucide="shopping-cart" class="icn"></i> カートは空です</h2>
+        <p>各見本市のページで、右上の <strong class="add-hint"><i data-lucide="plus" class="icn"></i></strong> ボタンを押してカートに追加してください。</p>
+        <p class="small-note"><i data-lucide="star" class="icn"></i> 画像活用・ボタン・文字装飾 の <strong>3つの見本市から選択</strong> できます。</p>
         <div class="quick-links">
             <a href="sample_button_showcase.html">ボタン見本市へ</a>
             <a href="sample_text_showcase.html">文字装飾見本市へ</a>
@@ -71,7 +72,7 @@
 
     <!-- プレビュー（メイン新機能） -->
     <section class="preview-section" id="preview-section" style="display:none;">
-        <h2>👀 ライブプレビュー</h2>
+        <h2><i data-lucide="eye" class="icn"></i> ライブプレビュー</h2>
 
         <div class="preview-controls">
             <label>
@@ -86,14 +87,14 @@
 
         <!-- コンテンツベースプレビュー：各アイテムを個別に表示 -->
         <div class="preview-zone preview-content-based" id="zone-content" style="display:none;">
-            <h3>🖼️ 見本そのままプレビュー（各アイテム個別）</h3>
+            <h3><i data-lucide="image" class="icn"></i> 見本そのままプレビュー（各アイテム個別）</h3>
             <div class="content-preview-grid" id="content-preview-grid"></div>
             <p class="preview-hint-note">各見本の実際の見た目を、選んだCSSそのままで表示します。</p>
         </div>
 
         <!-- テンプレートプレビュー（意図ベースの組み立て） -->
         <div class="preview-zone preview-templates" id="zone-templates">
-            <h3>🎯 テンプレートで組み立てる</h3>
+            <h3><i data-lucide="layout-grid" class="icn"></i> テンプレートで組み立てる</h3>
             <p class="template-hint">作りたい型を選ぶと、カート内のアイテムが割り当てられます。足りない要素は注釈で表示されます。</p>
 
             <div class="template-grid" id="template-grid"></div>
@@ -102,7 +103,7 @@
                 <h4 class="template-output-title" id="template-output-title">選択中: </h4>
                 <div class="template-preview-area" id="template-preview-area"></div>
                 <details class="template-html-details">
-                    <summary>📋 このテンプレートのHTMLソース</summary>
+                    <summary><i data-lucide="clipboard" class="icn"></i> このテンプレートのHTMLソース</summary>
                     <pre class="template-html-code"><code id="template-html-code"></code></pre>
                 </details>
             </div>
@@ -117,10 +118,10 @@
 
     <!-- 組み合わせコード -->
     <section class="combined" id="combined-section" style="display:none;">
-        <h2>🔗 組み合わせコード（全選択を連結）</h2>
+        <h2><i data-lucide="link" class="icn"></i> 組み合わせコード（全選択を連結）</h2>
         <p class="note">以下のCSSをあなたのプロジェクトに貼り付けて使ってください。</p>
         <pre class="combined-code"><code id="combined-code">/* 何も選択されていません */</code></pre>
-        <button id="btn-copy-combined" class="btn-action">📋 このコードをコピー</button>
+        <button id="btn-copy-combined" class="btn-action"><i data-lucide="clipboard" class="icn"></i> このコードをコピー</button>
     </section>
 
     <!-- 使い方 -->
@@ -138,18 +139,18 @@
 
 <!-- ボトムドロワー (D案) -->
 <button class="drawer-fab" id="drawer-fab">
-    🛒 サンプル棚を開く <span class="fab-arrow">▲</span>
+    <i data-lucide="shopping-cart" class="icn"></i> サンプル棚を開く <span class="fab-arrow"><i data-lucide="chevron-up" class="icn"></i></span>
 </button>
 
 <div class="drawer" id="drawer">
     <div class="drawer-handle"></div>
     <div class="drawer-head">
         <div class="drawer-tabs">
-            <button class="tab-btn active" data-cat="ボタン">🔘 ボタン</button>
-            <button class="tab-btn" data-cat="文字装飾">📝 文字装飾</button>
-            <button class="tab-btn" data-cat="画像活用">🖼️ 画像活用</button>
+            <button class="tab-btn active" data-cat="ボタン"><i data-lucide="mouse-pointer-click" class="icn"></i> ボタン</button>
+            <button class="tab-btn" data-cat="文字装飾"><i data-lucide="type" class="icn"></i> 文字装飾</button>
+            <button class="tab-btn" data-cat="画像活用"><i data-lucide="image" class="icn"></i> 画像活用</button>
         </div>
-        <button class="drawer-close" id="drawer-close" aria-label="閉じる">✕</button>
+        <button class="drawer-close" id="drawer-close" aria-label="閉じる"><i data-lucide="x" class="icn"></i></button>
     </div>
     <div class="drawer-body" id="drawer-body">
         <p class="drawer-loading">読み込み中...</p>
@@ -274,7 +275,7 @@
                     </div>
                     <p class="drawer-item-name">${escapeHtml(item.name)}</p>
                     <button class="drawer-add" data-id="${escapeHtml(item.id)}">
-                        ${inCart ? '✓ カート内' : '＋ 追加'}
+                        ${inCart ? '<i data-lucide="check" class="icn"></i> カート内' : '<i data-lucide="plus" class="icn"></i> 追加'}
                     </button>
                 </div>
             `;
@@ -393,15 +394,15 @@
                     <button class="remove-btn" data-id="${escapeHtml(item.id)}" title="削除">×</button>
                 </div>
                 <div class="swap-controls">
-                    <button class="swap-btn" data-id="${escapeHtml(item.id)}" data-dir="-1" title="前のサンプル">◀</button>
+                    <button class="swap-btn" data-id="${escapeHtml(item.id)}" data-dir="-1" title="前のサンプル"><i data-lucide="chevron-left" class="icn"></i></button>
                     <span class="swap-position">${swapInfo.idx} / ${swapInfo.total}</span>
-                    <button class="swap-btn" data-id="${escapeHtml(item.id)}" data-dir="1" title="次のサンプル">▶</button>
+                    <button class="swap-btn" data-id="${escapeHtml(item.id)}" data-dir="1" title="次のサンプル"><i data-lucide="chevron-right" class="icn"></i></button>
                     <span class="swap-hint">同カテゴリ内で切替</span>
                 </div>
                 <pre class="code-display"><code>${escapeHtml(item.css)}</code></pre>
                 <div class="card-actions">
-                    <button class="btn-action btn-small" data-copy-css="${escapeHtml(item.css)}">📋 コピー</button>
-                    ${params.length > 0 ? `<button class="btn-action btn-small btn-toggle-params" data-id="${escapeHtml(item.id)}">⚙️ パラメータ調整 (${params.length})</button>` : ''}
+                    <button class="btn-action btn-small" data-copy-css="${escapeHtml(item.css)}"><i data-lucide="clipboard" class="icn"></i> コピー</button>
+                    ${params.length > 0 ? `<button class="btn-action btn-small btn-toggle-params" data-id="${escapeHtml(item.id)}"><i data-lucide="sliders-horizontal" class="icn"></i> パラメータ調整 (${params.length})</button>` : ''}
                 </div>
                 <div class="params-panel" data-id="${escapeHtml(item.id)}" style="display:none;">
                     ${renderParamControls(item.id, params)}
@@ -409,7 +410,7 @@
                         <label>raw CSS (直接編集可):</label>
                         <textarea class="param-textarea" data-id="${escapeHtml(item.id)}">${escapeHtml(item.css)}</textarea>
                     </div>
-                    <button class="btn-action btn-small btn-reset" data-id="${escapeHtml(item.id)}">↺ オリジナルに戻す</button>
+                    <button class="btn-action btn-small btn-reset" data-id="${escapeHtml(item.id)}"><i data-lucide="rotate-ccw" class="icn"></i> オリジナルに戻す</button>
                 </div>
             `;
             list.appendChild(card);
@@ -435,7 +436,7 @@
                 const currentCss = getSelections().find(s => s.id === btn.closest('.selection-card').dataset.itemId)?.css || btn.dataset.copyCss;
                 copyToClipboard(currentCss);
                 const orig = btn.textContent;
-                btn.textContent = '✓ コピー済';
+                btn.textContent = '<i data-lucide="check" class="icn"></i> コピー済';
                 setTimeout(() => btn.textContent = orig, 1500);
             });
         });
@@ -768,7 +769,7 @@
         {
             id: 'single-image',
             name: '単体画像',
-            wireframe: '🖼️',
+            wireframe: '<i data-lucide="image" class="icn"></i>',
             required: { '画像活用': 1 },
             html: `<div class="tpl-wrap tpl-single">{image}</div>`,
             htmlRaw: `<div>\n  <!-- 画像 -->\n</div>`
@@ -776,7 +777,7 @@
         {
             id: 'single-button',
             name: '単体ボタン',
-            wireframe: '🔘',
+            wireframe: '<i data-lucide="mouse-pointer-click" class="icn"></i>',
             required: { 'ボタン': 1 },
             html: `<div class="tpl-wrap tpl-single">{button}</div>`,
             htmlRaw: `<div>\n  <!-- ボタン -->\n</div>`
@@ -784,7 +785,7 @@
         {
             id: 'single-text',
             name: '単体テキスト',
-            wireframe: '📝',
+            wireframe: '<i data-lucide="type" class="icn"></i>',
             required: { '文字装飾': 1 },
             html: `<div class="tpl-wrap tpl-single">{text}</div>`,
             htmlRaw: `<div>\n  <!-- テキスト -->\n</div>`
@@ -792,7 +793,7 @@
         {
             id: 'image-text-side',
             name: '横並び 画像+文字',
-            wireframe: '🖼️ 📝',
+            wireframe: '<i data-lucide="image" class="icn"></i> <i data-lucide="type" class="icn"></i>',
             required: { '画像活用': 1, '文字装飾': 1 },
             html: `<div class="tpl-wrap tpl-side">{image}{text}</div>`,
             htmlRaw: `<div style="display:flex;gap:1em;align-items:center;">\n  <!-- 画像 -->\n  <!-- テキスト -->\n</div>`
@@ -800,7 +801,7 @@
         {
             id: 'image-text-overlay',
             name: '画像にテキスト重ね',
-            wireframe: '🖼️/📝',
+            wireframe: '<i data-lucide="image" class="icn"></i>/<i data-lucide="type" class="icn"></i>',
             required: { '画像活用': 1, '文字装飾': 1 },
             html: `<div class="tpl-wrap tpl-overlay"><div class="tpl-img-slot">{image}</div><div class="tpl-text-slot">{text}</div></div>`,
             htmlRaw: `<div style="position:relative;display:inline-block;">\n  <!-- 画像 -->\n  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:white;">\n    <!-- テキスト -->\n  </div>\n</div>`
@@ -808,7 +809,7 @@
         {
             id: 'image-caption',
             name: 'キャプション付き画像',
-            wireframe: '🖼️\n📝',
+            wireframe: '<i data-lucide="image" class="icn"></i>\n<i data-lucide="type" class="icn"></i>',
             required: { '画像活用': 1, '文字装飾': 1 },
             html: `<figure class="tpl-wrap tpl-caption">{image}<figcaption>{text}</figcaption></figure>`,
             htmlRaw: `<figure>\n  <!-- 画像 -->\n  <figcaption>\n    <!-- テキスト -->\n  </figcaption>\n</figure>`
@@ -816,7 +817,7 @@
         {
             id: 'cta',
             name: 'CTA 見出し+ボタン',
-            wireframe: '📝\n🔘',
+            wireframe: '<i data-lucide="type" class="icn"></i>\n<i data-lucide="mouse-pointer-click" class="icn"></i>',
             required: { '文字装飾': 1, 'ボタン': 1 },
             html: `<div class="tpl-wrap tpl-cta">{text}{button}</div>`,
             htmlRaw: `<div style="text-align:center;">\n  <!-- テキスト -->\n  <!-- ボタン -->\n</div>`
@@ -824,7 +825,7 @@
         {
             id: 'image-button-stack',
             name: '画像+ボタン 縦並び',
-            wireframe: '🖼️\n🔘',
+            wireframe: '<i data-lucide="image" class="icn"></i>\n<i data-lucide="mouse-pointer-click" class="icn"></i>',
             required: { '画像活用': 1, 'ボタン': 1 },
             html: `<div class="tpl-wrap tpl-stacked">{image}{button}</div>`,
             htmlRaw: `<div style="display:flex;flex-direction:column;gap:0.8em;align-items:center;">\n  <!-- 画像 -->\n  <!-- ボタン -->\n</div>`
@@ -832,7 +833,7 @@
         {
             id: 'card-vertical',
             name: 'カード型 (画像+文字+ボタン)',
-            wireframe: '🖼️\n📝\n🔘',
+            wireframe: '<i data-lucide="image" class="icn"></i>\n<i data-lucide="type" class="icn"></i>\n<i data-lucide="mouse-pointer-click" class="icn"></i>',
             required: { '画像活用': 1, '文字装飾': 1, 'ボタン': 1 },
             html: `<div class="tpl-wrap tpl-card-v"><div class="tpl-card-img">{image}</div><div class="tpl-card-body">{text}{button}</div></div>`,
             htmlRaw: `<div class="card">\n  <!-- 画像 -->\n  <div class="body">\n    <!-- テキスト -->\n    <!-- ボタン -->\n  </div>\n</div>`
@@ -840,7 +841,7 @@
         {
             id: 'hero',
             name: 'ヒーロー型 (画像+重ねる文字+ボタン)',
-            wireframe: '🖼️(📝🔘)',
+            wireframe: '<i data-lucide="image" class="icn"></i>(<i data-lucide="type" class="icn"></i><i data-lucide="mouse-pointer-click" class="icn"></i>)',
             required: { '画像活用': 1, '文字装飾': 1, 'ボタン': 1 },
             html: `<div class="tpl-wrap tpl-hero">{image}<div class="tpl-hero-overlay">{text}{button}</div></div>`,
             htmlRaw: `<div class="hero" style="position:relative;">\n  <!-- 画像 -->\n  <div class="overlay" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;">\n    <!-- テキスト -->\n    <!-- ボタン -->\n  </div>\n</div>`
@@ -848,7 +849,7 @@
         {
             id: 'article-horizontal',
             name: '記事型 (左画像・右文字ボタン)',
-            wireframe: '🖼️ 📝🔘',
+            wireframe: '<i data-lucide="image" class="icn"></i> <i data-lucide="type" class="icn"></i><i data-lucide="mouse-pointer-click" class="icn"></i>',
             required: { '画像活用': 1, '文字装飾': 1, 'ボタン': 1 },
             html: `<div class="tpl-wrap tpl-article">{image}<div class="tpl-article-body">{text}{button}</div></div>`,
             htmlRaw: `<div style="display:flex;gap:1em;">\n  <!-- 画像 -->\n  <div>\n    <!-- テキスト -->\n    <!-- ボタン -->\n  </div>\n</div>`
@@ -856,9 +857,9 @@
     ];
 
     const CATEGORY_LABELS = {
-        '画像活用': '🖼️ 画像',
-        '文字装飾': '📝 文字',
-        'ボタン': '🔘 ボタン'
+        '画像活用': '<i data-lucide="image" class="icn"></i> 画像',
+        '文字装飾': '<i data-lucide="type" class="icn"></i> 文字',
+        'ボタン': '<i data-lucide="mouse-pointer-click" class="icn"></i> ボタン'
     };
 
     let selectedTemplateId = null;
@@ -896,8 +897,8 @@
                 <div class="tpl-name">${escapeHtml(tpl.name)}</div>
                 <div class="tpl-status">
                     ${ready
-                        ? '<span class="tpl-ok">✓ 選択可能</span>'
-                        : `<span class="tpl-warn">⚠ 不足: ${missing.map(m => `${m.label} ${m.need - m.have}個`).join(', ')}</span>`
+                        ? '<span class="tpl-ok"><i data-lucide="check" class="icn"></i> 選択可能</span>'
+                        : `<span class="tpl-warn"><i data-lucide="alert-triangle" class="icn"></i> 不足: ${missing.map(m => `${m.label} ${m.need - m.have}個`).join(', ')}</span>`
                     }
                 </div>
             `;

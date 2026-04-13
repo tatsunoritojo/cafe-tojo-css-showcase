@@ -51,6 +51,7 @@ function removeById(id) {
 function updateAll() {
     updateCards();
     updateSidebar();
+    refreshIcons();
 }
 
 function updateCards() {
@@ -63,7 +64,7 @@ function updateCards() {
         const id = btn.dataset.itemId;
         const selected = isSelected(id);
         btn.classList.toggle('added', selected);
-        btn.innerHTML = selected ? '✓' : '＋';
+        btn.innerHTML = selected ? '<i data-lucide="check" class="icn"></i>' : '<i data-lucide="plus" class="icn"></i>';
         btn.title = selected ? 'カートから削除' : 'カートに追加';
         const card = btn.closest('.btn-item, .text-item, .effect-item');
         if (card) card.classList.toggle('mixer-selected', selected);
@@ -104,7 +105,7 @@ function instrumentShowcase() {
         const btn = document.createElement('button');
         btn.className = 'add-to-mixer';
         btn.dataset.itemId = id;
-        btn.innerHTML = isSelected(id) ? '✓' : '＋';
+        btn.innerHTML = isSelected(id) ? '<i data-lucide="check" class="icn"></i>' : '<i data-lucide="plus" class="icn"></i>';
         btn.title = isSelected(id) ? 'カートから削除' : 'カートに追加';
         if (isSelected(id)) {
             btn.classList.add('added');
@@ -152,13 +153,13 @@ function injectTopNav() {
     const nav = document.createElement('nav');
     nav.id = 'mixable-top-nav';
     nav.innerHTML = `
-        <a href="index.html" class="tn-home" title="ポータルへ">🏠 Mixable CSS</a>
+        <a href="index.html" class="tn-home" title="ポータルへ"><i data-lucide="home" class="icn"></i> Mixable CSS</a>
         <div class="tn-links">
-            <a href="sample_button_showcase.html" class="${path.includes('button') ? 'tn-active' : ''}">🔘 ボタン</a>
-            <a href="sample_text_showcase.html" class="${path.includes('text') ? 'tn-active' : ''}">📝 文字</a>
-            <a href="sample_image_effects.html" class="${path.includes('image') ? 'tn-active' : ''}">🖼️ 画像活用</a>
-            <a href="sample_css_showcase.html" class="tn-note ${path.includes('css_showcase') ? 'tn-active' : ''}">📖 Notes</a>
-            <a href="mixer.html" class="tn-cta ${path.includes('mixer') ? 'tn-active' : ''}">🛒 レジ</a>
+            <a href="sample_button_showcase.html" class="${path.includes('button') ? 'tn-active' : ''}"><i data-lucide="mouse-pointer-click" class="icn"></i> ボタン</a>
+            <a href="sample_text_showcase.html" class="${path.includes('text') ? 'tn-active' : ''}"><i data-lucide="type" class="icn"></i> 文字</a>
+            <a href="sample_image_effects.html" class="${path.includes('image') ? 'tn-active' : ''}"><i data-lucide="image" class="icn"></i> 画像活用</a>
+            <a href="sample_css_showcase.html" class="tn-note ${path.includes('css_showcase') ? 'tn-active' : ''}"><i data-lucide="book-open" class="icn"></i> Notes</a>
+            <a href="mixer.html" class="tn-cta ${path.includes('mixer') ? 'tn-active' : ''}"><i data-lucide="shopping-cart" class="icn"></i> レジ</a>
         </div>
     `;
     document.body.prepend(nav);
@@ -173,8 +174,8 @@ function injectSidebar() {
     sidebar.id = 'mixer-sidebar';
     sidebar.innerHTML = `
         <div class="sb-head">
-            <h2>🛒 デザインカート</h2>
-            <button class="sb-close" id="sb-close" aria-label="閉じる">✕</button>
+            <h2><i data-lucide="shopping-cart" class="icn"></i> デザインカート</h2>
+            <button class="sb-close" id="sb-close" aria-label="閉じる"><i data-lucide="x" class="icn"></i></button>
         </div>
 
         <div class="sb-status">
@@ -182,7 +183,7 @@ function injectSidebar() {
         </div>
 
         <div class="sb-preview-block">
-            <h3>👀 ライブプレビュー</h3>
+            <h3><i data-lucide="eye" class="icn"></i> ライブプレビュー</h3>
             <label class="sb-input-label">
                 <span>プレビューテキスト</span>
                 <input type="text" id="sb-text" value="カフェ東城">
@@ -194,9 +195,9 @@ function injectSidebar() {
         </div>
 
         <div class="sb-list-block">
-            <h3>📋 カート内</h3>
+            <h3><i data-lucide="clipboard" class="icn"></i> カート内</h3>
             <div class="sb-list" id="sb-list">
-                <p class="empty-note">「＋」ボタンで追加</p>
+                <p class="empty-note">「<i data-lucide="plus" class="icn"></i>」ボタンで追加</p>
             </div>
         </div>
 
@@ -215,7 +216,7 @@ function injectSidebar() {
     // モバイル用トグル
     const toggle = document.createElement('button');
     toggle.className = 'mixer-sb-toggle';
-    toggle.innerHTML = `🛒 カート <span class="mixer-badge">0</span>`;
+    toggle.innerHTML = `<i data-lucide="shopping-cart" class="icn"></i> カート <span class="mixer-badge">0</span>`;
     toggle.addEventListener('click', () => {
         sidebar.classList.toggle('open');
     });
@@ -250,7 +251,7 @@ function updateSidebar() {
     const list = document.getElementById('sb-list');
     if (list) {
         if (selections.length === 0) {
-            list.innerHTML = '<p class="empty-note">「＋」ボタンで追加</p>';
+            list.innerHTML = '<p class="empty-note">「<i data-lucide="plus" class="icn"></i>」ボタンで追加</p>';
         } else {
             list.innerHTML = selections.map(s => `
                 <div class="sb-item">
@@ -363,7 +364,16 @@ function injectStyles() {
     const style = document.createElement('style');
     style.id = 'mixer-injected-styles';
     style.textContent = `
-        /* トップナビゲーション */
+        /* Lucideアイコン共通 */
+        .icn {
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+            vertical-align: -0.2em;
+            stroke-width: 2;
+        }
+
+        /* トップナビゲーション（ダーク背景で視認性向上） */
         body.has-top-nav {
             padding-top: 56px !important;
         }
@@ -373,56 +383,73 @@ function injectStyles() {
             left: 0;
             right: 0;
             height: 56px;
-            background: #6b4423;
+            background: #1a1a1a;
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 1.2em;
             z-index: 1001;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
             font-family: sans-serif;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
         }
         #mixable-top-nav .tn-home {
-            color: white;
+            color: #ffd700;
             font-weight: bold;
             text-decoration: none;
             font-size: 1rem;
             flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.4em;
+        }
+        #mixable-top-nav .tn-home .icn {
+            width: 18px;
+            height: 18px;
         }
         #mixable-top-nav .tn-links {
             display: flex;
-            gap: 0.4em;
+            gap: 0.3em;
             flex-wrap: wrap;
             align-items: center;
         }
         #mixable-top-nav .tn-links a {
-            color: #f5efe6;
-            padding: 0.4em 0.8em;
-            border-radius: 4px;
+            color: #e0e0e0;
+            padding: 0.4em 0.9em;
+            border-radius: 6px;
             text-decoration: none;
             font-size: 0.9rem;
-            transition: background 0.2s;
+            transition: all 0.2s;
             white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4em;
         }
         #mixable-top-nav .tn-links a:hover {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 215, 0, 0.15);
+            color: #ffd700;
         }
         #mixable-top-nav .tn-links a.tn-active {
             background: #ffd700;
-            color: #5a3000;
+            color: #1a1a1a;
             font-weight: bold;
         }
         #mixable-top-nav .tn-note {
-            border-left: 1px solid rgba(255, 255, 255, 0.3);
-            padding-left: 0.8em !important;
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            padding-left: 0.9em !important;
+            margin-left: 0.2em;
         }
         #mixable-top-nav .tn-cta {
             background: #c44;
             color: white !important;
         }
+        #mixable-top-nav .tn-cta:hover {
+            background: #e55 !important;
+            color: white !important;
+        }
         #mixable-top-nav .tn-cta.tn-active {
             background: #ffd700 !important;
-            color: #5a3000 !important;
+            color: #1a1a1a !important;
         }
         @media (max-width: 720px) {
             #mixable-top-nav {
@@ -441,7 +468,7 @@ function injectStyles() {
             }
         }
 
-        /* ＋ボタン */
+        /* 追加ボタン */
         .add-to-mixer {
             position: absolute;
             top: 8px;
@@ -745,8 +772,25 @@ function injectStyles() {
 
 /* ---------------- エントリポイント ---------------- */
 
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', instrumentShowcase);
-} else {
+function refreshIcons() {
+    if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        try { window.lucide.createIcons(); } catch (e) {}
+    }
+}
+
+function init() {
     instrumentShowcase();
+    // Lucideが読み込まれるまで少し待ってからcreateIcons
+    if (window.lucide) {
+        refreshIcons();
+    } else {
+        setTimeout(refreshIcons, 100);
+        setTimeout(refreshIcons, 500);
+    }
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+} else {
+    init();
 }

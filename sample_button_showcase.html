@@ -26,13 +26,14 @@
     <title>ボタン見本市 | Mixable CSS</title>
     <link rel="stylesheet" href="sample_button_showcase.css">
     <script src="mixer.js" defer></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
 
 <header class="page-header">
     <h1>A. ボタン見本市</h1>
     <p>同じ「カートに追加」ボタンを20通りのデザインで</p>
-    <p class="hint">★ 各カードの黒いコードブロックはコピーして使えます。右上「＋」でカートに追加。</p>
+    <p class="hint"><i data-lucide="star" class="icn"></i> 各カードの黒いコードブロックはコピーして使えます。右上「<i data-lucide="plus" class="icn"></i>」でカートに追加。</p>
     <p><a href="index.html">← ポータルに戻る</a></p>
 </header>
 
@@ -205,7 +206,7 @@ box-shadow:
 
     <!-- グループ4: ホバー動作 -->
     <section class="group">
-        <h2>グループ4: ホバー動作 ★マウスを乗せてみて</h2>
+        <h2>グループ4: ホバー動作 <i data-lucide="star" class="icn"></i>マウスを乗せてみて</h2>
         <div class="btn-grid">
 
             <div class="btn-item">
@@ -274,7 +275,7 @@ overflow: hidden;
 
             <div class="btn-item">
                 <button class="btn-icon">
-                    <span class="icon">☕</span>
+                    <span class="icon"><i data-lucide="coffee" class="icn"></i></span>
                     カートに追加
                 </button>
                 <p class="label">アイコン付き</p>
@@ -286,7 +287,7 @@ border: none;
 display: inline-flex;
 align-items: center;
 gap: 0.5em;
-/* HTML: &lt;span class="icon"&gt;☕&lt;/span&gt; 文字 */</code></pre>
+/* HTML: &lt;span class="icon"&gt;<i data-lucide="coffee" class="icn"></i>&lt;/span&gt; 文字 */</code></pre>
             </div>
 
             <div class="btn-item">
