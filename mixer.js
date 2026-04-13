@@ -75,6 +75,9 @@ function updateCards() {
 function instrumentShowcase() {
     injectStyles();
 
+    // 全ページにトップナビを挿入
+    injectTopNav();
+
     // CSS Notes（学習リソース）ページではカート追加無効
     const isCssNotes = location.pathname.includes('css_showcase');
     if (isCssNotes) {
@@ -135,6 +138,31 @@ function getPageKey() {
     if (path.includes('image')) return '画像活用';
     if (path.includes('css_showcase')) return 'CSS Notes';
     return 'その他';
+}
+
+/* ---------------- トップナビゲーション ---------------- */
+
+function injectTopNav() {
+    if (document.getElementById('mixable-top-nav')) return;
+    if (location.pathname.endsWith('index.html') || location.pathname === '/' || location.pathname.endsWith('/css-showcase/')) return;
+
+    const pageKey = getPageKey();
+    const path = location.pathname.split('/').pop();
+
+    const nav = document.createElement('nav');
+    nav.id = 'mixable-top-nav';
+    nav.innerHTML = `
+        <a href="index.html" class="tn-home" title="ポータルへ">🏠 Mixable CSS</a>
+        <div class="tn-links">
+            <a href="sample_button_showcase.html" class="${path.includes('button') ? 'tn-active' : ''}">🔘 ボタン</a>
+            <a href="sample_text_showcase.html" class="${path.includes('text') ? 'tn-active' : ''}">📝 文字</a>
+            <a href="sample_image_effects.html" class="${path.includes('image') ? 'tn-active' : ''}">🖼️ 画像活用</a>
+            <a href="sample_css_showcase.html" class="tn-note ${path.includes('css_showcase') ? 'tn-active' : ''}">📖 Notes</a>
+            <a href="mixer.html" class="tn-cta ${path.includes('mixer') ? 'tn-active' : ''}">🛒 レジ</a>
+        </div>
+    `;
+    document.body.prepend(nav);
+    document.body.classList.add('has-top-nav');
 }
 
 /* ---------------- サイドバー ---------------- */
@@ -335,6 +363,84 @@ function injectStyles() {
     const style = document.createElement('style');
     style.id = 'mixer-injected-styles';
     style.textContent = `
+        /* トップナビゲーション */
+        body.has-top-nav {
+            padding-top: 56px !important;
+        }
+        #mixable-top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 56px;
+            background: #6b4423;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1.2em;
+            z-index: 1001;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            font-family: sans-serif;
+        }
+        #mixable-top-nav .tn-home {
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+        #mixable-top-nav .tn-links {
+            display: flex;
+            gap: 0.4em;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        #mixable-top-nav .tn-links a {
+            color: #f5efe6;
+            padding: 0.4em 0.8em;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+        #mixable-top-nav .tn-links a:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+        #mixable-top-nav .tn-links a.tn-active {
+            background: #ffd700;
+            color: #5a3000;
+            font-weight: bold;
+        }
+        #mixable-top-nav .tn-note {
+            border-left: 1px solid rgba(255, 255, 255, 0.3);
+            padding-left: 0.8em !important;
+        }
+        #mixable-top-nav .tn-cta {
+            background: #c44;
+            color: white !important;
+        }
+        #mixable-top-nav .tn-cta.tn-active {
+            background: #ffd700 !important;
+            color: #5a3000 !important;
+        }
+        @media (max-width: 720px) {
+            #mixable-top-nav {
+                height: auto;
+                padding: 0.5em 0.8em;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.3em;
+            }
+            #mixable-top-nav .tn-links a {
+                font-size: 0.8rem;
+                padding: 0.3em 0.5em;
+            }
+            body.has-top-nav {
+                padding-top: 100px !important;
+            }
+        }
+
         /* ＋ボタン */
         .add-to-mixer {
             position: absolute;
