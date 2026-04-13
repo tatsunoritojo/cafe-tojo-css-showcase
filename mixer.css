@@ -219,6 +219,285 @@ main {
 }
 
 /* ==========================================
+   テンプレートプレビュー
+   ========================================== */
+
+.preview-templates {
+    background: linear-gradient(135deg, #fff8e7, #ffe0b2);
+    border: 2px solid #ff9800;
+    margin-bottom: 1.5em;
+}
+.preview-templates h3 {
+    color: #e65100;
+    font-size: 1.15rem;
+    margin-bottom: 0.4em;
+}
+.template-hint {
+    font-size: 0.9rem;
+    color: #7a6a00;
+    margin: 0 0 1em;
+}
+
+.template-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0.8em;
+    margin-bottom: 1.5em;
+}
+
+.tpl-card {
+    background: white;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    padding: 1em;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    min-height: 140px;
+}
+
+.tpl-card.tpl-ready {
+    border-color: #00c853;
+}
+.tpl-card.tpl-ready:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.tpl-card.tpl-missing {
+    opacity: 0.6;
+    cursor: not-allowed;
+    border-color: #ddd;
+}
+
+.tpl-card.tpl-selected {
+    border-color: #6b4423;
+    background: #fffbef;
+    box-shadow: 0 4px 14px rgba(107, 68, 35, 0.3);
+}
+
+.tpl-wireframe {
+    font-size: 1.3rem;
+    padding: 0.5em;
+    background: #f5efe6;
+    border-radius: 4px;
+    white-space: pre-line;
+    line-height: 1.3;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tpl-name {
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: #333;
+    flex: 1;
+}
+
+.tpl-status {
+    font-size: 0.75rem;
+}
+.tpl-ok {
+    color: #00723d;
+    font-weight: bold;
+}
+.tpl-warn {
+    color: #c44;
+}
+
+/* 組み立てプレビュー */
+.template-output {
+    background: white;
+    padding: 1.5em;
+    border-radius: 8px;
+    border-left: 4px solid #6b4423;
+}
+
+.template-output-title {
+    color: #6b4423;
+    margin: 0 0 0.8em;
+    font-size: 1rem;
+}
+
+.template-preview-area {
+    min-height: 200px;
+    padding: 1.5em;
+    background: #fafafa;
+    border: 1px dashed #ccc;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    contain: layout paint;
+    position: relative;
+}
+
+.template-preview-area > * {
+    max-width: 100%;
+}
+
+/* テンプレート配置用のラッパークラス */
+.tpl-wrap {
+    display: block;
+}
+
+.tpl-single {
+    text-align: center;
+}
+
+.tpl-side {
+    display: flex;
+    gap: 1em;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.tpl-overlay {
+    position: relative;
+    display: inline-block;
+}
+.tpl-overlay .tpl-img-slot {
+    position: relative;
+}
+.tpl-overlay .tpl-img-slot img {
+    display: block;
+    max-width: 100%;
+    filter: brightness(0.65);
+}
+.tpl-overlay .tpl-text-slot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+}
+
+.tpl-caption {
+    margin: 0;
+    text-align: center;
+    max-width: 400px;
+}
+.tpl-caption figcaption {
+    margin-top: 0.5em;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.tpl-cta {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8em;
+    align-items: center;
+}
+
+.tpl-stacked {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8em;
+    align-items: center;
+}
+
+.tpl-card-v {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 280px;
+}
+.tpl-card-v .tpl-card-img img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    display: block;
+}
+.tpl-card-v .tpl-card-body {
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    align-items: center;
+}
+
+.tpl-hero {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    max-width: 400px;
+}
+.tpl-hero img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.5);
+}
+.tpl-hero .tpl-hero-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8em;
+    color: white;
+}
+
+.tpl-article {
+    display: flex;
+    gap: 1em;
+    align-items: flex-start;
+    max-width: 500px;
+}
+.tpl-article img {
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+.tpl-article .tpl-article-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6em;
+    align-items: flex-start;
+}
+
+.template-html-details {
+    margin-top: 1em;
+}
+.template-html-details summary {
+    cursor: pointer;
+    color: #6b4423;
+    font-weight: bold;
+    font-size: 0.9rem;
+    padding: 0.3em 0;
+}
+.template-html-code {
+    background: #2d2d2d;
+    color: #f5efe6;
+    padding: 1em 1.2em;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    overflow-x: auto;
+    font-family: 'Courier New', monospace;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    margin-top: 0.5em;
+}
+
+
+/* ==========================================
    コンテンツベースプレビュー（各アイテム個別表示）
    ========================================== */
 

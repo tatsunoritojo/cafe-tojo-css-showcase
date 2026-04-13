@@ -91,21 +91,21 @@
             <p class="preview-hint-note">各見本の実際の見た目を、選んだCSSそのままで表示します。</p>
         </div>
 
-        <!-- 組み合わせプレビュー（全選択を1要素に適用） -->
-        <div class="preview-zone preview-combined" id="zone-combined" style="display:none;">
-            <h3>🎨 組み合わせプレビュー ★全CSSを1要素に統合</h3>
-            <div class="element-toggle">
-                <label>プレビュー要素を選択:</label>
-                <div class="toggle-buttons">
-                    <button class="toggle-btn active" data-target="button">🔘 ボタン</button>
-                    <button class="toggle-btn" data-target="text">📝 文字</button>
-                    <button class="toggle-btn" data-target="image">🖼️ 画像</button>
-                </div>
+        <!-- テンプレートプレビュー（意図ベースの組み立て） -->
+        <div class="preview-zone preview-templates" id="zone-templates">
+            <h3>🎯 テンプレートで組み立てる</h3>
+            <p class="template-hint">作りたい型を選ぶと、カート内のアイテムが割り当てられます。足りない要素は注釈で表示されます。</p>
+
+            <div class="template-grid" id="template-grid"></div>
+
+            <div class="template-output" id="template-output" style="display:none;">
+                <h4 class="template-output-title" id="template-output-title">選択中: </h4>
+                <div class="template-preview-area" id="template-preview-area"></div>
+                <details class="template-html-details">
+                    <summary>📋 このテンプレートのHTMLソース</summary>
+                    <pre class="template-html-code"><code id="template-html-code"></code></pre>
+                </details>
             </div>
-            <div class="preview-area preview-area-large" id="combined-preview-area">
-                <button id="combined-preview-el">カートに追加</button>
-            </div>
-            <p class="combined-hint">ボタン + 文字装飾 + アニメ を組み合わせると、1つのボタンに全て適用されます（単純要素向け）</p>
         </div>
 
 
@@ -746,14 +746,8 @@
             contentZone.style.display = 'none';
         }
 
-        // 組み合わせプレビュー
-        const combinedZone = document.getElementById('zone-combined');
-        if (selections.length >= 1) {
-            combinedZone.style.display = 'block';
-            renderCombinedPreview(selections);
-        } else {
-            combinedZone.style.display = 'none';
-        }
+        // テンプレートプレビュー（常に表示）
+        renderTemplates(selections);
 
         // 注入CSS（@keyframes、:hover等）を更新
         const injectedStyles = [];
@@ -766,6 +760,205 @@
         document.getElementById('mixer-injected-css').textContent = injectedStyles.join('\n\n');
 
         updatePreviewTexts();
+    }
+
+    /* ==================== テンプレート定義 ==================== */
+
+    const TEMPLATES = [
+        {
+            id: 'single-image',
+            name: '単体画像',
+            wireframe: '🖼️',
+            required: { '画像活用': 1 },
+            html: `<div class="tpl-wrap tpl-single">{image}</div>`,
+            htmlRaw: `<div>\n  <!-- 画像 -->\n</div>`
+        },
+        {
+            id: 'single-button',
+            name: '単体ボタン',
+            wireframe: '🔘',
+            required: { 'ボタン': 1 },
+            html: `<div class="tpl-wrap tpl-single">{button}</div>`,
+            htmlRaw: `<div>\n  <!-- ボタン -->\n</div>`
+        },
+        {
+            id: 'single-text',
+            name: '単体テキスト',
+            wireframe: '📝',
+            required: { '文字装飾': 1 },
+            html: `<div class="tpl-wrap tpl-single">{text}</div>`,
+            htmlRaw: `<div>\n  <!-- テキスト -->\n</div>`
+        },
+        {
+            id: 'image-text-side',
+            name: '横並び 画像+文字',
+            wireframe: '🖼️ 📝',
+            required: { '画像活用': 1, '文字装飾': 1 },
+            html: `<div class="tpl-wrap tpl-side">{image}{text}</div>`,
+            htmlRaw: `<div style="display:flex;gap:1em;align-items:center;">\n  <!-- 画像 -->\n  <!-- テキスト -->\n</div>`
+        },
+        {
+            id: 'image-text-overlay',
+            name: '画像にテキスト重ね',
+            wireframe: '🖼️/📝',
+            required: { '画像活用': 1, '文字装飾': 1 },
+            html: `<div class="tpl-wrap tpl-overlay"><div class="tpl-img-slot">{image}</div><div class="tpl-text-slot">{text}</div></div>`,
+            htmlRaw: `<div style="position:relative;display:inline-block;">\n  <!-- 画像 -->\n  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:white;">\n    <!-- テキスト -->\n  </div>\n</div>`
+        },
+        {
+            id: 'image-caption',
+            name: 'キャプション付き画像',
+            wireframe: '🖼️\n📝',
+            required: { '画像活用': 1, '文字装飾': 1 },
+            html: `<figure class="tpl-wrap tpl-caption">{image}<figcaption>{text}</figcaption></figure>`,
+            htmlRaw: `<figure>\n  <!-- 画像 -->\n  <figcaption>\n    <!-- テキスト -->\n  </figcaption>\n</figure>`
+        },
+        {
+            id: 'cta',
+            name: 'CTA 見出し+ボタン',
+            wireframe: '📝\n🔘',
+            required: { '文字装飾': 1, 'ボタン': 1 },
+            html: `<div class="tpl-wrap tpl-cta">{text}{button}</div>`,
+            htmlRaw: `<div style="text-align:center;">\n  <!-- テキスト -->\n  <!-- ボタン -->\n</div>`
+        },
+        {
+            id: 'image-button-stack',
+            name: '画像+ボタン 縦並び',
+            wireframe: '🖼️\n🔘',
+            required: { '画像活用': 1, 'ボタン': 1 },
+            html: `<div class="tpl-wrap tpl-stacked">{image}{button}</div>`,
+            htmlRaw: `<div style="display:flex;flex-direction:column;gap:0.8em;align-items:center;">\n  <!-- 画像 -->\n  <!-- ボタン -->\n</div>`
+        },
+        {
+            id: 'card-vertical',
+            name: 'カード型 (画像+文字+ボタン)',
+            wireframe: '🖼️\n📝\n🔘',
+            required: { '画像活用': 1, '文字装飾': 1, 'ボタン': 1 },
+            html: `<div class="tpl-wrap tpl-card-v"><div class="tpl-card-img">{image}</div><div class="tpl-card-body">{text}{button}</div></div>`,
+            htmlRaw: `<div class="card">\n  <!-- 画像 -->\n  <div class="body">\n    <!-- テキスト -->\n    <!-- ボタン -->\n  </div>\n</div>`
+        },
+        {
+            id: 'hero',
+            name: 'ヒーロー型 (画像+重ねる文字+ボタン)',
+            wireframe: '🖼️(📝🔘)',
+            required: { '画像活用': 1, '文字装飾': 1, 'ボタン': 1 },
+            html: `<div class="tpl-wrap tpl-hero">{image}<div class="tpl-hero-overlay">{text}{button}</div></div>`,
+            htmlRaw: `<div class="hero" style="position:relative;">\n  <!-- 画像 -->\n  <div class="overlay" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;">\n    <!-- テキスト -->\n    <!-- ボタン -->\n  </div>\n</div>`
+        },
+        {
+            id: 'article-horizontal',
+            name: '記事型 (左画像・右文字ボタン)',
+            wireframe: '🖼️ 📝🔘',
+            required: { '画像活用': 1, '文字装飾': 1, 'ボタン': 1 },
+            html: `<div class="tpl-wrap tpl-article">{image}<div class="tpl-article-body">{text}{button}</div></div>`,
+            htmlRaw: `<div style="display:flex;gap:1em;">\n  <!-- 画像 -->\n  <div>\n    <!-- テキスト -->\n    <!-- ボタン -->\n  </div>\n</div>`
+        }
+    ];
+
+    const CATEGORY_LABELS = {
+        '画像活用': '🖼️ 画像',
+        '文字装飾': '📝 文字',
+        'ボタン': '🔘 ボタン'
+    };
+
+    let selectedTemplateId = null;
+
+    function renderTemplates(selections) {
+        const grid = document.getElementById('template-grid');
+        grid.innerHTML = '';
+
+        // カテゴリ別のカウント
+        const categoryCount = {};
+        selections.forEach(s => {
+            categoryCount[s.category] = (categoryCount[s.category] || 0) + 1;
+        });
+
+        TEMPLATES.forEach(tpl => {
+            const missing = [];
+            for (const [cat, need] of Object.entries(tpl.required)) {
+                const have = categoryCount[cat] || 0;
+                if (have < need) {
+                    missing.push({
+                        cat,
+                        need,
+                        have,
+                        label: CATEGORY_LABELS[cat] || cat
+                    });
+                }
+            }
+            const ready = missing.length === 0;
+
+            const card = document.createElement('div');
+            card.className = `tpl-card ${ready ? 'tpl-ready' : 'tpl-missing'} ${selectedTemplateId === tpl.id ? 'tpl-selected' : ''}`;
+            card.dataset.tplId = tpl.id;
+            card.innerHTML = `
+                <div class="tpl-wireframe">${escapeHtml(tpl.wireframe)}</div>
+                <div class="tpl-name">${escapeHtml(tpl.name)}</div>
+                <div class="tpl-status">
+                    ${ready
+                        ? '<span class="tpl-ok">✓ 選択可能</span>'
+                        : `<span class="tpl-warn">⚠ 不足: ${missing.map(m => `${m.label} ${m.need - m.have}個`).join(', ')}</span>`
+                    }
+                </div>
+            `;
+
+            if (ready) {
+                card.addEventListener('click', () => selectTemplate(tpl.id, selections));
+            }
+
+            grid.appendChild(card);
+        });
+
+        // 選択中のテンプレートを再レンダリング
+        if (selectedTemplateId) {
+            const stillValid = TEMPLATES.find(t => t.id === selectedTemplateId);
+            if (stillValid) {
+                const missing = Object.entries(stillValid.required).some(([cat, need]) => (categoryCount[cat] || 0) < need);
+                if (!missing) {
+                    selectTemplate(selectedTemplateId, selections);
+                    return;
+                }
+            }
+            // 無効になった場合はクリア
+            selectedTemplateId = null;
+            document.getElementById('template-output').style.display = 'none';
+        }
+    }
+
+    function selectTemplate(tplId, selections) {
+        const tpl = TEMPLATES.find(t => t.id === tplId);
+        if (!tpl) return;
+
+        selectedTemplateId = tplId;
+
+        // カテゴリ別の最初のアイテムを取得
+        const slots = {};
+        selections.forEach(s => {
+            if (!slots[s.category]) slots[s.category] = s;
+        });
+
+        // プレースホルダーを置換
+        let html = tpl.html;
+        html = html.replace('{image}', slots['画像活用']?.html || '');
+        html = html.replace('{text}', slots['文字装飾']?.html || '');
+        html = html.replace('{button}', slots['ボタン']?.html || '');
+
+        // レンダリング
+        document.getElementById('template-output').style.display = 'block';
+        document.getElementById('template-output-title').textContent = `選択中: ${tpl.name}`;
+        document.getElementById('template-preview-area').innerHTML = html;
+
+        // HTMLソース表示
+        let sourceHtml = tpl.htmlRaw;
+        if (slots['画像活用']) sourceHtml = sourceHtml.replace('<!-- 画像 -->', slots['画像活用'].html);
+        if (slots['文字装飾']) sourceHtml = sourceHtml.replace('<!-- テキスト -->', slots['文字装飾'].html);
+        if (slots['ボタン']) sourceHtml = sourceHtml.replace('<!-- ボタン -->', slots['ボタン'].html);
+        document.getElementById('template-html-code').textContent = sourceHtml;
+
+        // カード選択状態を更新
+        document.querySelectorAll('.tpl-card').forEach(c => {
+            c.classList.toggle('tpl-selected', c.dataset.tplId === tplId);
+        });
     }
 
     function renderContentBasedPreview(selections) {
