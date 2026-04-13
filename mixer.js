@@ -60,6 +60,9 @@ function updateAllBadges() {
         btn.classList.toggle('added', selected);
         btn.innerHTML = selected ? '✓' : '＋';
         btn.title = selected ? 'ミキサーから削除' : 'ミキサーに追加';
+        // カード自体にも選択状態のクラスを付ける
+        const card = btn.closest('.btn-item, .text-item, .effect-item');
+        if (card) card.classList.toggle('mixer-selected', selected);
     });
 }
 
@@ -87,7 +90,10 @@ function instrumentShowcase() {
         btn.dataset.itemId = id;
         btn.innerHTML = isSelected(id) ? '✓' : '＋';
         btn.title = isSelected(id) ? 'ミキサーから削除' : 'ミキサーに追加';
-        if (isSelected(id)) btn.classList.add('added');
+        if (isSelected(id)) {
+            btn.classList.add('added');
+            item.classList.add('mixer-selected');
+        }
 
         btn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -132,13 +138,13 @@ function injectStyles() {
             position: absolute;
             top: 8px;
             right: 8px;
-            width: 32px;
-            height: 32px;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
             border: 2px solid #6b4423;
             background: white;
             color: #6b4423;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: bold;
             cursor: pointer;
             display: flex;
@@ -148,14 +154,21 @@ function injectStyles() {
             z-index: 10;
             padding: 0;
             line-height: 1;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
         }
         .add-to-mixer:hover {
-            transform: scale(1.1);
+            transform: scale(1.15);
             background: #f5efe6;
         }
         .add-to-mixer.added {
             background: #6b4423;
             color: white;
+        }
+
+        /* カード選択時のハイライト */
+        .mixer-selected {
+            outline: 3px solid #ffd700 !important;
+            outline-offset: 2px;
         }
 
         .mixer-float {

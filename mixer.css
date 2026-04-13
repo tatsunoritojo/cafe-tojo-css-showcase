@@ -5,7 +5,7 @@
 * { box-sizing: border-box; }
 
 body {
-    font-family: sans-serif;
+    font-family: 'Noto Sans JP', sans-serif;
     margin: 0;
     padding: 0;
     background-color: #fdfaf4;
@@ -108,6 +108,26 @@ main {
     margin-top: 0;
 }
 
+.empty-state .add-hint {
+    display: inline-block;
+    background: white;
+    color: #6b4423;
+    border: 2px solid #6b4423;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    text-align: center;
+    line-height: 28px;
+    font-size: 1.2rem;
+    margin: 0 0.2em;
+}
+
+.empty-state .small-note {
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 1em;
+}
+
 .quick-links {
     display: flex;
     flex-wrap: wrap;
@@ -129,7 +149,122 @@ main {
     background: #8a5a30;
 }
 
-/* ----- 選択項目 ----- */
+/* ==========================================
+   プレビュー
+   ========================================== */
+
+.preview-section {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5em;
+    margin-bottom: 2em;
+    border-left: 4px solid #00c853;
+}
+
+.preview-section h2 {
+    margin-top: 0;
+    color: #2e7d32;
+}
+
+.preview-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    margin-bottom: 1.5em;
+    padding: 1em;
+    background: #f5efe6;
+    border-radius: 6px;
+}
+
+.preview-controls label {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 200px;
+    font-size: 0.9rem;
+    color: #555;
+    font-weight: bold;
+}
+
+.preview-controls input {
+    margin-top: 0.3em;
+    padding: 0.5em 0.7em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+.preview-zones {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1em;
+}
+
+.preview-zone {
+    background: #fafafa;
+    border: 1px solid #eee;
+    border-radius: 6px;
+    padding: 1em;
+}
+
+.preview-zone h3 {
+    margin: 0 0 0.8em;
+    font-size: 0.95rem;
+    color: #6b4423;
+}
+
+.preview-area {
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5em;
+    background: white;
+    border: 1px dashed #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+#preview-text-el,
+#preview-generic-el {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #6b4423;
+    display: inline-block;
+}
+
+#preview-button-el {
+    padding: 0.7em 1.4em;
+    border: none;
+    background: #6b4423;
+    color: white;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+#preview-image-el {
+    max-width: 100%;
+    max-height: 200px;
+    border-radius: 8px;
+}
+
+.preview-warning {
+    margin-top: 1em;
+    padding: 0.8em 1em;
+    background: #fff8e7;
+    border-left: 3px solid #ffc107;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    color: #8a6a00;
+}
+
+/* ==========================================
+   選択項目
+   ========================================== */
+
 .selections {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -199,7 +334,10 @@ main {
     padding: 0;
 }
 
-/* ----- 組み合わせコード ----- */
+/* ==========================================
+   組み合わせコード
+   ========================================== */
+
 .combined {
     margin-top: 2em;
     background: white;
@@ -234,7 +372,10 @@ main {
     white-space: pre;
 }
 
-/* ----- 注意書き ----- */
+/* ==========================================
+   注意書き
+   ========================================== */
+
 .note-section {
     background: #fff8e7;
     padding: 1.5em 2em;
@@ -256,4 +397,29 @@ main {
 
 .note-section strong {
     color: #6b4423;
+}
+
+/* ==========================================
+   トースト通知
+   ========================================== */
+
+.toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: #333;
+    color: white;
+    padding: 0.8em 1.5em;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    opacity: 0;
+    transition: all 0.3s;
+    z-index: 2000;
+    pointer-events: none;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
 }

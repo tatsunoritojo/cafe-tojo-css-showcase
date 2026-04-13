@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ミキサー | カフェ東城 CSS見本市</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@100;400;700;900&family=M+PLUS+Rounded+1c:wght@400;700&family=Shippori+Mincho:wght@400;700&family=Yuji+Syuku&family=Klee+One:wght@400;600&family=Rampart+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="mixer.css">
     <script src="mixer.js" defer></script>
 </head>
@@ -17,6 +20,7 @@
 
 <main>
 
+    <!-- ツールバー -->
     <section class="toolbar">
         <span class="status"><strong id="count">0</strong> 個のスタイルを選択中</span>
         <div class="actions">
@@ -25,9 +29,11 @@
         </div>
     </section>
 
+    <!-- 空状態 -->
     <section class="empty-state" id="empty">
         <h2>まだ何も選ばれていません</h2>
-        <p>各見本市のページで、右上の「+」ボタンを押して追加してください。</p>
+        <p>各見本市のページで、右上の <strong class="add-hint">＋</strong> ボタンを押して追加してください。</p>
+        <p class="small-note">★ 画像エフェクト・ボタン・文字装飾・CSS基礎、<strong>どの見本も選択できます</strong>。</p>
         <div class="quick-links">
             <a href="sample_button_showcase.html">ボタン見本市へ</a>
             <a href="sample_text_showcase.html">文字装飾見本市へ</a>
@@ -36,24 +42,75 @@
         </div>
     </section>
 
-    <section class="selections" id="selections">
-        <!-- 選択項目がここに描画される -->
+    <!-- プレビュー（メイン新機能） -->
+    <section class="preview-section" id="preview-section" style="display:none;">
+        <h2>👀 ライブプレビュー</h2>
+
+        <div class="preview-controls">
+            <label>
+                プレビュー用テキスト:
+                <input type="text" id="preview-text" value="カフェ東城">
+            </label>
+            <label>
+                ボタン用テキスト:
+                <input type="text" id="preview-button-text" value="カートに追加">
+            </label>
+        </div>
+
+        <div class="preview-zones">
+            <div class="preview-zone" id="zone-text" style="display:none;">
+                <h3>📝 文字プレビュー</h3>
+                <div class="preview-area">
+                    <span id="preview-text-el">カフェ東城</span>
+                </div>
+            </div>
+
+            <div class="preview-zone" id="zone-button" style="display:none;">
+                <h3>🔘 ボタンプレビュー</h3>
+                <div class="preview-area">
+                    <button id="preview-button-el">カートに追加</button>
+                </div>
+            </div>
+
+            <div class="preview-zone" id="zone-image" style="display:none;">
+                <h3>🖼️ 画像プレビュー</h3>
+                <div class="preview-area">
+                    <img id="preview-image-el"
+                         src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=600&q=80"
+                         alt="プレビュー画像">
+                </div>
+            </div>
+
+            <div class="preview-zone" id="zone-generic" style="display:none;">
+                <h3>🎨 CSS基礎プレビュー</h3>
+                <div class="preview-area">
+                    <div id="preview-generic-el">カフェ東城</div>
+                </div>
+            </div>
+        </div>
+
+        <p class="preview-warning" id="preview-warning" style="display:none;"></p>
     </section>
 
+    <!-- 選択項目 -->
+    <section class="selections" id="selections"></section>
+
+    <!-- 組み合わせコード -->
     <section class="combined" id="combined-section" style="display:none;">
         <h2>🔗 組み合わせコード（全選択を連結）</h2>
-        <p class="note">以下のCSSをあなたのプロジェクトに貼り付けて使ってください。クラス名の競合がある場合は必要に応じて調整を。</p>
+        <p class="note">以下のCSSをあなたのプロジェクトに貼り付けて使ってください。</p>
         <pre class="combined-code"><code id="combined-code">/* 何も選択されていません */</code></pre>
         <button id="btn-copy-combined" class="btn-action">📋 このコードをコピー</button>
     </section>
 
+    <!-- 使い方 -->
     <section class="note-section">
         <h2>このミキサーについて（モック版）</h2>
         <ul>
-            <li>現状は <strong>選択・一覧表示・コード出力</strong> の MVP（最小機能）です</li>
             <li>選択状態は <strong>ブラウザのlocalStorage</strong> に保存されます（ログイン不要）</li>
             <li>ページを閉じても選択は残ります。削除するには「全クリア」ボタンを押してください</li>
-            <li>今後の拡張候補: プレビュー画面 / クラス名の自動リネーム / ダウンロード機能</li>
+            <li>ライブプレビューは <strong>CSSの一部解釈</strong> のみ対応しています（@keyframesは自動注入、:hoverブロックは簡易対応）</li>
+            <li>全ての組み合わせがそのまま綺麗に合わさるわけではなく、<strong>CSSの競合解決は設計次第</strong>です</li>
         </ul>
     </section>
 
@@ -63,7 +120,12 @@
     <p><a href="index.html">← ポータルに戻る</a></p>
 </footer>
 
+<!-- 動的に注入される @keyframes 等のCSS -->
+<style id="mixer-injected-css"></style>
+
 <script>
+    let INJECTED_ANIMS = new Set();
+
     document.addEventListener('DOMContentLoaded', () => {
         render();
 
@@ -76,13 +138,16 @@
 
         document.getElementById('btn-copy').addEventListener('click', () => {
             copyToClipboard(getCombinedCSS());
-            alert('全コードをコピーしました');
+            toast('全コードをコピーしました');
         });
 
         document.getElementById('btn-copy-combined').addEventListener('click', () => {
             copyToClipboard(getCombinedCSS());
-            alert('組み合わせコードをコピーしました');
+            toast('組み合わせコードをコピーしました');
         });
+
+        document.getElementById('preview-text').addEventListener('input', updatePreviewTexts);
+        document.getElementById('preview-button-text').addEventListener('input', updatePreviewTexts);
     });
 
     function render() {
@@ -92,9 +157,12 @@
         const empty = document.getElementById('empty');
         const list = document.getElementById('selections');
         const combined = document.getElementById('combined-section');
+        const preview = document.getElementById('preview-section');
 
-        empty.style.display = selections.length === 0 ? 'block' : 'none';
-        combined.style.display = selections.length === 0 ? 'none' : 'block';
+        const hasItems = selections.length > 0;
+        empty.style.display = hasItems ? 'none' : 'block';
+        combined.style.display = hasItems ? 'block' : 'none';
+        preview.style.display = hasItems ? 'block' : 'none';
         list.innerHTML = '';
 
         selections.forEach(item => {
@@ -107,12 +175,11 @@
                     <button class="remove-btn" data-id="${escapeHtml(item.id)}" title="削除">×</button>
                 </div>
                 <pre class="code-display"><code>${escapeHtml(item.css)}</code></pre>
-                <button class="btn-action btn-small" data-copy="${escapeHtml(item.css)}">📋 このコードをコピー</button>
+                <button class="btn-action btn-small" data-copy-css="${escapeHtml(item.css)}">📋 このコードをコピー</button>
             `;
             list.appendChild(card);
         });
 
-        // 削除ボタン
         list.querySelectorAll('.remove-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 removeById(btn.dataset.id);
@@ -120,17 +187,107 @@
             });
         });
 
-        // 個別コピー
-        list.querySelectorAll('[data-copy]').forEach(btn => {
+        list.querySelectorAll('[data-copy-css]').forEach(btn => {
             btn.addEventListener('click', () => {
-                copyToClipboard(btn.dataset.copy);
+                copyToClipboard(btn.dataset.copyCss);
+                const orig = btn.textContent;
                 btn.textContent = '✓ コピーしました';
-                setTimeout(() => btn.textContent = '📋 このコードをコピー', 1500);
+                setTimeout(() => btn.textContent = orig, 1500);
             });
         });
 
-        // 組み合わせコード
         document.getElementById('combined-code').textContent = getCombinedCSS() || '/* 何も選択されていません */';
+
+        if (hasItems) {
+            renderPreviews(selections);
+        }
+    }
+
+    function renderPreviews(selections) {
+        // カテゴリ別に分類
+        const byCategory = { '文字装飾': [], 'ボタン': [], '画像エフェクト': [], 'CSS基礎': [] };
+        selections.forEach(s => {
+            if (byCategory[s.category]) byCategory[s.category].push(s);
+            else (byCategory['CSS基礎'] = byCategory['CSS基礎'] || []).push(s);
+        });
+
+        // ゾーンごとに表示
+        toggleZone('zone-text', byCategory['文字装飾'], 'preview-text-el');
+        toggleZone('zone-button', byCategory['ボタン'], 'preview-button-el');
+        toggleZone('zone-image', byCategory['画像エフェクト'], 'preview-image-el');
+        toggleZone('zone-generic', byCategory['CSS基礎'], 'preview-generic-el');
+
+        // 注入CSS（@keyframes、:hover等）を更新
+        const injectedStyles = [];
+        selections.forEach(s => {
+            const parsed = parseCSS(s.css);
+            parsed.blocks.forEach(b => {
+                if (!injectedStyles.includes(b)) injectedStyles.push(b);
+            });
+        });
+        document.getElementById('mixer-injected-css').textContent = injectedStyles.join('\n\n');
+
+        updatePreviewTexts();
+    }
+
+    function toggleZone(zoneId, items, targetId) {
+        const zone = document.getElementById(zoneId);
+        if (!items || items.length === 0) {
+            zone.style.display = 'none';
+            return;
+        }
+        zone.style.display = 'block';
+
+        // 全プロパティをマージ
+        const merged = {};
+        items.forEach(item => {
+            const parsed = parseCSS(item.css);
+            Object.assign(merged, parsed.properties);
+        });
+
+        // スタイル適用
+        const target = document.getElementById(targetId);
+        target.removeAttribute('style');
+        Object.entries(merged).forEach(([prop, val]) => {
+            target.style.setProperty(prop, val);
+        });
+    }
+
+    function updatePreviewTexts() {
+        const txt = document.getElementById('preview-text').value || 'カフェ東城';
+        const btnTxt = document.getElementById('preview-button-text').value || 'クリック';
+        document.getElementById('preview-text-el').textContent = txt;
+        document.getElementById('preview-button-el').textContent = btnTxt;
+        document.getElementById('preview-generic-el').textContent = txt;
+    }
+
+    /* CSSコードをプロパティとブロックに分解 */
+    function parseCSS(code) {
+        // コメント除去
+        let clean = code.replace(/\/\*[\s\S]*?\*\//g, '');
+
+        // @keyframes（他の@ルールも） と ルールブロック を抽出
+        const blocks = [];
+        const atRuleRegex = /@[-\w]+\s+[^{]*\{(?:[^{}]|\{[^{}]*\})*\}/g;
+        clean = clean.replace(atRuleRegex, m => { blocks.push(m); return ''; });
+
+        const selectorBlockRegex = /[^{};]+\{[^}]*\}/g;
+        clean = clean.replace(selectorBlockRegex, m => { blocks.push(m); return ''; });
+
+        // 残りをプロパティとして抽出
+        const properties = {};
+        clean.split(/[\n;]/).forEach(line => {
+            line = line.trim();
+            if (!line || !line.includes(':')) return;
+            const colonIdx = line.indexOf(':');
+            const prop = line.substring(0, colonIdx).trim();
+            const val = line.substring(colonIdx + 1).trim().replace(/;$/, '');
+            if (prop && val && !prop.startsWith('//')) {
+                properties[prop] = val;
+            }
+        });
+
+        return { properties, blocks };
     }
 
     function getCombinedCSS() {
@@ -160,6 +317,18 @@
         ta.select();
         try { document.execCommand('copy'); } catch (e) {}
         document.body.removeChild(ta);
+    }
+
+    function toast(msg) {
+        const t = document.createElement('div');
+        t.className = 'toast';
+        t.textContent = msg;
+        document.body.appendChild(t);
+        setTimeout(() => t.classList.add('show'), 10);
+        setTimeout(() => {
+            t.classList.remove('show');
+            setTimeout(() => t.remove(), 300);
+        }, 1800);
     }
 </script>
 
