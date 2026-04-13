@@ -61,6 +61,24 @@
             </label>
         </div>
 
+        <!-- 組み合わせプレビュー（全選択を1要素に適用） -->
+        <div class="preview-zone preview-combined" id="zone-combined" style="display:none;">
+            <h3>🎨 組み合わせプレビュー ★全選択を1要素に統合適用</h3>
+            <div class="element-toggle">
+                <label>プレビュー要素を選択:</label>
+                <div class="toggle-buttons">
+                    <button class="toggle-btn active" data-target="button">🔘 ボタン</button>
+                    <button class="toggle-btn" data-target="text">📝 文字</button>
+                    <button class="toggle-btn" data-target="image">🖼️ 画像</button>
+                </div>
+            </div>
+            <div class="preview-area preview-area-large" id="combined-preview-area">
+                <button id="combined-preview-el">カートに追加</button>
+            </div>
+            <p class="combined-hint">ボタン + 文字装飾 + アニメ を組み合わせると、1つのボタンに全て適用されます。</p>
+        </div>
+
+        <h3 class="zones-subheader">カテゴリ別プレビュー</h3>
         <div class="preview-zones">
             <div class="preview-zone" id="zone-text" style="display:none;">
                 <h3>📝 文字プレビュー</h3>
@@ -152,6 +170,15 @@
 
         document.getElementById('preview-text').addEventListener('input', updatePreviewTexts);
         document.getElementById('preview-button-text').addEventListener('input', updatePreviewTexts);
+
+        // 要素切替ボタン
+        document.querySelectorAll('.toggle-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderCombinedPreview(getSelections());
+            });
+        });
     });
 
     function render() {
@@ -516,6 +543,15 @@
         toggleZone('zone-image', byCategory['画像エフェクト'], 'preview-image-el');
         toggleZone('zone-generic', byCategory['CSS基礎'], 'preview-generic-el');
 
+        // 組み合わせプレビュー
+        const combinedZone = document.getElementById('zone-combined');
+        if (selections.length >= 1) {
+            combinedZone.style.display = 'block';
+            renderCombinedPreview(selections);
+        } else {
+            combinedZone.style.display = 'none';
+        }
+
         // 注入CSS（@keyframes、:hover等）を更新
         const injectedStyles = [];
         selections.forEach(s => {
@@ -527,6 +563,48 @@
         document.getElementById('mixer-injected-css').textContent = injectedStyles.join('\n\n');
 
         updatePreviewTexts();
+    }
+
+    function renderCombinedPreview(selections) {
+        const activeBtn = document.querySelector('.toggle-btn.active');
+        const target = activeBtn ? activeBtn.dataset.target : 'button';
+        const area = document.getElementById('combined-preview-area');
+        area.innerHTML = '';
+
+        const text = document.getElementById('preview-text').value || 'カフェ東城';
+        const btnText = document.getElementById('preview-button-text').value || 'クリック';
+
+        let el;
+        if (target === 'button') {
+            el = document.createElement('button');
+            el.textContent = btnText;
+        } else if (target === 'text') {
+            el = document.createElement('span');
+            el.textContent = text;
+            el.style.fontSize = '2rem';
+            el.style.fontWeight = 'bold';
+            el.style.color = '#6b4423';
+        } else if (target === 'image') {
+            el = document.createElement('img');
+            el.src = 'https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=400&q=80';
+            el.alt = 'プレビュー';
+            el.style.maxWidth = '100%';
+            el.style.maxHeight = '200px';
+        }
+        el.id = 'combined-preview-el';
+
+        // 全プロパティをマージ（後勝ち）
+        const merged = {};
+        selections.forEach(item => {
+            const parsed = parseCSS(item.css);
+            Object.assign(merged, parsed.properties);
+        });
+
+        Object.entries(merged).forEach(([prop, val]) => {
+            try { el.style.setProperty(prop, val); } catch (e) {}
+        });
+
+        area.appendChild(el);
     }
 
     function toggleZone(zoneId, items, targetId) {
@@ -558,6 +636,14 @@
         document.getElementById('preview-text-el').textContent = txt;
         document.getElementById('preview-button-el').textContent = btnTxt;
         document.getElementById('preview-generic-el').textContent = txt;
+        // 組み合わせプレビューのテキストも更新
+        const combinedEl = document.getElementById('combined-preview-el');
+        if (combinedEl) {
+            const activeBtn = document.querySelector('.toggle-btn.active');
+            const target = activeBtn ? activeBtn.dataset.target : 'button';
+            if (target === 'button') combinedEl.textContent = btnTxt;
+            else if (target === 'text') combinedEl.textContent = txt;
+        }
     }
 
     /* CSSコードをプロパティとブロックに分解 */

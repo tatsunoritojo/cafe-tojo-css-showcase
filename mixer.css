@@ -195,6 +195,79 @@ main {
     font-family: inherit;
 }
 
+/* 組み合わせプレビュー（強調表示） */
+.preview-combined {
+    background: linear-gradient(135deg, #fff8e7, #ffe0b2);
+    border: 2px solid #ff9800;
+    margin-bottom: 1.5em;
+}
+.preview-combined h3 {
+    color: #e65100;
+    font-size: 1.1rem;
+    margin-bottom: 0.8em;
+}
+
+.element-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.8em;
+    margin-bottom: 1em;
+    flex-wrap: wrap;
+}
+
+.element-toggle label {
+    font-size: 0.9rem;
+    color: #555;
+    font-weight: bold;
+}
+
+.toggle-buttons {
+    display: flex;
+    gap: 0.4em;
+    flex-wrap: wrap;
+}
+
+.toggle-btn {
+    padding: 0.5em 1em;
+    border: 1px solid #ccc;
+    background: white;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-family: inherit;
+    transition: all 0.2s;
+}
+
+.toggle-btn:hover {
+    background: #fafafa;
+}
+
+.toggle-btn.active {
+    background: #6b4423;
+    color: white;
+    border-color: #6b4423;
+}
+
+.preview-area-large {
+    min-height: 180px;
+    padding: 2em;
+}
+
+.combined-hint {
+    font-size: 0.85rem;
+    color: #7a6a00;
+    margin: 0.8em 0 0;
+    font-style: italic;
+}
+
+.zones-subheader {
+    margin: 1.5em 0 0.8em;
+    font-size: 0.95rem;
+    color: #555;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 0.3em;
+}
+
 .preview-zones {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
