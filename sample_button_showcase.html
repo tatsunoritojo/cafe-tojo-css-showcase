@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ボタン見本市 | カフェ東城</title>
+    <link rel="stylesheet" href="sample_button_showcase.css">
+    <script src="mixer.js" defer></script>
+</head>
+<body>
+
+<header class="page-header">
+    <h1>A. ボタン見本市</h1>
+    <p>同じ「カートに追加」ボタンを20通りのデザインで</p>
+    <p><a href="index.html">← ポータルに戻る</a></p>
+</header>
+
+<main>
+
+    <!-- グループ1: 基本形 -->
+    <section class="group">
+        <h2>グループ1: 基本形 — 形と余白</h2>
+        <div class="btn-grid">
+            <div class="btn-item">
+                <button class="btn-flat">カートに追加</button>
+                <code>btn-flat (フラット)</code>
+            </div>
+            <div class="btn-item">
+                <button class="btn-outline">カートに追加</button>
+                <code>btn-outline (アウトライン)</code>
+            </div>
+            <div class="btn-item">
+                <button class="btn-pill">カートに追加</button>
+                <code>btn-pill (カプセル型)</code>
+            </div>
+            <div class="btn-item">
+                <button class="btn-square">カートに追加</button>
+                <code>btn-square (角丸なし)</code>
+            </div>
+        </div>
+    </section>
+
+    <!-- グループ2: 背景バリエーション -->
+    <section class="group">
+        <h2>グループ2: 背景 — 塗り方のバリエーション</h2>
+        <div class="btn-grid">
+            <div class="btn-item">
+                <button class="btn-gradient-h">カートに追加</button>
+                <code>linear-gradient (横方向)</code>
+            </div>
+            <div class="btn-item">
+                <button class="btn-gradient-d">カートに追加</button>
+                <code>linear-gradient (斜め)</code>
+            </div>
+            <div class="btn-item">
+                <button class="btn-ghost">カートに追加</button>
+                <code>btn-ghost (透明背景)</code>
+            </div>
+            <div class="btn-item">
+                <button class="btn-striped">カートに追加</button>
+                <code>repeating-gradient (ストライプ)</code>
+            </div>
+        </div>
+    </section>
+
+    <!-- グループ3: 影効果 -->
+    <section class="group">
+        <h2>グループ3: 影 — 立体感の表現</h2>
+        <div class="btn-grid">
+            <div class="btn-item">
+                <button class="btn-shadow">カートに追加</button>
+                <code>box-shadow (基本)</code>
+            </div>
+            <div class="btn-item">
+                <button class="btn-float">カートに追加</button>
+                <code>強い浮き上がり</code>
+            </div>
+            <div class="btn-item">
+                <button class="btn-3d">カートに追加</button>
+                <code>下に固い影 (3D)</code>
+            </div>
+            <div class="btn-item">
+                <button class="btn-neumorphism">カートに追加</button>
+                <code>ネオモーフィズム</code>
+            </div>
+        </div>
+    </section>
+
+    <!-- グループ4: ホバー動作 -->
+    <section class="group">
+        <h2>グループ4: ホバー動作 ★マウスを乗せてみて</h2>
+        <div class="btn-grid">
+            <div class="btn-item">
+                <button class="btn-hover-invert">カートに追加</button>
+                <code>色反転</code>
+            </div>
+            <div class="btn-item">
+                <button class="btn-hover-lift">カートに追加</button>
+                <code>浮き上がる</code>
+            </div>
+            <div class="btn-item">
+                <button class="btn-hover-underline">カートに追加</button>
+                <code>下線スライド</code>
+            </div>
+            <div class="btn-item">
+                <button class="btn-hover-fill">カートに追加</button>
+                <code>横から塗りつぶし</code>
+            </div>
+        </div>
+    </section>
+
+    <!-- グループ5: 複合・特殊 -->
+    <section class="group">
+        <h2>グループ5: 複合・状態表現</h2>
+        <div class="btn-grid">
+            <div class="btn-item">
+                <button class="btn-icon">
+                    <span class="icon">☕</span>
+                    カートに追加
+                </button>
+                <code>アイコン付き</code>
+            </div>
+            <div class="btn-item">
+                <button class="btn-loading">
+                    <span class="spinner"></span>
+                    処理中...
+                </button>
+                <code>ローディング中</code>
+            </div>
+            <div class="btn-item">
+                <button class="btn-disabled" disabled>カートに追加</button>
+                <code>無効状態</code>
+            </div>
+            <div class="btn-item">
+                <button class="btn-neon">カートに追加</button>
+                <code>ネオン発光</code>
+            </div>
+        </div>
+    </section>
+
+    <!-- 教えるポイント -->
+    <section class="lesson">
+        <h2>教える時のポイント</h2>
+        <ul>
+            <li><strong>ボタンはユーザーが最も触るUI</strong>。デザインの説得力が問われる</li>
+            <li>ホバー動作があると <strong>クリックできると伝わる</strong>（アフォーダンス）</li>
+            <li>無効状態は <code>opacity</code> を下げて <code>cursor: not-allowed</code> に</li>
+            <li>ローディング中の表示は <strong>押し直しを防ぐ</strong> UX設計の基本</li>
+            <li>同じ「カートに追加」でも、印象で購買意欲は変わる</li>
+        </ul>
+    </section>
+
+</main>
+
+<footer class="page-footer">
+    <p><a href="index.html">← ポータルに戻る</a></p>
+</footer>
+
+</body>
+</html>

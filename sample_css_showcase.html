@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS見本市 | カフェ東城スタイルガイド</title>
+    <link rel="stylesheet" href="sample_css_showcase.css">
+    <script src="mixer.js" defer></script>
+</head>
+<body>
+
+<header class="site-header">
+    <img class="hero-image"
+         src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=1200&q=80"
+         alt="カフェの店内イメージ">
+    <h1>CSS見本市</h1>
+    <p class="lead">カフェ東城スタイルガイド — 基本プロパティの実演</p>
+    <p><a href="index.html">← ポータルに戻る</a></p>
+</header>
+
+<main>
+
+    <!-- ① セレクタの種類 -->
+    <section class="demo">
+        <h2>① セレクタの種類</h2>
+
+        <p>これは要素セレクタで色を指定した段落（<code>p { color: ... }</code>）</p>
+
+        <p class="highlight">これはクラスセレクタで背景色を指定（<code>.highlight</code>）</p>
+
+        <p id="unique">これはIDセレクタで枠線を指定（<code>#unique</code>）</p>
+
+        <div class="nested-demo">
+            <p>親に入れ子の段落（子孫セレクタで反応）</p>
+            <span>span要素</span>
+        </div>
+
+        <p>マウスを乗せると変化 → <a href="#">ホバーリンク</a></p>
+    </section>
+
+    <!-- ② color と font-size -->
+    <section class="demo">
+        <h2>② color と font-size</h2>
+
+        <p class="color-red">color: red</p>
+        <p class="color-hex">color: #6b4423（カフェ東城ブラウン）</p>
+        <p class="color-rgba">color: rgba(107, 68, 35, 0.5)（50%透明）</p>
+
+        <p class="size-sm">font-size: 0.8rem（小さい注釈）</p>
+        <p class="size-md">font-size: 1rem（標準）</p>
+        <p class="size-lg">font-size: 1.5rem（見出しっぽく）</p>
+        <p class="size-xl">font-size: clamp(1.5rem, 4vw, 3rem)（レスポンシブ）</p>
+    </section>
+
+    <!-- ③ text-align -->
+    <section class="demo">
+        <h2>③ text-align</h2>
+
+        <p class="align-left">左揃え（既定） — text-align: left</p>
+        <p class="align-center">中央揃え — text-align: center</p>
+        <p class="align-right">右揃え — text-align: right</p>
+        <p class="align-justify">両端揃え。長い文章で効果が見えます。各行の右端が揃うように単語間のスペースが自動調整されます。書籍や新聞のレイアウトで使われる手法です。</p>
+    </section>
+
+    <!-- ④ background-color -->
+    <section class="demo">
+        <h2>④ background-color</h2>
+
+        <div class="bg-cream">background-color: #f5efe6（クリーム）</div>
+        <div class="bg-brown">background-color: #6b4423（ブラウン・文字白）</div>
+        <div class="bg-alert">background-color: #fff3cd（警告バナー風）</div>
+    </section>
+
+    <!-- ⑤ margin と padding -->
+    <section class="demo">
+        <h2>⑤ margin と padding の違い（ボックスモデル）</h2>
+
+        <p>以下の2つの箱を比べてください。どちらも同じ30pxの余白ですが、効果が違います。</p>
+
+        <div class="box-margin">margin: 30px（外側の余白・背景が塗られない）</div>
+        <div class="box-padding">padding: 30px（内側の余白・背景が塗られる）</div>
+
+        <p>中央寄せの定番パターン <code>margin: 0 auto</code>:</p>
+        <div class="box-center">幅400px、左右autoで中央配置</div>
+    </section>
+
+    <!-- ⑥ 画像の扱い -->
+    <section class="demo">
+        <h2>⑥ 画像（&lt;img&gt;タグとCSS）</h2>
+
+        <p>画像は<code>&lt;img src="..." alt="..."&gt;</code>で埋め込みます。CSSで幅・枠・角丸等を制御できます。</p>
+
+        <div class="image-row">
+            <img class="img-basic"
+                 src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&q=80"
+                 alt="コーヒーカップ">
+            <img class="img-rounded"
+                 src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&q=80"
+                 alt="ラテアート">
+            <img class="img-circle"
+                 src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&q=80"
+                 alt="コーヒー豆">
+        </div>
+
+        <p class="note">左から: 基本（枠線）/ 角丸（border-radius: 8px）/ 円形（border-radius: 50%）。同じ写真素材でも、CSSで印象が大きく変わります。</p>
+    </section>
+
+    <!-- ⑦ 組み合わせ実例: カフェカード -->
+    <section class="demo">
+        <h2>⑦ 組み合わせ実例: 商品カード</h2>
+
+        <div class="product-card">
+            <img class="product-image"
+                 src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&q=80"
+                 alt="エチオピア・イルガチェフェのコーヒー">
+            <div class="product-body">
+                <h3>エチオピア・イルガチェフェ</h3>
+                <p class="product-price">650円</p>
+                <p class="product-desc">柑橘系の華やかな香りと、紅茶のような軽やかな後味。</p>
+                <button class="product-button">カートに追加</button>
+            </div>
+        </div>
+
+        <p class="note">このカード1つに、今日学んだプロパティが全て使われています。CSSファイルを見て、どの行が何を作っているか対応を確認してみてください。</p>
+    </section>
+
+</main>
+
+<footer class="site-footer">
+    <p>&copy; 2026 カフェ東城 CSS見本市</p>
+</footer>
+
+</body>
+</html>

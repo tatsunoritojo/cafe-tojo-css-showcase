@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>カフェ東城 CSS見本市ポータル</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<header class="portal-header">
+    <h1>カフェ東城 CSS見本市ポータル</h1>
+    <p>1つの素材をCSSでどこまで変化させられるか — 新入社員研修用ショーケース集</p>
+</header>
+
+<main>
+
+    <section class="status-board">
+        <h2>進捗</h2>
+        <p>全9ページ中 <strong class="progress-count">4</strong> ページ公開済み</p>
+    </section>
+
+    <section class="mixer-promo">
+        <h2>🎨 ミキサー機能（新機能・モック版）</h2>
+        <p>各見本ページで「+」ボタンを押して気に入った見本を選び、組み合わせたCSSコードを生成できます。</p>
+        <a class="mixer-link-big" href="mixer.html">ミキサーを開く →</a>
+    </section>
+
+    <section class="showcase-grid">
+        <h2>見本市一覧</h2>
+
+        <div class="card-list">
+
+            <!-- 既存: CSS基本見本市 -->
+            <a class="showcase-card done" href="sample_css_showcase.html">
+                <span class="badge">公開中</span>
+                <h3>CSS見本市</h3>
+                <p>基本プロパティ（color / font-size / text-align / background / margin / padding）の実演。</p>
+                <p class="tag">セレクタ / プロパティ / ボックスモデル</p>
+            </a>
+
+            <!-- 既存: 画像エフェクト -->
+            <a class="showcase-card done" href="sample_image_effects.html">
+                <span class="badge">公開中</span>
+                <h3>画像エフェクト見本市</h3>
+                <p>同じ1枚の写真を19通りに変化。grayscale・sepia・blur・ホバー動作ほか。</p>
+                <p class="tag">filter / transform / transition</p>
+            </a>
+
+            <!-- A. ボタン見本市 -->
+            <a class="showcase-card done" href="sample_button_showcase.html">
+                <span class="badge">公開中</span>
+                <h3>A. ボタン見本市</h3>
+                <p>「カートに追加」ボタンの20通り。フラット・グラデーション・3D・ネオモーフィズム等。</p>
+                <p class="tag">background / border / shadow / hover</p>
+            </a>
+
+            <!-- B. 文字装飾見本市 -->
+            <a class="showcase-card done" href="sample_text_showcase.html">
+                <span class="badge">公開中</span>
+                <h3>B. 文字装飾見本市</h3>
+                <p>同じ文字列「カフェ東城」を20通り。フォント・グラデ文字・下線・縦書き等。</p>
+                <p class="tag">font / text-shadow / letter-spacing</p>
+            </a>
+
+            <!-- C. カード見本市 -->
+            <div class="showcase-card todo">
+                <span class="badge badge-todo">準備中</span>
+                <h3>C. カード見本市</h3>
+                <p>商品・プロフィール・料金プランのカード設計集。</p>
+                <p class="tag">レイアウト / コンポーネント設計</p>
+            </div>
+
+            <!-- D. レイアウト見本市 -->
+            <div class="showcase-card todo">
+                <span class="badge badge-todo">準備中</span>
+                <h3>D. レイアウト見本市</h3>
+                <p>Flexbox / Grid の基本形をパターン網羅。</p>
+                <p class="tag">flexbox / grid / responsive</p>
+            </div>
+
+            <!-- E. 色とグラデーション -->
+            <div class="showcase-card todo">
+                <span class="badge badge-todo">準備中</span>
+                <h3>E. 色とグラデーション見本市</h3>
+                <p>カラーパレット・グラデ方向・背景パターン。</p>
+                <p class="tag">color / gradient / pattern</p>
+            </div>
+
+            <!-- F. アニメーション -->
+            <div class="showcase-card todo">
+                <span class="badge badge-todo">準備中</span>
+                <h3>F. アニメーション見本市</h3>
+                <p>登場・ホバー・スピナー・注意喚起の各種動き。</p>
+                <p class="tag">animation / keyframes / transition</p>
+            </div>
+
+            <!-- G. フォーム -->
+            <div class="showcase-card todo">
+                <span class="badge badge-todo">準備中</span>
+                <h3>G. フォーム見本市</h3>
+                <p>入力欄・チェックボックス・エラー表示のデザイン集。</p>
+                <p class="tag">form / input / focus</p>
+            </div>
+
+            <!-- H. 影とデプス -->
+            <div class="showcase-card todo">
+                <span class="badge badge-todo">準備中</span>
+                <h3>H. 影とデプス見本市</h3>
+                <p>Material Designの elevation を10段階で表現。</p>
+                <p class="tag">box-shadow / elevation</p>
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+<footer class="portal-footer">
+    <p>&copy; 2026 東城立憲 — 新入社員研修講師準備プロジェクト</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ミキサー | カフェ東城 CSS見本市</title>
+    <link rel="stylesheet" href="mixer.css">
+    <script src="mixer.js" defer></script>
+</head>
+<body>
+
+<header class="page-header">
+    <h1>🎨 CSS ミキサー</h1>
+    <p>気に入った見本を組み合わせて、あなた専用のCSSを生成</p>
+    <p><a href="index.html">← ポータルに戻る</a></p>
+</header>
+
+<main>
+
+    <section class="toolbar">
+        <span class="status"><strong id="count">0</strong> 個のスタイルを選択中</span>
+        <div class="actions">
+            <button id="btn-copy" class="btn-action">📋 全コードをコピー</button>
+            <button id="btn-clear" class="btn-action btn-danger">🗑️ 全クリア</button>
+        </div>
+    </section>
+
+    <section class="empty-state" id="empty">
+        <h2>まだ何も選ばれていません</h2>
+        <p>各見本市のページで、右上の「+」ボタンを押して追加してください。</p>
+        <div class="quick-links">
+            <a href="sample_button_showcase.html">ボタン見本市へ</a>
+            <a href="sample_text_showcase.html">文字装飾見本市へ</a>
+            <a href="sample_image_effects.html">画像エフェクト見本市へ</a>
+            <a href="sample_css_showcase.html">CSS基礎見本市へ</a>
+        </div>
+    </section>
+
+    <section class="selections" id="selections">
+        <!-- 選択項目がここに描画される -->
+    </section>
+
+    <section class="combined" id="combined-section" style="display:none;">
+        <h2>🔗 組み合わせコード（全選択を連結）</h2>
+        <p class="note">以下のCSSをあなたのプロジェクトに貼り付けて使ってください。クラス名の競合がある場合は必要に応じて調整を。</p>
+        <pre class="combined-code"><code id="combined-code">/* 何も選択されていません */</code></pre>
+        <button id="btn-copy-combined" class="btn-action">📋 このコードをコピー</button>
+    </section>
+
+    <section class="note-section">
+        <h2>このミキサーについて（モック版）</h2>
+        <ul>
+            <li>現状は <strong>選択・一覧表示・コード出力</strong> の MVP（最小機能）です</li>
+            <li>選択状態は <strong>ブラウザのlocalStorage</strong> に保存されます（ログイン不要）</li>
+            <li>ページを閉じても選択は残ります。削除するには「全クリア」ボタンを押してください</li>
+            <li>今後の拡張候補: プレビュー画面 / クラス名の自動リネーム / ダウンロード機能</li>
+        </ul>
+    </section>
+
+</main>
+
+<footer class="page-footer">
+    <p><a href="index.html">← ポータルに戻る</a></p>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        render();
+
+        document.getElementById('btn-clear').addEventListener('click', () => {
+            if (confirm('全ての選択を削除しますか?')) {
+                clearAll();
+                render();
+            }
+        });
+
+        document.getElementById('btn-copy').addEventListener('click', () => {
+            copyToClipboard(getCombinedCSS());
+            alert('全コードをコピーしました');
+        });
+
+        document.getElementById('btn-copy-combined').addEventListener('click', () => {
+            copyToClipboard(getCombinedCSS());
+            alert('組み合わせコードをコピーしました');
+        });
+    });
+
+    function render() {
+        const selections = getSelections();
+        document.getElementById('count').textContent = selections.length;
+
+        const empty = document.getElementById('empty');
+        const list = document.getElementById('selections');
+        const combined = document.getElementById('combined-section');
+
+        empty.style.display = selections.length === 0 ? 'block' : 'none';
+        combined.style.display = selections.length === 0 ? 'none' : 'block';
+        list.innerHTML = '';
+
+        selections.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'selection-card';
+            card.innerHTML = `
+                <div class="card-head">
+                    <span class="category-badge">${escapeHtml(item.category)}</span>
+                    <strong>${escapeHtml(item.name)}</strong>
+                    <button class="remove-btn" data-id="${escapeHtml(item.id)}" title="削除">×</button>
+                </div>
+                <pre class="code-display"><code>${escapeHtml(item.css)}</code></pre>
+                <button class="btn-action btn-small" data-copy="${escapeHtml(item.css)}">📋 このコードをコピー</button>
+            `;
+            list.appendChild(card);
+        });
+
+        // 削除ボタン
+        list.querySelectorAll('.remove-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                removeById(btn.dataset.id);
+                render();
+            });
+        });
+
+        // 個別コピー
+        list.querySelectorAll('[data-copy]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                copyToClipboard(btn.dataset.copy);
+                btn.textContent = '✓ コピーしました';
+                setTimeout(() => btn.textContent = '📋 このコードをコピー', 1500);
+            });
+        });
+
+        // 組み合わせコード
+        document.getElementById('combined-code').textContent = getCombinedCSS() || '/* 何も選択されていません */';
+    }
+
+    function getCombinedCSS() {
+        const selections = getSelections();
+        if (selections.length === 0) return '';
+        return selections.map(s => `/* ${s.category}: ${s.name} */\n${s.css}`).join('\n\n');
+    }
+
+    function escapeHtml(str) {
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+
+    function copyToClipboard(text) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
+        } else {
+            fallbackCopy(text);
+        }
+    }
+
+    function fallbackCopy(text) {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta);
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>画像エフェクト見本市 | カフェ東城</title>
+    <link rel="stylesheet" href="sample_image_effects.css">
+    <script src="mixer.js" defer></script>
+</head>
+<body>
+
+<header class="page-header">
+    <h1>画像エフェクト見本市</h1>
+    <p>同じ1枚のカフェ写真を、CSSでどれだけ印象変化させられるか</p>
+    <p><a href="index.html">← ポータルに戻る</a></p>
+</header>
+
+<main class="gallery">
+
+    <!-- オリジナル -->
+    <figure class="effect-item">
+        <img class="original"
+             src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=600&q=80"
+             alt="カフェ店内">
+        <figcaption>
+            <strong>オリジナル</strong>
+            <code>(フィルターなし)</code>
+        </figcaption>
+    </figure>
+
+    <!-- モノクロ -->
+    <figure class="effect-item">
+        <img class="grayscale"
+             src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=600&q=80"
+             alt="カフェ店内 モノクロ">
+        <figcaption>
+            <strong>モノクロ</strong>
+            <code>filter: grayscale(100%)</code>
+        </figcaption>
+    </figure>
+
+    <!-- セピア -->
+    <figure class="effect-item">
+        <img class="sepia"
+             src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=600&q=80"
+             alt="カフェ店内 セピア">
+        <figcaption>
+            <strong>セピア</strong>
+            <code>filter: sepia(80%)</code>
+        </figcaption>
+    </figure>
+
+    <!-- 暗めムーディー -->
+    <figure class="effect-item">
+        <img class="moody"
+             src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=600&q=80"
+             alt="カフェ店内 暗め">
+        <figcaption>
+            <strong>暗めムーディー</strong>
+            <code>brightness(0.6) contrast(1.2)</code>
+        </figcaption>
+    </figure>
+
+    <!-- 明るく -->
+    <figure class="effect-item">
+        <img class="bright"
+             src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=600&q=80"
+             alt="カフェ店内 明るく">
+        <figcaption>
+            <strong>明るく</strong>
+            <code>filter: brightness(1.3)</code>
+        </figcaption>
+    </figure>
+
+    <!-- コントラスト強 -->
+    <figure class="effect-item">
+        <img class="high-contrast"
+             src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=600&q=80"
+             alt="カフェ店内 コントラスト強">
+        <figcaption>
+            <strong>コントラスト強</strong>
+            <code>filter: contrast(1.6)</code>
+        </figcaption>
+    </figure>
+
+    <!-- 彩度高め -->
+    <figure class="effect-item">
+        <img class="saturate"
+             src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=600&q=80"
+             alt="カフェ店内 彩度高">
+        <figcaption>
+            <strong>彩度高め</strong>
+            <code>filter: saturate(2)</code>
+        </figcaption>
+    </figure>
+
+    <!-- ぼかし -->
+    <figure class="effect-item">
+        <img class="blur"
+             src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=600&q=80"
+             alt="カフェ店内 ぼかし">
+        <figcaption>
+            <strong>ぼかし</strong>
+            <code>filter: blur(4px)</code>
+        </figcaption>
+    </figure>
+
+    <!-- 色相回転 -->
+    <figure class="effect-item">
+        <img class="hue"
+             src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=600&q=80"
+             alt="カフェ店内 色相回転">
+        <figcaption>
+            <strong>色相回転</strong>
+            <code>filter: hue-rotate(90deg)</code>
+        </figcaption>
+    </figure>
+
+    <!-- 反転 -->
+    <figure class="effect-item">
+        <img class="invert"
+             src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=600&q=80"
+             alt="カフェ店内 色反転">
+        <figcaption>
+            <strong>色反転（ネガ）</strong>
+            <code>filter: invert(100%)</code>
+        </figcaption>
+    </figure>
+
+    <!-- 半透明 -->
+    <figure class="effect-item">
+        <img class="transparent"
+             src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=600&q=80"
+             alt="カフェ店内 半透明">
+        <figcaption>
+            <strong>半透明</strong>
+            <code>opacity: 0.4</code>
+        </figcaption>
+    </figure>
+
+    <!-- ヴィンテージ -->
+    <figure class="effect-item">
+        <img class="vintage"
+             src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=600&q=80"
+             alt="カフェ店内 ヴィンテージ">
+        <figcaption>
+            <strong>ヴィンテージ（合わせ技）</strong>
+            <code>sepia(40%) contrast(1.15) saturate(1.3)</code>
+        </figcaption>
+    </figure>
+
+    <!-- 角丸大 -->
+    <figure class="effect-item">
+        <img class="rounded-large"
+             src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=600&q=80"
+             alt="カフェ店内 角丸">
+        <figcaption>
+            <strong>角丸大</strong>
+            <code>border-radius: 30px</code>
+        </figcaption>
+    </figure>
+
+    <!-- 円形 -->
+    <figure class="effect-item">
+        <img class="circle"
+             src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=600&q=80"
+             alt="カフェ店内 円形">
+        <figcaption>
+            <strong>円形</strong>
+            <code>border-radius: 50%</code>
+        </figcaption>
+    </figure>
+
+    <!-- 影付き -->
+    <figure class="effect-item">
+        <img class="shadow"
+             src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=600&q=80"
+             alt="カフェ店内 影付き">
+        <figcaption>
+            <strong>影付き（浮き上がり）</strong>
+            <code>box-shadow: 0 10px 30px rgba(0,0,0,0.4)</code>
+        </figcaption>
+    </figure>
+
+    <!-- ポラロイド風 -->
+    <figure class="effect-item">
+        <img class="polaroid"
+             src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=600&q=80"
+             alt="カフェ店内 ポラロイド">
+        <figcaption>
+            <strong>ポラロイド風</strong>
+            <code>border + shadow</code>
+        </figcaption>
+    </figure>
+
+    <!-- ホバーで色に戻る -->
+    <figure class="effect-item">
+        <img class="hover-color"
+             src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=600&q=80"
+             alt="カフェ店内 ホバーで変化">
+        <figcaption>
+            <strong>ホバーで色が戻る ★触ってみて</strong>
+            <code>:hover { filter: grayscale(0%) }</code>
+        </figcaption>
+    </figure>
+
+    <!-- ホバーでズーム -->
+    <figure class="effect-item">
+        <img class="hover-zoom"
+             src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=600&q=80"
+             alt="カフェ店内 ホバーで拡大">
+        <figcaption>
+            <strong>ホバーで拡大 ★触ってみて</strong>
+            <code>:hover { transform: scale(1.1) }</code>
+        </figcaption>
+    </figure>
+
+    <!-- オーバーレイ付き -->
+    <figure class="effect-item overlay-container">
+        <img class="overlay-image"
+             src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=600&q=80"
+             alt="カフェ店内 テキストオーバーレイ">
+        <div class="overlay-text">Cafe Tojo</div>
+        <figcaption>
+            <strong>テキスト重ね</strong>
+            <code>position: absolute でテキスト配置</code>
+        </figcaption>
+    </figure>
+
+</main>
+
+<footer class="page-footer">
+    <p>元の画像は1枚、CSSで19通りに変化。全て <code>sample_image_effects.css</code> で制御しています。</p>
+    <p><a href="index.html">← ポータルに戻る</a></p>
+</footer>
+
+</body>
+</html>

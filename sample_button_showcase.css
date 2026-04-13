@@ -1,0 +1,365 @@
+/* ==========================================
+   A. ボタン見本市
+   ========================================== */
+
+* { box-sizing: border-box; }
+
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fdfaf4;
+    color: #333;
+    line-height: 1.6;
+}
+
+.page-header {
+    background: linear-gradient(135deg, #6b4423, #8a5a30);
+    color: white;
+    padding: 2em 1em;
+    text-align: center;
+}
+
+.page-header h1 { margin: 0 0 0.3em; }
+.page-header p { margin: 0.3em 0; }
+.page-header a { color: #f5efe6; }
+
+main {
+    max-width: 1200px;
+    margin: 2em auto;
+    padding: 0 1em;
+}
+
+.page-footer {
+    text-align: center;
+    margin-top: 3em;
+    padding: 1.5em;
+    border-top: 1px solid #ddd;
+}
+.page-footer a { color: #6b4423; }
+
+/* ----- グループ共通 ----- */
+.group {
+    margin-bottom: 3em;
+    background-color: white;
+    padding: 1.5em;
+    border-radius: 8px;
+    border-left: 4px solid #6b4423;
+}
+
+.group h2 {
+    margin-top: 0;
+    color: #6b4423;
+}
+
+.btn-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 1.5em;
+    align-items: start;
+}
+
+.btn-item {
+    background-color: #fafafa;
+    padding: 1.5em;
+    border-radius: 6px;
+    text-align: center;
+    border: 1px solid #eee;
+}
+
+.btn-item code {
+    display: block;
+    margin-top: 1em;
+    font-size: 0.8rem;
+    color: #666;
+}
+
+/* ----- 共通ベース ----- */
+button {
+    font-family: inherit;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.7em 1.4em;
+    border: none;
+    transition: all 0.25s;
+}
+
+
+/* ==========================================
+   グループ1: 基本形
+   ========================================== */
+
+.btn-flat {
+    background-color: #6b4423;
+    color: white;
+    border-radius: 4px;
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: #6b4423;
+    border: 2px solid #6b4423;
+    border-radius: 4px;
+}
+
+.btn-pill {
+    background-color: #6b4423;
+    color: white;
+    border-radius: 999px;
+    padding: 0.7em 1.8em;
+}
+
+.btn-square {
+    background-color: #6b4423;
+    color: white;
+    border-radius: 0;
+}
+
+
+/* ==========================================
+   グループ2: 背景バリエーション
+   ========================================== */
+
+.btn-gradient-h {
+    background: linear-gradient(to right, #6b4423, #a56b3a);
+    color: white;
+    border-radius: 4px;
+}
+
+.btn-gradient-d {
+    background: linear-gradient(135deg, #c44, #6b4423);
+    color: white;
+    border-radius: 4px;
+}
+
+.btn-ghost {
+    background-color: transparent;
+    color: #6b4423;
+    border: none;
+    padding: 0.7em 0;
+    text-decoration: underline;
+}
+
+.btn-striped {
+    background: repeating-linear-gradient(
+        45deg,
+        #6b4423,
+        #6b4423 10px,
+        #8a5a30 10px,
+        #8a5a30 20px
+    );
+    color: white;
+    border-radius: 4px;
+}
+
+
+/* ==========================================
+   グループ3: 影効果
+   ========================================== */
+
+.btn-shadow {
+    background-color: #6b4423;
+    color: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.btn-float {
+    background-color: #6b4423;
+    color: white;
+    border-radius: 6px;
+    box-shadow: 0 8px 20px rgba(107, 68, 35, 0.5);
+}
+
+.btn-3d {
+    background-color: #6b4423;
+    color: white;
+    border-radius: 4px;
+    box-shadow: 0 4px 0 #4a2e18;
+    /* 下に固い影 = 立体的に沈んで見える */
+}
+
+.btn-3d:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #4a2e18;
+}
+
+.btn-neumorphism {
+    background-color: #fdfaf4;
+    color: #6b4423;
+    border-radius: 12px;
+    box-shadow:
+        6px 6px 12px #d9d3c8,
+        -6px -6px 12px #ffffff;
+}
+
+
+/* ==========================================
+   グループ4: ホバー動作
+   ========================================== */
+
+.btn-hover-invert {
+    background-color: #6b4423;
+    color: white;
+    border: 2px solid #6b4423;
+    border-radius: 4px;
+}
+.btn-hover-invert:hover {
+    background-color: white;
+    color: #6b4423;
+}
+
+.btn-hover-lift {
+    background-color: #6b4423;
+    color: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.btn-hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.btn-hover-underline {
+    background-color: transparent;
+    color: #6b4423;
+    border: none;
+    padding: 0.7em 0;
+    position: relative;
+    font-weight: bold;
+}
+.btn-hover-underline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: #6b4423;
+    transition: width 0.3s;
+}
+.btn-hover-underline:hover::after {
+    width: 100%;
+}
+
+.btn-hover-fill {
+    background-color: transparent;
+    color: #6b4423;
+    border: 2px solid #6b4423;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+.btn-hover-fill::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background-color: #6b4423;
+    transition: left 0.3s;
+    z-index: -1;
+}
+.btn-hover-fill:hover {
+    color: white;
+}
+.btn-hover-fill:hover::before {
+    left: 0;
+}
+
+
+/* ==========================================
+   グループ5: 複合・状態
+   ========================================== */
+
+.btn-icon {
+    background-color: #6b4423;
+    color: white;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+}
+
+.btn-icon .icon {
+    font-size: 1.2em;
+}
+
+.btn-loading {
+    background-color: #6b4423;
+    color: white;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    cursor: wait;
+}
+
+.btn-loading .spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid white;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.btn-disabled {
+    background-color: #ccc;
+    color: #888;
+    border-radius: 4px;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.btn-neon {
+    background-color: #1a1a1a;
+    color: #00ffaa;
+    border: 2px solid #00ffaa;
+    border-radius: 4px;
+    box-shadow:
+        0 0 10px #00ffaa,
+        inset 0 0 10px rgba(0, 255, 170, 0.2);
+    text-shadow: 0 0 4px #00ffaa;
+}
+
+.btn-neon:hover {
+    background-color: #00ffaa;
+    color: #1a1a1a;
+    box-shadow: 0 0 20px #00ffaa;
+}
+
+
+/* ==========================================
+   レッスンセクション
+   ========================================== */
+
+.lesson {
+    background-color: #fff8e7;
+    padding: 1.5em 2em;
+    border-radius: 8px;
+    border-left: 4px solid #ffc107;
+    margin-top: 3em;
+}
+
+.lesson h2 {
+    color: #8a6a00;
+    margin-top: 0;
+}
+
+.lesson ul {
+    line-height: 1.8;
+}
+
+.lesson code {
+    background-color: #f5f5f5;
+    padding: 0.1em 0.4em;
+    border-radius: 3px;
+    font-size: 0.9em;
+}

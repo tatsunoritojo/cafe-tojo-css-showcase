@@ -1,0 +1,286 @@
+/* ==========================================
+   CSS見本市 カフェ東城スタイルガイド
+   ========================================== */
+
+/* ----- 全体の基本設定 ----- */
+body {
+    font-family: Gothic;
+    max-width: 800px;
+    margin: 2em auto;         /* 上下2em、左右auto = 中央寄せ */
+    padding: 0 1em;
+    line-height: 1.7;
+    color: #333;
+    background-color: #fdfaf4;
+}
+
+code {
+    background-color: #eee;
+    padding: 0.1em 0.4em;
+    border-radius: 3px;
+    font-size: 0.9em;
+}
+
+
+/* ----- ヘッダー・フッター ----- */
+.site-header {
+    border-bottom: 3px double #6b4423;
+    padding-bottom: 1em;
+    margin-bottom: 2em;
+    text-align: center;
+}
+
+.hero-image {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;          /* 領域に合わせて切り抜き */
+    border-radius: 8px;
+    margin-bottom: 1em;
+    filter: grayscale(100%)
+}
+
+.site-header h1 {
+    color: #6b4423;
+    margin: 0;
+}
+
+.lead {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.site-footer {
+    text-align: center;
+    color: #999;
+    font-size: 0.9rem;
+    margin-top: 3em;
+    padding-top: 1em;
+    border-top: 1px solid #ddd;
+}
+
+
+/* ----- セクション共通 ----- */
+.demo {
+    margin-bottom: 3em;
+    padding: 1.5em;
+    background-color: white;
+    border-left: 4px solid #6b4423;
+}
+
+.demo h2 {
+    color: #6b4423;
+    margin-top: 0;
+}
+
+
+/* ==========================================
+   ① セレクタの種類
+   ========================================== */
+
+/* 要素セレクタ: demo内の全p（他はより詳細なセレクタで上書き） */
+.demo p {
+    color: #333;
+}
+
+/* クラスセレクタ */
+.highlight {
+    background-color: #fff3cd;
+    padding: 0.5em;
+}
+
+/* IDセレクタ */
+#unique {
+    border: 2px solid #6b4423;
+    padding: 0.5em;
+}
+
+/* 子孫セレクタ */
+.nested-demo p {
+    color: #c44;
+}
+
+.nested-demo span {
+    color: #4a4;
+}
+
+/* 疑似クラス（ホバー） */
+.demo a:hover {
+    color: white;
+    background-color: #6b4423;
+    text-decoration: none;
+}
+
+
+/* ==========================================
+   ② color と font-size
+   ========================================== */
+
+.color-red  { color: red; }
+.color-hex  { color: #6b4423; }
+.color-rgba { color: rgba(107, 68, 35, 0.5); }
+
+.size-sm { font-size: 0.8rem; }
+.size-md { font-size: 1rem; }
+.size-lg { font-size: 1.5rem; }
+.size-xl { font-size: clamp(1.5rem, 4vw, 3rem); }
+
+
+/* ==========================================
+   ③ text-align
+   ========================================== */
+
+.align-left    { text-align: left; }
+.align-center  { text-align: center; }
+.align-right   { text-align: right; }
+.align-justify { text-align: justify; }
+
+
+/* ==========================================
+   ④ background-color
+   ========================================== */
+
+.bg-cream {
+    background-color: #f5efe6;
+    padding: 1em;
+    margin-bottom: 0.5em;
+}
+
+.bg-brown {
+    background-color: #6b4423;
+    color: white;
+    padding: 1em;
+    margin-bottom: 0.5em;
+}
+
+.bg-alert {
+    background-color: #fff3cd;
+    padding: 1em;
+    border: 1px solid #ffc107;
+}
+
+
+/* ==========================================
+   ⑤ margin と padding
+   ========================================== */
+
+.box-margin {
+    margin: 30px;
+    background-color: #f5efe6;
+    /* padding無しなので、背景は文字の周りだけ */
+}
+
+.box-padding {
+    padding: 30px;
+    background-color: #f5efe6;
+    /* marginなし、paddingで内側に30pxの余白が背景色で塗られる */
+}
+
+.box-center {
+    width: 400px;
+    margin: 1em auto;        /* ← 中央寄せの定番 */
+    padding: 1em;
+    background-color: #6b4423;
+    color: white;
+    text-align: center;
+}
+
+
+/* ==========================================
+   ⑥ 画像（imgタグの3パターン）
+   ========================================== */
+
+.image-row {
+    display: flex;
+    gap: 1em;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 1em 0;
+}
+
+.image-row img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;          /* アスペクト比を保ちつつ領域を埋める */
+}
+
+.img-basic {
+    border: 3px solid #6b4423;
+}
+
+.img-rounded {
+    border-radius: 8px;
+}
+
+.img-circle {
+    border-radius: 50%;
+}
+
+
+/* ==========================================
+   ⑦ 組み合わせ実例: 商品カード
+   ========================================== */
+
+.product-card {
+    /* レイアウト */
+    max-width: 400px;
+    margin: 1em auto;         /* 中央寄せ */
+
+    /* 見た目 */
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;         /* 角丸からはみ出た画像を隠す */
+}
+
+.product-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+}
+
+.product-body {
+    padding: 1.5em;
+}
+
+.product-card h3 {
+    color: #6b4423;
+    margin-top: 0;
+}
+
+.product-price {
+    font-size: 1.5rem;
+    color: #c44;
+    font-weight: bold;
+}
+
+.product-desc {
+    color: #666;
+    font-size: 0.95rem;
+}
+
+.product-button {
+    background-color: #6b4423;
+    color: white;
+    border: none;
+    padding: 0.8em 1.5em;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.product-button:hover {
+    background-color: #8a5a30;
+}
+
+
+/* ==========================================
+   ⑦ 注釈
+   ========================================== */
+
+.note {
+    background-color: #f5f5f5;
+    padding: 1em;
+    border-left: 3px solid #999;
+    font-size: 0.9rem;
+    color: #555;
+}

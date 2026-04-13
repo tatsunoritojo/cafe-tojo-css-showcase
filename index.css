@@ -1,0 +1,180 @@
+/* ==========================================
+   カフェ東城 CSS見本市 ポータルページ
+   ========================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fdfaf4;
+    color: #333;
+    line-height: 1.6;
+}
+
+.portal-header {
+    background: linear-gradient(135deg, #6b4423, #8a5a30);
+    color: white;
+    padding: 3em 1em;
+    text-align: center;
+}
+
+.portal-header h1 {
+    margin: 0 0 0.3em;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.portal-header p {
+    margin: 0;
+    opacity: 0.9;
+}
+
+main {
+    max-width: 1200px;
+    margin: 2em auto;
+    padding: 0 1em;
+}
+
+/* ----- ミキサーPromo ----- */
+.mixer-promo {
+    background: linear-gradient(135deg, #ffd700, #ff9800);
+    color: #333;
+    padding: 1.5em 2em;
+    border-radius: 8px;
+    margin-bottom: 2em;
+    display: flex;
+    align-items: center;
+    gap: 1.5em;
+    flex-wrap: wrap;
+}
+.mixer-promo h2 {
+    margin: 0;
+    color: #6b4423;
+    font-size: 1.2rem;
+}
+.mixer-promo p {
+    margin: 0;
+    flex: 1;
+    min-width: 200px;
+}
+.mixer-link-big {
+    background: #6b4423;
+    color: white;
+    padding: 0.7em 1.4em;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    white-space: nowrap;
+    transition: transform 0.2s;
+}
+.mixer-link-big:hover {
+    transform: translateY(-2px);
+}
+
+/* ----- 進捗ボード ----- */
+.status-board {
+    background-color: white;
+    padding: 1em 1.5em;
+    border-radius: 8px;
+    border-left: 4px solid #6b4423;
+    margin-bottom: 2em;
+}
+
+.status-board h2 {
+    margin: 0 0 0.3em;
+    color: #6b4423;
+    font-size: 1.1rem;
+}
+
+.progress-count {
+    color: #6b4423;
+    font-size: 1.5rem;
+}
+
+/* ----- カード一覧 ----- */
+.showcase-grid h2 {
+    color: #6b4423;
+    border-left: 4px solid #6b4423;
+    padding-left: 0.5em;
+}
+
+.card-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5em;
+}
+
+.showcase-card {
+    display: block;
+    position: relative;
+    background-color: white;
+    padding: 1.5em 1.3em;
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid #e8d5b7;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.showcase-card.done {
+    cursor: pointer;
+}
+
+.showcase-card.done:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(107, 68, 35, 0.2);
+}
+
+.showcase-card.todo {
+    opacity: 0.6;
+    background-color: #faf7f2;
+}
+
+.showcase-card h3 {
+    margin: 0 0 0.5em;
+    color: #6b4423;
+    padding-right: 4em;     /* バッジと重ならないように */
+}
+
+.showcase-card p {
+    margin: 0 0 0.5em;
+    font-size: 0.92rem;
+}
+
+.showcase-card .tag {
+    font-size: 0.8rem;
+    color: #888;
+    font-style: italic;
+    margin-top: 0.5em;
+}
+
+/* バッジ */
+.badge {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    background-color: #6b4423;
+    color: white;
+    padding: 0.2em 0.7em;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+.badge-todo {
+    background-color: #ccc;
+    color: #666;
+}
+
+/* ----- フッター ----- */
+.portal-footer {
+    text-align: center;
+    margin-top: 3em;
+    padding: 1.5em;
+    color: #999;
+    font-size: 0.85rem;
+    border-top: 1px solid #ddd;
+}

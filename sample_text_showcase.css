@@ -1,0 +1,595 @@
+/* ==========================================
+   B. 文字装飾見本市 拡張版（約50種）
+   ========================================== */
+
+* { box-sizing: border-box; }
+
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fdfaf4;
+    color: #333;
+    line-height: 1.6;
+}
+
+.page-header {
+    background: linear-gradient(135deg, #6b4423, #8a5a30);
+    color: white;
+    padding: 2em 1em;
+    text-align: center;
+}
+
+.page-header h1 { margin: 0 0 0.3em; }
+.page-header p { margin: 0.3em 0; }
+.page-header a { color: #f5efe6; }
+.page-header .hint {
+    font-size: 0.9rem;
+    opacity: 0.85;
+}
+
+main {
+    max-width: 1400px;
+    margin: 2em auto;
+    padding: 0 1em;
+}
+
+.page-footer {
+    text-align: center;
+    margin-top: 3em;
+    padding: 1.5em;
+    border-top: 1px solid #ddd;
+}
+.page-footer a { color: #6b4423; }
+
+/* ----- グループ共通 ----- */
+.group {
+    margin-bottom: 3em;
+    background-color: white;
+    padding: 1.5em;
+    border-radius: 8px;
+    border-left: 4px solid #6b4423;
+}
+
+.group h2 {
+    margin-top: 0;
+    color: #6b4423;
+}
+
+.text-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1em;
+}
+
+.text-item {
+    background-color: #fafafa;
+    padding: 1em;
+    border-radius: 6px;
+    border: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    min-height: 280px;
+}
+
+.text-item.dark {
+    background-color: #1a1a1a;
+    color: white;
+}
+
+.text-item.dark .label {
+    color: #ccc;
+}
+
+.text-item > p:first-child {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    font-size: 1.4rem;
+    color: #6b4423;
+    font-weight: bold;
+}
+
+.text-item.dark > p:first-child {
+    color: white;
+}
+
+.label {
+    font-size: 0.9rem;
+    color: #444;
+    margin: 0.5em 0;
+    font-weight: bold;
+}
+
+/* コードブロック (コピー用) */
+.code {
+    background: #2d2d2d;
+    color: #f5efe6;
+    padding: 0.7em 0.9em;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    text-align: left;
+    overflow-x: auto;
+    margin: 0;
+    font-family: 'Courier New', monospace;
+    line-height: 1.5;
+    white-space: pre;
+    cursor: text;
+}
+
+.code code {
+    font-family: inherit;
+    color: inherit;
+    background: transparent;
+    padding: 0;
+}
+
+
+/* ==========================================
+   グループ1: フォント種類
+   ========================================== */
+
+.txt-serif       { font-family: 'Shippori Mincho', serif; font-weight: 700; }
+.txt-sans        { font-family: 'Noto Sans JP', sans-serif; font-weight: 700; }
+.txt-mono        { font-family: 'Courier New', monospace; font-weight: 700; }
+.txt-rounded     { font-family: 'M PLUS Rounded 1c', sans-serif; font-weight: 700; }
+.txt-handwriting { font-family: 'Klee One', cursive; font-weight: 600; }
+.txt-yuji        { font-family: 'Yuji Syuku', serif; }
+.txt-rampart     { font-family: 'Rampart One', serif; }
+.txt-italic      { font-family: serif; font-style: italic; font-weight: 700; }
+
+
+/* ==========================================
+   グループ2: サイズと太さ
+   （親の .text-item > p:first-child で設定された
+     font-size/weight を上書きするため !important）
+   ========================================== */
+
+.text-item .txt-huge   { font-size: 3rem !important; font-weight: bold !important; }
+.text-item .txt-large  { font-size: 2rem !important; font-weight: bold !important; }
+.text-item .txt-normal { font-size: 1rem !important; font-weight: normal !important; }
+.text-item .txt-small  { font-size: 0.75rem !important; color: #888 !important; font-weight: normal !important; }
+.text-item .txt-thin   { font-weight: 100 !important; font-size: 2rem !important; }
+.text-item .txt-black  { font-weight: 900 !important; font-size: 2rem !important; }
+.text-item .txt-responsive { font-size: clamp(1rem, 5vw, 2.5rem) !important; font-weight: bold !important; }
+.text-item .txt-emphasis {
+    font-weight: bold !important;
+    font-style: italic !important;
+    color: #c44 !important;
+    font-size: 1.5rem !important;
+}
+
+
+/* ==========================================
+   グループ3: 色・影・質感
+   ========================================== */
+
+.txt-gradient-h {
+    background: linear-gradient(90deg, #c44, #6b4423);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent !important;
+}
+
+.txt-gradient-v {
+    background: linear-gradient(to bottom, #ffd700, #6b4423);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent !important;
+}
+
+.txt-gradient-rainbow {
+    background: linear-gradient(90deg, #ff0080, #ff8c00, #ffd700, #00c853, #2979ff, #d500f9);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent !important;
+}
+
+.txt-shadow-drop {
+    color: #6b4423;
+    text-shadow: 3px 3px 0 #d4a574;
+}
+
+.txt-shadow-blur {
+    color: #6b4423;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.txt-stroke {
+    color: transparent !important;
+    -webkit-text-stroke: 2px #f5efe6;
+}
+
+.txt-stroke-fill {
+    color: #ffd700 !important;
+    -webkit-text-stroke: 2px #6b4423;
+}
+
+.txt-glow {
+    color: #fff !important;
+    text-shadow:
+        0 0 8px #00ffaa,
+        0 0 16px #00ffaa,
+        0 0 24px #00ffaa;
+}
+
+.txt-emboss {
+    color: #6b4423;
+    text-shadow:
+        -1px -1px 0 rgba(255, 255, 255, 0.8),
+        1px 1px 0 rgba(0, 0, 0, 0.4);
+}
+
+.txt-inset {
+    color: transparent !important;
+    text-shadow:
+        1px 1px 1px #fff,
+        -1px -1px 1px rgba(0, 0, 0, 0.5);
+    background: #ddd;
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+.txt-3d {
+    color: #c44 !important;
+    text-shadow:
+        1px 1px 0 #a33,
+        2px 2px 0 #933,
+        3px 3px 0 #833,
+        4px 4px 0 #733,
+        5px 5px 10px rgba(0, 0, 0, 0.4);
+}
+
+.txt-milky {
+    color: #fff !important;
+    text-shadow:
+        0 2px 0 #ff69b4,
+        0 4px 0 #ff1493,
+        0 6px 4px rgba(255, 20, 147, 0.4);
+}
+
+
+/* ==========================================
+   グループ4: 間隔・配置・変形
+   ========================================== */
+
+.txt-wide           { letter-spacing: 0.5em; }
+.txt-tight          { letter-spacing: -0.05em; }
+
+.vertical-cell      { min-height: 350px; }
+.txt-vertical {
+    writing-mode: vertical-rl;
+    font-size: 1.5rem;
+    font-family: 'Shippori Mincho', serif;
+}
+
+.txt-rotate {
+    transform: rotate(-8deg);
+    display: inline-block;
+}
+
+.txt-mirror {
+    transform: scaleX(-1);
+    display: inline-block;
+}
+
+.txt-skew {
+    transform: skewX(-15deg);
+    display: inline-block;
+}
+
+.txt-line-through {
+    text-decoration: line-through;
+    text-decoration-color: #c44;
+    text-decoration-thickness: 3px;
+}
+
+.txt-underline-wave {
+    text-decoration: underline wavy #c44;
+    text-underline-offset: 6px;
+    text-decoration-thickness: 2px;
+}
+
+
+/* ==========================================
+   グループ5: アニメーション
+   ========================================== */
+
+.txt-fadein {
+    animation: fadeIn 2s ease-in-out infinite alternate;
+}
+@keyframes fadeIn {
+    from { opacity: 0.2; transform: translateY(10px); }
+    to   { opacity: 1;   transform: translateY(0); }
+}
+
+/* タイピング風: 外側で固定幅を確保し、中央に配置 */
+.typing-cell .typing-outer {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.typing-cell .typing-inner {
+    width: 5ch;               /* 最終テキスト幅分を確保 */
+    /* 左寄せ: 内側の要素はこの枠内で左から右へ展開 */
+}
+.typing-cell .txt-typing {
+    display: block;
+    margin: 0;
+    width: 0;                 /* 0から伸びて左から文字が現れる */
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 2px solid #6b4423;
+    font-family: 'Courier New', monospace !important;
+    font-size: 1.3rem !important;
+    animation:
+        typing 2.5s steps(5, end) infinite,
+        blink 0.7s step-end infinite;
+}
+@keyframes typing {
+    0%       { width: 0; }
+    50%, 90% { width: 5ch; }
+    100%     { width: 0; }
+}
+@keyframes blink {
+    50% { border-color: transparent; }
+}
+
+.txt-neon {
+    color: #ff4080 !important;
+    animation: neonFlicker 2s infinite;
+}
+@keyframes neonFlicker {
+    0%, 100% {
+        text-shadow:
+            0 0 8px #ff4080,
+            0 0 20px #ff4080,
+            0 0 40px #ff4080;
+        opacity: 1;
+    }
+    50% {
+        text-shadow:
+            0 0 4px #ff4080,
+            0 0 10px #ff4080;
+        opacity: 0.7;
+    }
+}
+
+.txt-flow {
+    background: linear-gradient(90deg, #6b4423, #c44, #8a5a30, #6b4423);
+    background-size: 300% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent !important;
+    animation: flowGradient 3s linear infinite;
+}
+@keyframes flowGradient {
+    from { background-position: 0% center; }
+    to   { background-position: 300% center; }
+}
+
+.txt-bounce {
+    display: inline-block;
+    animation: bounce 1s infinite;
+}
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-15px); }
+}
+
+.txt-shake {
+    display: inline-block;
+    animation: shake 0.5s infinite;
+}
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25%      { transform: translateX(-3px); }
+    75%      { transform: translateX(3px); }
+}
+
+.txt-glitch {
+    color: #fff !important;
+    animation: glitch 1s infinite;
+}
+@keyframes glitch {
+    0%, 100% {
+        text-shadow: 2px 0 #f00, -2px 0 #0ff;
+    }
+    50% {
+        text-shadow: -2px 0 #f00, 2px 0 #0ff;
+    }
+}
+
+.txt-breathe {
+    display: inline-block;
+    animation: breathe 3s ease-in-out infinite;
+}
+@keyframes breathe {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.15); }
+}
+
+.txt-rotate-3d {
+    display: inline-block;
+    animation: rotate3d 4s linear infinite;
+}
+@keyframes rotate3d {
+    from { transform: rotateY(0); }
+    to   { transform: rotateY(360deg); }
+}
+
+.txt-colorshift {
+    animation: colorShift 3s infinite;
+}
+@keyframes colorShift {
+    0%, 100% { color: #6b4423; }
+    33%      { color: #c44; }
+    66%      { color: #4a8; }
+}
+
+.txt-slidein {
+    display: inline-block;
+    animation: slideIn 2s ease infinite;
+}
+@keyframes slideIn {
+    from { transform: translateX(50px); opacity: 0; }
+    to   { transform: translateX(0);    opacity: 1; }
+}
+
+.txt-wave {
+    /* 参考用の静的表示（文字別に分ける本実装は別途必要） */
+    animation: wave 1s ease-in-out infinite;
+    display: inline-block;
+}
+@keyframes wave {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-12px); }
+}
+
+
+/* ==========================================
+   グループ6: アニメーション調整
+   ========================================== */
+
+.note {
+    background-color: #fff8e7;
+    padding: 0.8em 1.2em;
+    border-radius: 6px;
+    border-left: 3px solid #ffc107;
+    margin: 0.5em 0 1.5em;
+    font-size: 0.95rem;
+}
+
+.group h3 {
+    color: #6b4423;
+    margin-top: 2em;
+    border-bottom: 1px solid #e8d5b7;
+    padding-bottom: 0.3em;
+}
+
+/* パラメータ早見表 */
+.param-table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 1em;
+}
+
+.param-table th,
+.param-table td {
+    border: 1px solid #e0d4c0;
+    padding: 0.6em 0.8em;
+    text-align: left;
+    font-size: 0.9rem;
+    vertical-align: top;
+}
+
+.param-table th {
+    background-color: #6b4423;
+    color: white;
+}
+
+.param-table tbody tr:nth-child(even) {
+    background-color: #faf7f2;
+}
+
+.param-table code {
+    background-color: #f0e8dc;
+    padding: 0.1em 0.4em;
+    border-radius: 3px;
+    font-size: 0.85em;
+    color: #6b4423;
+}
+
+/* 幅広のコードブロック（説明用） */
+.code-block-wide {
+    background: #2d2d2d;
+    color: #f5efe6;
+    padding: 1em 1.2em;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    overflow-x: auto;
+    font-family: 'Courier New', monospace;
+    line-height: 1.6;
+    margin: 1em 0 1.5em;
+    white-space: pre;
+}
+
+.code-block-wide code {
+    font-family: inherit;
+    color: inherit;
+    background: transparent;
+    padding: 0;
+}
+
+/* 速さ比較 */
+.txt-speed-fast,
+.txt-speed-normal,
+.txt-speed-slow,
+.txt-ease-linear,
+.txt-ease-ease,
+.txt-count {
+    display: inline-block;
+}
+
+.txt-speed-fast   { animation: breatheDemo 0.5s ease-in-out infinite; }
+.txt-speed-normal { animation: breatheDemo 3s   ease-in-out infinite; }
+.txt-speed-slow   { animation: breatheDemo 8s   ease-in-out infinite; }
+.txt-ease-linear  { animation: breatheDemo 3s   linear      infinite; }
+.txt-ease-ease    { animation: breatheDemo 3s   ease-in-out infinite; }
+.txt-count        { animation: breatheDemo 1.5s ease-in-out 3;        }
+
+@keyframes breatheDemo {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.2); }
+}
+
+/* グラデ速さ比較 */
+.txt-flow-fast,
+.txt-flow-slow {
+    background: linear-gradient(90deg, #6b4423, #c44, #8a5a30, #6b4423);
+    background-size: 300% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent !important;
+    display: inline-block;
+}
+.txt-flow-fast { animation: flowGradient 1s linear infinite; }
+.txt-flow-slow { animation: flowGradient 8s linear infinite; }
+
+
+/* ==========================================
+   レッスン
+   ========================================== */
+
+.lesson {
+    background-color: #fff8e7;
+    padding: 1.5em 2em;
+    border-radius: 8px;
+    border-left: 4px solid #ffc107;
+    margin-top: 3em;
+}
+
+.lesson h2 {
+    color: #8a6a00;
+    margin-top: 0;
+}
+
+.lesson ul {
+    line-height: 1.8;
+}
+
+.lesson code {
+    background-color: #f5f5f5;
+    padding: 0.1em 0.4em;
+    border-radius: 3px;
+    font-size: 0.9em;
+}

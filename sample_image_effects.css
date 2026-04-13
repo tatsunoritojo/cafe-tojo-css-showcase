@@ -1,0 +1,217 @@
+/* ==========================================
+   画像エフェクト見本市
+   同じ1枚の写真に異なるCSSを適用して比較
+   ========================================== */
+
+/* ----- 全体 ----- */
+body {
+    font-family: sans-serif;
+    max-width: 1200px;
+    margin: 2em auto;
+    padding: 0 1em;
+    background-color: #fdfaf4;
+    color: #333;
+}
+
+.page-header {
+    text-align: center;
+    border-bottom: 3px double #6b4423;
+    padding-bottom: 1em;
+    margin-bottom: 2em;
+}
+
+.page-header h1 {
+    color: #6b4423;
+    margin: 0;
+}
+
+.page-footer {
+    text-align: center;
+    margin-top: 3em;
+    padding-top: 1em;
+    border-top: 1px solid #ddd;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.page-footer a {
+    color: #6b4423;
+}
+
+
+/* ----- ギャラリーレイアウト ----- */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5em;
+}
+
+.effect-item {
+    margin: 0;
+    background-color: white;
+    padding: 1em;
+    border: 1px solid #eee;
+    border-radius: 8px;
+}
+
+.effect-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+    margin-bottom: 0.5em;
+}
+
+.effect-item figcaption {
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.effect-item figcaption strong {
+    display: block;
+    color: #6b4423;
+    margin-bottom: 0.3em;
+}
+
+.effect-item figcaption code {
+    background-color: #f5efe6;
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-size: 0.85em;
+    color: #555;
+}
+
+
+/* ==========================================
+   各エフェクト
+   ========================================== */
+
+/* オリジナル */
+.original {
+    /* なし */
+}
+
+/* モノクロ */
+.grayscale {
+    filter: grayscale(100%);
+}
+
+/* セピア */
+.sepia {
+    filter: sepia(80%);
+}
+
+/* 暗めムーディー */
+.moody {
+    filter: brightness(0.6) contrast(1.2);
+}
+
+/* 明るく */
+.bright {
+    filter: brightness(1.3);
+}
+
+/* コントラスト強 */
+.high-contrast {
+    filter: contrast(1.6);
+}
+
+/* 彩度高め */
+.saturate {
+    filter: saturate(2);
+}
+
+/* ぼかし */
+.blur {
+    filter: blur(4px);
+}
+
+/* 色相回転 */
+.hue {
+    filter: hue-rotate(90deg);
+}
+
+/* 反転（ネガ） */
+.invert {
+    filter: invert(100%);
+}
+
+/* 半透明 */
+.transparent {
+    opacity: 0.4;
+}
+
+/* ヴィンテージ（合わせ技） */
+.vintage {
+    filter: sepia(40%) contrast(1.15) saturate(1.3);
+}
+
+/* 角丸大 */
+.rounded-large {
+    border-radius: 30px;
+}
+
+/* 円形 */
+.circle {
+    border-radius: 50%;
+    /* 正円にするには正方形が前提 */
+    height: 200px !important;
+    width: 200px !important;
+    margin: 0 auto 0.5em !important;
+}
+
+/* 影付き */
+.shadow {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* ポラロイド風 */
+.polaroid {
+    border: 10px solid white;
+    border-bottom-width: 40px;    /* 下だけ広い = 名前を書くスペース */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+    height: 180px !important;
+}
+
+/* ホバーで色が戻る */
+.hover-color {
+    filter: grayscale(100%);
+    transition: filter 0.5s;
+}
+.hover-color:hover {
+    filter: grayscale(0%);
+}
+
+/* ホバーで拡大 */
+.hover-zoom {
+    transition: transform 0.3s;
+}
+.hover-zoom:hover {
+    transform: scale(1.1);
+}
+
+
+/* ==========================================
+   テキストオーバーレイ
+   ========================================== */
+
+.overlay-container {
+    position: relative;
+}
+
+.overlay-image {
+    filter: brightness(0.6);
+}
+
+.overlay-text {
+    position: absolute;
+    top: 80px;                    /* 画像の上からの位置 */
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: 0.2em;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
