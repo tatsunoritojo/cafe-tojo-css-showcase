@@ -903,7 +903,7 @@
             card.className = `tpl-card ${ready ? 'tpl-ready' : 'tpl-missing'} ${selectedTemplateId === tpl.id ? 'tpl-selected' : ''}`;
             card.dataset.tplId = tpl.id;
             card.innerHTML = `
-                <div class="tpl-wireframe">${escapeHtml(tpl.wireframe)}</div>
+                <div class="tpl-wireframe">${tpl.wireframe}</div>
                 <div class="tpl-name">${escapeHtml(tpl.name)}</div>
                 <div class="tpl-status">
                     ${ready

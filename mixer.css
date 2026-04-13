@@ -43,8 +43,14 @@ main > section:not(.group) {
     padding: 2em 1em;
     text-align: center;
 }
-.page-header h1 { margin: 0 0 0.3em; }
-.page-header p { margin: 0.3em 0; }
+.page-header h1 {
+    margin: 0 0 0.3em;
+    color: white !important;    /* sample_image_effects.css の brown を打ち消す */
+}
+.page-header p {
+    margin: 0.3em 0;
+    color: white;
+}
 .page-header a { color: #f5efe6; }
 
 main {
