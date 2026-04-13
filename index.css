@@ -16,20 +16,54 @@ body {
 }
 
 .portal-header {
-    background: linear-gradient(135deg, #6b4423, #8a5a30);
+    background: #6b4423;
     color: white;
-    padding: 3em 1em;
     text-align: center;
+    overflow: hidden;
+}
+
+.hero-image-wrap {
+    position: relative;
+    width: 100%;
+    height: clamp(240px, 40vw, 400px);
+    overflow: hidden;
+}
+
+.hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.55);
+    transition: filter 0.5s;
+}
+.hero-image-wrap:hover .hero-image {
+    filter: brightness(0.75);
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1em;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
 }
 
 .portal-header h1 {
     margin: 0 0 0.3em;
     font-size: clamp(1.5rem, 4vw, 2.5rem);
+    color: white;
 }
 
 .portal-header p {
     margin: 0;
-    opacity: 0.9;
+    opacity: 0.95;
+    color: white;
 }
 
 main {

@@ -246,7 +246,7 @@ function updateSidebarPreview() {
         el.textContent = text;
     } else if (pageKey === '画像エフェクト') {
         el = document.createElement('img');
-        el.src = 'https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=400&q=80';
+        el.src = 'images/cafe-exterior.jpg';
         el.alt = 'プレビュー';
         el.style.maxWidth = '100%';
         el.style.maxHeight = '160px';
