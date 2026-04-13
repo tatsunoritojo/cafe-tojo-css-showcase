@@ -170,8 +170,10 @@
         list.innerHTML = '';
 
         selections.forEach(item => {
+            const params = extractParameters(item.css);
             const card = document.createElement('div');
             card.className = 'selection-card';
+            card.dataset.itemId = item.id;
             card.innerHTML = `
                 <div class="card-head">
                     <span class="category-badge">${escapeHtml(item.category)}</span>
@@ -179,7 +181,18 @@
                     <button class="remove-btn" data-id="${escapeHtml(item.id)}" title="削除">×</button>
                 </div>
                 <pre class="code-display"><code>${escapeHtml(item.css)}</code></pre>
-                <button class="btn-action btn-small" data-copy-css="${escapeHtml(item.css)}">📋 このコードをコピー</button>
+                <div class="card-actions">
+                    <button class="btn-action btn-small" data-copy-css="${escapeHtml(item.css)}">📋 コピー</button>
+                    ${params.length > 0 ? `<button class="btn-action btn-small btn-toggle-params" data-id="${escapeHtml(item.id)}">⚙️ パラメータ調整 (${params.length})</button>` : ''}
+                </div>
+                <div class="params-panel" data-id="${escapeHtml(item.id)}" style="display:none;">
+                    ${renderParamControls(item.id, params)}
+                    <div class="param-raw">
+                        <label>raw CSS (直接編集可):</label>
+                        <textarea class="param-textarea" data-id="${escapeHtml(item.id)}">${escapeHtml(item.css)}</textarea>
+                    </div>
+                    <button class="btn-action btn-small btn-reset" data-id="${escapeHtml(item.id)}">↺ オリジナルに戻す</button>
+                </div>
             `;
             list.appendChild(card);
         });
@@ -193,10 +206,49 @@
 
         list.querySelectorAll('[data-copy-css]').forEach(btn => {
             btn.addEventListener('click', () => {
-                copyToClipboard(btn.dataset.copyCss);
+                const currentCss = getSelections().find(s => s.id === btn.closest('.selection-card').dataset.itemId)?.css || btn.dataset.copyCss;
+                copyToClipboard(currentCss);
                 const orig = btn.textContent;
-                btn.textContent = '✓ コピーしました';
+                btn.textContent = '✓ コピー済';
                 setTimeout(() => btn.textContent = orig, 1500);
+            });
+        });
+
+        // パラメータパネル開閉
+        list.querySelectorAll('.btn-toggle-params').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const panel = list.querySelector(`.params-panel[data-id="${btn.dataset.id}"]`);
+                if (panel) {
+                    const open = panel.style.display !== 'none';
+                    panel.style.display = open ? 'none' : 'block';
+                    btn.classList.toggle('active', !open);
+                }
+            });
+        });
+
+        // パラメータ変更
+        list.querySelectorAll('.param-control').forEach(input => {
+            input.addEventListener('input', (e) => {
+                const itemId = e.target.dataset.itemId;
+                const paramIdx = parseInt(e.target.dataset.paramIdx);
+                const newValue = getNewValueFromInput(e.target);
+                updateItemParameter(itemId, paramIdx, newValue);
+            });
+        });
+
+        // 生CSS直接編集
+        list.querySelectorAll('.param-textarea').forEach(ta => {
+            ta.addEventListener('input', (e) => {
+                updateItemCSS(e.target.dataset.id, e.target.value);
+            });
+        });
+
+        // リセット
+        list.querySelectorAll('.btn-reset').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (confirm('このアイテムをオリジナルのCSSに戻しますか?')) {
+                    resetItem(btn.dataset.id);
+                }
             });
         });
 
@@ -205,6 +257,249 @@
         if (hasItems) {
             renderPreviews(selections);
         }
+    }
+
+    /* ==================== パラメータ抽出 ==================== */
+
+    function extractParameters(css) {
+        const params = [];
+        const lines = css.split('\n');
+
+        lines.forEach((line, lineIdx) => {
+            // コメント行はスキップ
+            if (line.trim().startsWith('/*') || line.trim().startsWith('//')) return;
+
+            // プロパティ行を検出
+            const m = line.match(/^(\s*)([a-z-]+)\s*:\s*(.+?)(;?\s*(\/\*.*?\*\/)?)\s*$/i);
+            if (!m) return;
+            const [, indent, prop, val] = m;
+
+            // 色の検出
+            const colorRegex = /#[0-9a-fA-F]{3,8}\b|rgba?\([^)]+\)/g;
+            let colorMatch;
+            let idx = 0;
+            while ((colorMatch = colorRegex.exec(val)) !== null) {
+                params.push({
+                    type: 'color',
+                    property: prop,
+                    value: colorMatch[0],
+                    lineIdx,
+                    // startIdxは行全体での位置
+                    startIdx: line.indexOf(colorMatch[0], line.indexOf(':') + 1),
+                    label: `${prop}${idx > 0 ? ` (${idx + 1}番目)` : ''}`
+                });
+                idx++;
+            }
+
+            // 秒数の検出 (animation, transition)
+            if (/animation|transition|delay|duration/.test(prop)) {
+                const durRegex = /(\d+(?:\.\d+)?)(s|ms)\b/g;
+                let durMatch;
+                let dIdx = 0;
+                while ((durMatch = durRegex.exec(val)) !== null) {
+                    params.push({
+                        type: 'duration',
+                        property: prop,
+                        value: durMatch[0],
+                        number: parseFloat(durMatch[1]),
+                        unit: durMatch[2],
+                        lineIdx,
+                        startIdx: line.indexOf(durMatch[0], line.indexOf(':') + 1),
+                        label: `${prop} 時間${dIdx > 0 ? ` (${dIdx + 1}番目)` : ''}`
+                    });
+                    dIdx++;
+                }
+
+                // タイミング関数
+                const timingMatch = val.match(/\b(linear|ease|ease-in|ease-out|ease-in-out|steps\([^)]*\))\b/);
+                if (timingMatch) {
+                    params.push({
+                        type: 'timing',
+                        property: prop,
+                        value: timingMatch[1],
+                        lineIdx,
+                        startIdx: line.indexOf(timingMatch[1], line.indexOf(':') + 1),
+                        label: `${prop} タイミング関数`
+                    });
+                }
+            }
+
+            // サイズ
+            if (/^(font-size|width|height|padding|margin|gap|border-radius|border-width)$/.test(prop)) {
+                const sizeRegex = /(\d+(?:\.\d+)?)(px|rem|em|%)\b/g;
+                let szMatch;
+                let sIdx = 0;
+                while ((szMatch = sizeRegex.exec(val)) !== null) {
+                    params.push({
+                        type: 'size',
+                        property: prop,
+                        value: szMatch[0],
+                        number: parseFloat(szMatch[1]),
+                        unit: szMatch[2],
+                        lineIdx,
+                        startIdx: line.indexOf(szMatch[0], line.indexOf(':') + 1),
+                        label: `${prop}${sIdx > 0 ? ` (${sIdx + 1}番目)` : ''}`
+                    });
+                    sIdx++;
+                }
+            }
+        });
+
+        return params;
+    }
+
+    function renderParamControls(itemId, params) {
+        if (params.length === 0) {
+            return '<p class="no-params">調整可能なパラメータが見つかりませんでした。下の raw CSS を直接編集してください。</p>';
+        }
+
+        return params.map((p, idx) => {
+            if (p.type === 'color') {
+                return `
+                    <div class="param-row">
+                        <label>${escapeHtml(p.label)}</label>
+                        <input type="color" class="param-control" value="${normalizeColor(p.value)}"
+                            data-item-id="${escapeHtml(itemId)}" data-param-idx="${idx}" data-param-type="color">
+                        <span class="param-value">${escapeHtml(p.value)}</span>
+                    </div>
+                `;
+            } else if (p.type === 'duration') {
+                return `
+                    <div class="param-row">
+                        <label>${escapeHtml(p.label)}</label>
+                        <input type="number" class="param-control" value="${p.number}" step="0.1" min="0"
+                            data-item-id="${escapeHtml(itemId)}" data-param-idx="${idx}" data-param-type="duration" data-param-unit="${p.unit}">
+                        <select class="param-unit" data-item-id="${escapeHtml(itemId)}" data-param-idx="${idx}" data-param-type="duration-unit">
+                            <option value="s" ${p.unit === 's' ? 'selected' : ''}>秒 (s)</option>
+                            <option value="ms" ${p.unit === 'ms' ? 'selected' : ''}>ms</option>
+                        </select>
+                    </div>
+                `;
+            } else if (p.type === 'timing') {
+                return `
+                    <div class="param-row">
+                        <label>${escapeHtml(p.label)}</label>
+                        <select class="param-control" data-item-id="${escapeHtml(itemId)}" data-param-idx="${idx}" data-param-type="timing">
+                            ${['linear','ease','ease-in','ease-out','ease-in-out'].map(v =>
+                                `<option value="${v}" ${v === p.value ? 'selected' : ''}>${v}</option>`
+                            ).join('')}
+                        </select>
+                    </div>
+                `;
+            } else if (p.type === 'size') {
+                return `
+                    <div class="param-row">
+                        <label>${escapeHtml(p.label)}</label>
+                        <input type="number" class="param-control" value="${p.number}" step="${p.unit === 'px' ? 1 : 0.1}" min="0"
+                            data-item-id="${escapeHtml(itemId)}" data-param-idx="${idx}" data-param-type="size" data-param-unit="${p.unit}">
+                        <select class="param-unit" data-item-id="${escapeHtml(itemId)}" data-param-idx="${idx}" data-param-type="size-unit">
+                            ${['px','rem','em','%'].map(u =>
+                                `<option value="${u}" ${u === p.unit ? 'selected' : ''}>${u}</option>`
+                            ).join('')}
+                        </select>
+                    </div>
+                `;
+            }
+            return '';
+        }).join('');
+    }
+
+    function normalizeColor(val) {
+        // #RGB → #RRGGBB にする（color inputは6桁必須）
+        const shortHex = val.match(/^#([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])$/);
+        if (shortHex) {
+            return `#${shortHex[1]}${shortHex[1]}${shortHex[2]}${shortHex[2]}${shortHex[3]}${shortHex[3]}`;
+        }
+        if (/^#[0-9a-fA-F]{6}$/.test(val)) return val;
+        // rgb(a) は変換省略 - color inputには入らない
+        return '#000000';
+    }
+
+    function getNewValueFromInput(input) {
+        const type = input.dataset.paramType;
+        if (type === 'color') return input.value;
+        if (type === 'duration' || type === 'size') {
+            // 数値 + 単位
+            const unit = input.dataset.paramUnit;
+            return `${input.value}${unit}`;
+        }
+        if (type === 'timing') return input.value;
+        if (type === 'duration-unit' || type === 'size-unit') {
+            // 単位変更: 対応する数値inputの値と組み合わせる
+            const row = input.closest('.param-row');
+            const numInput = row.querySelector('input[type="number"]');
+            if (numInput) {
+                numInput.dataset.paramUnit = input.value;
+                return `${numInput.value}${input.value}`;
+            }
+        }
+        return input.value;
+    }
+
+    /* ==================== パラメータ更新 ==================== */
+
+    function updateItemParameter(itemId, paramIdx, newValue) {
+        const selections = getSelections();
+        const item = selections.find(s => s.id === itemId);
+        if (!item) return;
+
+        // オリジナルを保持（リセット用）
+        if (!item.originalCss) item.originalCss = item.css;
+
+        const params = extractParameters(item.css);
+        const target = params[paramIdx];
+        if (!target) return;
+
+        // 行内の指定位置を置換
+        const lines = item.css.split('\n');
+        const line = lines[target.lineIdx];
+        const before = line.substring(0, target.startIdx);
+        const after = line.substring(target.startIdx + target.value.length);
+        lines[target.lineIdx] = before + newValue + after;
+
+        item.css = lines.join('\n');
+        setSelections(selections);
+
+        // パネル内のコード表示とテキストエリアを更新
+        updateCardDisplay(itemId, item.css);
+    }
+
+    function updateItemCSS(itemId, newCSS) {
+        const selections = getSelections();
+        const item = selections.find(s => s.id === itemId);
+        if (!item) return;
+        if (!item.originalCss) item.originalCss = item.css;
+        item.css = newCSS;
+        setSelections(selections);
+        updateCardDisplay(itemId, newCSS, { skipTextarea: true });
+    }
+
+    function resetItem(itemId) {
+        const selections = getSelections();
+        const item = selections.find(s => s.id === itemId);
+        if (!item || !item.originalCss) return;
+        item.css = item.originalCss;
+        delete item.originalCss;
+        setSelections(selections);
+        render();
+    }
+
+    function updateCardDisplay(itemId, newCSS, opts = {}) {
+        const card = [...document.querySelectorAll('.selection-card')].find(c => c.dataset.itemId === itemId);
+        if (!card) return;
+
+        const codeEl = card.querySelector('.code-display code');
+        if (codeEl) codeEl.textContent = newCSS;
+
+        const ta = card.querySelector('.param-textarea');
+        if (ta && !opts.skipTextarea) ta.value = newCSS;
+
+        const copyBtn = card.querySelector('[data-copy-css]');
+        if (copyBtn) copyBtn.dataset.copyCss = newCSS;
+
+        // 組み合わせコードとプレビューも更新
+        document.getElementById('combined-code').textContent = getCombinedCSS() || '/* 何も選択されていません */';
+        renderPreviews(getSelections());
     }
 
     function renderPreviews(selections) {

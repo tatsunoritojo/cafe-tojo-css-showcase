@@ -61,17 +61,52 @@ main {
 
 .btn-item {
     background-color: #fafafa;
-    padding: 1.5em;
+    padding: 1.5em 1em;
     border-radius: 6px;
     text-align: center;
     border: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8em;
+    min-height: 220px;
 }
 
-.btn-item code {
+.btn-item > button:first-of-type {
+    align-self: center;
+}
+
+.btn-item .label {
+    font-size: 0.9rem;
+    color: #444;
+    font-weight: bold;
+    margin: 0;
+}
+
+.btn-item pre.code {
+    background: #2d2d2d;
+    color: #f5efe6;
+    padding: 0.7em 0.9em;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    text-align: left;
+    overflow-x: auto;
+    margin: 0;
+    font-family: 'Courier New', monospace;
+    line-height: 1.5;
+    white-space: pre;
+}
+
+.btn-item pre.code code {
+    font-family: inherit;
+    color: inherit;
+    background: transparent;
+    padding: 0;
     display: block;
-    margin-top: 1em;
-    font-size: 0.8rem;
-    color: #666;
+}
+
+.page-header .hint {
+    font-size: 0.9rem;
+    opacity: 0.9;
 }
 
 /* ----- 共通ベース ----- */
