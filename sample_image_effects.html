@@ -30,12 +30,16 @@
 <body>
 
 <header class="page-header">
-    <h1>画像エフェクト見本市</h1>
-    <p>同じ1枚のカフェ写真を、CSSでどれだけ印象変化させられるか</p>
+    <h1>画像活用見本市</h1>
+    <p>フィルター効果・画像ボタン・画像カード・文字×画像・フレーム装飾</p>
     <p><a href="index.html">← ポータルに戻る</a></p>
 </header>
 
-<main class="gallery">
+<main>
+
+<section class="group">
+<h2>① フィルター効果（CSSフィルターで印象を変える）</h2>
+<div class="gallery">
 
     <!-- オリジナル -->
     <figure class="effect-item">
@@ -246,6 +250,452 @@
             <code>position: absolute でテキスト配置</code>
         </figcaption>
     </figure>
+
+</div>
+</section>
+
+<!-- ② 画像ボタン -->
+<section class="group">
+<h2>② 画像ボタン（画像を使ったクリック要素）</h2>
+<div class="gallery">
+
+    <figure class="effect-item">
+        <button class="ibtn-bg">CLICK</button>
+        <figcaption>
+            <strong>背景画像ボタン</strong>
+            <pre class="code"><code>background: url('image.jpg') center/cover;
+color: white;
+text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+padding: 1em 2.5em;
+border: none;
+border-radius: 8px;
+font-weight: bold;
+font-size: 1.1rem;
+cursor: pointer;</code></pre>
+        </figcaption>
+    </figure>
+
+    <figure class="effect-item">
+        <button class="ibtn-zoom"><span>店舗を見る</span></button>
+        <figcaption>
+            <strong>ホバー画像拡大</strong>
+            <pre class="code"><code>/* 画像を内包し、ホバーでzoomする構造 */
+overflow: hidden;
+position: relative;
+/* img { transition: transform 0.4s } */
+/* :hover img { transform: scale(1.15) } */
+padding: 0;
+border: none;
+border-radius: 8px;</code></pre>
+        </figcaption>
+    </figure>
+
+    <figure class="effect-item">
+        <button class="ibtn-overlay">メニュー</button>
+        <figcaption>
+            <strong>半透明オーバーレイボタン</strong>
+            <pre class="code"><code>background: url('image.jpg') center/cover;
+color: white;
+padding: 1em 2em;
+border: none;
+border-radius: 8px;
+position: relative;
+z-index: 1;
+/* ::before で暗い半透明レイヤー */
+/* ::before { background: rgba(0,0,0,0.4) } */</code></pre>
+        </figcaption>
+    </figure>
+
+    <figure class="effect-item">
+        <button class="ibtn-circle"></button>
+        <figcaption>
+            <strong>円形プロフィールボタン</strong>
+            <pre class="code"><code>width: 60px;
+height: 60px;
+border-radius: 50%;
+background: url('avatar.jpg') center/cover;
+border: 3px solid white;
+box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+cursor: pointer;
+/* :hover { transform: scale(1.1) } */</code></pre>
+        </figcaption>
+    </figure>
+
+    <figure class="effect-item">
+        <button class="ibtn-icon">
+            <img src="images/cafe-exterior.jpg" alt="">
+            <span>カフェへ</span>
+        </button>
+        <figcaption>
+            <strong>画像+テキスト横並び</strong>
+            <pre class="code"><code>display: inline-flex;
+align-items: center;
+gap: 0.6em;
+padding: 0.5em 1em;
+background: white;
+border: 1px solid #ddd;
+border-radius: 999px;
+cursor: pointer;
+/* img は 24x24 円形 */</code></pre>
+        </figcaption>
+    </figure>
+
+</div>
+</section>
+
+<!-- ③ 画像カード -->
+<section class="group">
+<h2>③ 画像カード（情報表示のレイアウト）</h2>
+<div class="gallery">
+
+    <figure class="effect-item card-sample">
+        <div class="icard-vertical">
+            <img src="images/cafe-exterior.jpg" alt="">
+            <div class="icard-body">
+                <h4>カフェ訪問記</h4>
+                <p>落ち着いた雰囲気の店舗</p>
+            </div>
+        </div>
+        <figcaption>
+            <strong>縦型カード（画像上・情報下）</strong>
+            <pre class="code"><code>/* .icard-vertical */
+background: white;
+border-radius: 8px;
+overflow: hidden;
+box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+
+/* img */
+width: 100%;
+height: 150px;
+object-fit: cover;
+
+/* .icard-body */
+padding: 1em;</code></pre>
+        </figcaption>
+    </figure>
+
+    <figure class="effect-item card-sample">
+        <div class="icard-horizontal">
+            <img src="images/cafe-exterior.jpg" alt="">
+            <div class="icard-body">
+                <h4>横型</h4>
+                <p>画像左・文章右の記事型</p>
+            </div>
+        </div>
+        <figcaption>
+            <strong>横型カード（左画像・右文字）</strong>
+            <pre class="code"><code>/* .icard-horizontal */
+display: flex;
+background: white;
+border-radius: 8px;
+overflow: hidden;
+box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+
+/* img */
+width: 120px;
+height: 120px;
+object-fit: cover;
+flex-shrink: 0;
+
+/* .icard-body */
+padding: 0.8em 1em;
+flex: 1;</code></pre>
+        </figcaption>
+    </figure>
+
+    <figure class="effect-item card-sample">
+        <div class="icard-hero">
+            <img src="images/cafe-exterior.jpg" alt="">
+            <div class="icard-hero-text">
+                <h4>特集記事</h4>
+                <p>画像上にテキストを重ねる</p>
+            </div>
+        </div>
+        <figcaption>
+            <strong>ヒーロー型（テキスト重ね）</strong>
+            <pre class="code"><code>/* .icard-hero */
+position: relative;
+border-radius: 8px;
+overflow: hidden;
+
+/* img: filter: brightness(0.6) で暗く */
+width: 100%;
+height: 200px;
+object-fit: cover;
+filter: brightness(0.6);
+
+/* .icard-hero-text */
+position: absolute;
+bottom: 1em;
+left: 1em;
+color: white;</code></pre>
+        </figcaption>
+    </figure>
+
+    <figure class="effect-item card-sample">
+        <div class="icard-profile">
+            <img src="images/cafe-exterior.jpg" alt="">
+            <h4>東城 立憲</h4>
+            <p>Individual Developer</p>
+        </div>
+        <figcaption>
+            <strong>プロフィールカード</strong>
+            <pre class="code"><code>/* .icard-profile */
+background: white;
+padding: 2em 1em 1em;
+text-align: center;
+border-radius: 8px;
+
+/* img: 円形 */
+width: 80px;
+height: 80px;
+border-radius: 50%;
+object-fit: cover;
+border: 3px solid #6b4423;</code></pre>
+        </figcaption>
+    </figure>
+
+    <figure class="effect-item card-sample">
+        <div class="icard-product">
+            <img src="images/cafe-exterior.jpg" alt="">
+            <div class="icard-product-body">
+                <h4>ブレンド豆 200g</h4>
+                <p class="price">¥1,200</p>
+                <button>カートへ</button>
+            </div>
+        </div>
+        <figcaption>
+            <strong>商品カード</strong>
+            <pre class="code"><code>/* .icard-product */
+background: white;
+border-radius: 8px;
+overflow: hidden;
+box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+
+/* img */
+width: 100%;
+height: 140px;
+object-fit: cover;
+
+/* .price { color: #c44; font-weight: bold } */
+/* button: 全幅、茶色ボタン */</code></pre>
+        </figcaption>
+    </figure>
+
+</div>
+</section>
+
+<!-- ④ 文字×画像 -->
+<section class="group">
+<h2>④ 文字×画像（組み合わせ表現）</h2>
+<div class="gallery">
+
+    <figure class="effect-item">
+        <div class="tximg-center">
+            <img src="images/cafe-exterior.jpg" alt="">
+            <span class="tximg-caption">CAFE</span>
+        </div>
+        <figcaption>
+            <strong>画像上中央テキスト</strong>
+            <pre class="code"><code>/* .tximg-center */
+position: relative;
+display: inline-block;
+
+/* img: filter: brightness(0.6) */
+
+/* .tximg-caption */
+position: absolute;
+top: 50%; left: 50%;
+transform: translate(-50%, -50%);
+color: white;
+font-size: 2rem;
+font-weight: bold;
+letter-spacing: 0.3em;
+text-shadow: 0 2px 8px rgba(0,0,0,0.7);</code></pre>
+        </figcaption>
+    </figure>
+
+    <figure class="effect-item">
+        <div class="tximg-bottom">
+            <img src="images/cafe-exterior.jpg" alt="">
+            <div class="tximg-bottom-text">本日の一杯</div>
+        </div>
+        <figcaption>
+            <strong>画像下部にテキスト帯</strong>
+            <pre class="code"><code>/* .tximg-bottom */
+position: relative;
+border-radius: 8px;
+overflow: hidden;
+
+/* .tximg-bottom-text */
+position: absolute;
+bottom: 0;
+left: 0;
+right: 0;
+padding: 0.8em 1em;
+background: linear-gradient(
+  to top, rgba(0,0,0,0.75), transparent);
+color: white;
+font-weight: bold;</code></pre>
+        </figcaption>
+    </figure>
+
+    <figure class="effect-item">
+        <figure class="tximg-caption-fig">
+            <img src="images/cafe-exterior.jpg" alt="">
+            <figcaption>2026年4月 — 路地裏のカフェ</figcaption>
+        </figure>
+        <figcaption>
+            <strong>キャプション付き画像</strong>
+            <pre class="code"><code>/* figure */
+margin: 0;
+text-align: center;
+
+/* figcaption */
+font-size: 0.85rem;
+color: #666;
+margin-top: 0.5em;
+font-style: italic;</code></pre>
+        </figcaption>
+    </figure>
+
+    <figure class="effect-item">
+        <div class="tximg-article">
+            <img src="images/cafe-exterior.jpg" alt="">
+            <div class="tximg-article-body">
+                <h4>見出し</h4>
+                <p>画像の右に回り込みテキストを配置する記事レイアウト。</p>
+            </div>
+        </div>
+        <figcaption>
+            <strong>記事型（左画像・右文字）</strong>
+            <pre class="code"><code>/* .tximg-article */
+display: flex;
+gap: 1em;
+align-items: flex-start;
+
+/* img */
+width: 100px;
+height: 100px;
+object-fit: cover;
+flex-shrink: 0;
+border-radius: 4px;
+
+/* .tximg-article-body { flex: 1 } */</code></pre>
+        </figcaption>
+    </figure>
+
+    <figure class="effect-item">
+        <div class="tximg-initial">
+            <span class="initial-char">C</span>
+            <img src="images/cafe-exterior.jpg" alt="">
+        </div>
+        <figcaption>
+            <strong>イニシャル大文字+画像</strong>
+            <pre class="code"><code>/* .tximg-initial */
+position: relative;
+display: inline-block;
+
+/* .initial-char */
+position: absolute;
+top: -10px; left: -10px;
+font-size: 5rem;
+font-weight: 900;
+color: #6b4423;
+z-index: 2;
+line-height: 1;
+text-shadow: 2px 2px 0 white;
+
+/* img: 丸っぽく or 通常 */
+border-radius: 8px;</code></pre>
+        </figcaption>
+    </figure>
+
+</div>
+</section>
+
+<!-- ⑤ 画像フレーム装飾 -->
+<section class="group">
+<h2>⑤ 画像フレーム装飾</h2>
+<div class="gallery">
+
+    <figure class="effect-item">
+        <img class="iframe-double" src="images/cafe-exterior.jpg" alt="">
+        <figcaption>
+            <strong>二重フレーム</strong>
+            <pre class="code"><code>padding: 10px;
+background: white;
+border: 4px double #6b4423;
+box-shadow: 0 4px 10px rgba(0,0,0,0.2);</code></pre>
+        </figcaption>
+    </figure>
+
+    <figure class="effect-item">
+        <img class="iframe-hex" src="images/cafe-exterior.jpg" alt="">
+        <figcaption>
+            <strong>六角形マスク</strong>
+            <pre class="code"><code>clip-path: polygon(
+  50% 0%, 100% 25%, 100% 75%,
+  50% 100%, 0% 75%, 0% 25%);
+width: 200px;
+height: 200px;
+object-fit: cover;</code></pre>
+        </figcaption>
+    </figure>
+
+    <figure class="effect-item">
+        <img class="iframe-star" src="images/cafe-exterior.jpg" alt="">
+        <figcaption>
+            <strong>星型マスク</strong>
+            <pre class="code"><code>clip-path: polygon(
+  50% 0%, 61% 35%, 98% 35%, 68% 57%,
+  79% 91%, 50% 70%, 21% 91%, 32% 57%,
+  2% 35%, 39% 35%);
+width: 200px;
+height: 200px;
+object-fit: cover;</code></pre>
+        </figcaption>
+    </figure>
+
+    <figure class="effect-item">
+        <img class="iframe-blob" src="images/cafe-exterior.jpg" alt="">
+        <figcaption>
+            <strong>Blob（自由曲線）型</strong>
+            <pre class="code"><code>border-radius:
+  60% 40% 30% 70% /
+  60% 30% 70% 40%;
+width: 200px;
+height: 200px;
+object-fit: cover;</code></pre>
+        </figcaption>
+    </figure>
+
+    <figure class="effect-item">
+        <div class="iframe-ribbon-wrap">
+            <img class="iframe-ribbon" src="images/cafe-exterior.jpg" alt="">
+            <span class="ribbon-tag">NEW</span>
+        </div>
+        <figcaption>
+            <strong>リボン付き</strong>
+            <pre class="code"><code>/* .iframe-ribbon-wrap */
+position: relative;
+display: inline-block;
+
+/* .ribbon-tag */
+position: absolute;
+top: 12px; left: -8px;
+background: #c44;
+color: white;
+padding: 0.2em 0.8em;
+font-weight: bold;
+font-size: 0.85rem;
+box-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+/* 左端に三角形の装飾を足しても良い */</code></pre>
+        </figcaption>
+    </figure>
+
+</div>
+</section>
 
 </main>
 

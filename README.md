@@ -13,7 +13,7 @@ CSSのデザインパターンを1ページに1テーマで集めた個人開発
 |---|---|
 | [index.html](./index.html) | ポータル（ハブページ） |
 | [sample_css_showcase.html](./sample_css_showcase.html) | CSS基礎（セレクタ・プロパティ・ボックスモデル） |
-| [sample_image_effects.html](./sample_image_effects.html) | 画像エフェクト見本市（19種） |
+| [sample_image_effects.html](./sample_image_effects.html) | 画像活用見本市（19種） |
 | [sample_button_showcase.html](./sample_button_showcase.html) | ボタン見本市（20種） |
 | [sample_text_showcase.html](./sample_text_showcase.html) | 文字装飾見本市（約50種） |
 | [mixer.html](./mixer.html) | 見本を組み合わせるミキサー機能（MVP） |

@@ -57,12 +57,12 @@
     <section class="empty-state" id="empty">
         <h2>🛒 カートは空です</h2>
         <p>各見本市のページで、右上の <strong class="add-hint">＋</strong> ボタンを押してカートに追加してください。</p>
-        <p class="small-note">★ 画像エフェクト・ボタン・文字装飾・CSS基礎、<strong>どの見本も選択できます</strong>。</p>
+        <p class="small-note">★ 画像活用・ボタン・文字装飾 の <strong>3つの見本市から選択</strong> できます（CSS Notesは参照専用）。</p>
         <div class="quick-links">
             <a href="sample_button_showcase.html">ボタン見本市へ</a>
             <a href="sample_text_showcase.html">文字装飾見本市へ</a>
-            <a href="sample_image_effects.html">画像エフェクト見本市へ</a>
-            <a href="sample_css_showcase.html">CSS基礎見本市へ</a>
+            <a href="sample_image_effects.html">画像活用見本市へ</a>
+            <a href="sample_css_showcase.html" class="link-note">📖 CSS Notes</a>
         </div>
     </section>
 
@@ -169,8 +169,7 @@
         <div class="drawer-tabs">
             <button class="tab-btn active" data-cat="ボタン">🔘 ボタン</button>
             <button class="tab-btn" data-cat="文字装飾">📝 文字装飾</button>
-            <button class="tab-btn" data-cat="画像エフェクト">🖼️ 画像</button>
-            <button class="tab-btn" data-cat="CSS基礎">🎨 CSS基礎</button>
+            <button class="tab-btn" data-cat="画像活用">🖼️ 画像活用</button>
         </div>
         <button class="drawer-close" id="drawer-close" aria-label="閉じる">✕</button>
     </div>
@@ -198,8 +197,7 @@
         const pages = [
             { url: 'sample_button_showcase.html', key: 'ボタン' },
             { url: 'sample_text_showcase.html', key: '文字装飾' },
-            { url: 'sample_image_effects.html', key: '画像エフェクト' },
-            { url: 'sample_css_showcase.html', key: 'CSS基礎' }
+            { url: 'sample_image_effects.html', key: '画像活用' }
         ];
         const catalog = {};
         for (const page of pages) {
@@ -211,7 +209,8 @@
                 const items = doc.querySelectorAll('.btn-item, .text-item, .effect-item');
                 catalog[page.key] = [];
                 items.forEach((item, idx) => {
-                    const codeEl = item.querySelector('pre.code, pre.code-block-wide');
+                    const codeEl = item.querySelector('pre.code, pre.code-block-wide')
+                                 || item.querySelector('figcaption code');
                     const labelEl = item.querySelector('.label, figcaption strong');
                     if (!codeEl) return;
                     catalog[page.key].push({
@@ -324,7 +323,7 @@
     function renderDrawerVisual(item, category) {
         if (category === 'ボタン') return `<button class="dp-btn">サンプル</button>`;
         if (category === '文字装飾') return `<span class="dp-text">カフェ</span>`;
-        if (category === '画像エフェクト') return `<img class="dp-img" src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=200&q=80" alt="">`;
+        if (category === '画像活用') return `<img class="dp-img" src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=200&q=80" alt="">`;
         return `<div class="dp-generic">カフェ</div>`;
     }
 
@@ -750,17 +749,17 @@
 
     function renderPreviews(selections) {
         // カテゴリ別に分類
-        const byCategory = { '文字装飾': [], 'ボタン': [], '画像エフェクト': [], 'CSS基礎': [] };
+        const byCategory = { '文字装飾': [], 'ボタン': [], '画像活用': [] };
         selections.forEach(s => {
             if (byCategory[s.category]) byCategory[s.category].push(s);
-            else (byCategory['CSS基礎'] = byCategory['CSS基礎'] || []).push(s);
         });
 
         // ゾーンごとに表示
         toggleZone('zone-text', byCategory['文字装飾'], 'preview-text-el');
         toggleZone('zone-button', byCategory['ボタン'], 'preview-button-el');
-        toggleZone('zone-image', byCategory['画像エフェクト'], 'preview-image-el');
-        toggleZone('zone-generic', byCategory['CSS基礎'], 'preview-generic-el');
+        toggleZone('zone-image', byCategory['画像活用'], 'preview-image-el');
+        const genericZone = document.getElementById('zone-generic');
+        if (genericZone) genericZone.style.display = 'none';
 
         // 組み合わせプレビュー
         const combinedZone = document.getElementById('zone-combined');

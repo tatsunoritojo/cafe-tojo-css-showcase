@@ -48,6 +48,18 @@ code {
     font-size: 1.1rem;
 }
 
+.reference-note {
+    font-size: 0.9rem;
+    color: #8a6a00;
+    background: #fff8e7;
+    border-left: 3px solid #ffc107;
+    padding: 0.5em 1em;
+    border-radius: 4px;
+    margin: 0.8em auto;
+    max-width: 500px;
+    text-align: left;
+}
+
 .site-footer {
     text-align: center;
     color: #999;

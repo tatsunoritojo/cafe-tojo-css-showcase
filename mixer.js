@@ -75,11 +75,22 @@ function updateCards() {
 function instrumentShowcase() {
     injectStyles();
 
+    // CSS Notes（学習リソース）ページではカート追加無効
+    const isCssNotes = location.pathname.includes('css_showcase');
+    if (isCssNotes) {
+        // サイドバーは表示するが、+ボタンは一切つけない
+        if (!location.pathname.includes('mixer.html')) {
+            injectSidebar();
+        }
+        return;
+    }
+
     const items = document.querySelectorAll('.btn-item, .text-item, .effect-item');
     const pageKey = getPageKey();
 
     items.forEach((item, idx) => {
-        const codeEl = item.querySelector('pre.code, pre.code-block-wide');
+        const codeEl = item.querySelector('pre.code, pre.code-block-wide')
+                     || item.querySelector('figcaption code');
         const labelEl = item.querySelector('.label, figcaption strong');
         if (!codeEl) return;
 
@@ -117,8 +128,8 @@ function getPageKey() {
     const path = location.pathname.split('/').pop();
     if (path.includes('button')) return 'ボタン';
     if (path.includes('text')) return '文字装飾';
-    if (path.includes('image')) return '画像エフェクト';
-    if (path.includes('css_showcase')) return 'CSS基礎';
+    if (path.includes('image')) return '画像活用';
+    if (path.includes('css_showcase')) return 'CSS Notes';
     return 'その他';
 }
 
@@ -244,7 +255,7 @@ function updateSidebarPreview() {
     if (pageKey === 'ボタン') {
         el = document.createElement('button');
         el.textContent = text;
-    } else if (pageKey === '画像エフェクト') {
+    } else if (pageKey === '画像活用') {
         el = document.createElement('img');
         el.src = 'images/cafe-exterior.jpg';
         el.alt = 'プレビュー';
