@@ -364,8 +364,9 @@ main {
 }
 
 .preview-area-large {
-    min-height: 180px;
-    padding: 2em;
+    min-height: 220px;
+    height: 260px;
+    padding: 1.5em;
 }
 
 .combined-hint {
@@ -404,12 +405,12 @@ main {
 
 .preview-area {
     position: relative;         /* 子要素のabsolute positioningを閉じ込める */
-    min-height: 120px;
-    max-height: 400px;
+    min-height: 180px;
+    height: 220px;              /* 明示的な高さで max-height: 100% を有効に */
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1.5em;
+    padding: 1em;
     background: white;
     border: 1px dashed #ddd;
     border-radius: 4px;
@@ -420,6 +421,28 @@ main {
 .preview-area > * {
     max-width: 100%;
     max-height: 100%;
+}
+
+/* プレビュー要素への強制リセット - 適用CSSの position/padding で崩れないように */
+#preview-image-el,
+#preview-button-el,
+#preview-text-el,
+#preview-generic-el,
+#combined-preview-el {
+    max-width: 100% !important;
+    max-height: 200px !important;
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    object-fit: contain;
+}
+
+#preview-image-el,
+#combined-preview-el[src] {
+    /* 画像の場合は contain で全体表示 */
+    object-fit: contain;
 }
 
 #preview-text-el,

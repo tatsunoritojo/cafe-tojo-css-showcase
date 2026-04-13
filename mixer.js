@@ -467,12 +467,12 @@ function injectStyles() {
 
         .sb-preview-area {
             position: relative;           /* absolute 子要素を閉じ込める */
-            min-height: 90px;
-            max-height: 200px;
+            min-height: 120px;
+            height: 150px;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 1em;
+            padding: 0.8em;
             background: #fafafa;
             border: 1px dashed #ddd;
             border-radius: 4px;
@@ -480,8 +480,12 @@ function injectStyles() {
             contain: layout paint;
         }
         .sb-preview-area > * {
-            max-width: 100%;
-            max-height: 100%;
+            max-width: 100% !important;
+            max-height: 100% !important;
+            position: static !important;
+            top: auto !important;
+            left: auto !important;
+            object-fit: contain;
         }
         #sb-preview-el {
             font-size: 1.4rem;
