@@ -290,6 +290,8 @@
             if (previewEl) applyInlineProperties(previewEl, item.css);
         });
 
+        if (window.lucide) lucide.createIcons();
+
         body.querySelectorAll('.drawer-add').forEach(btn => {
             btn.addEventListener('click', () => {
                 const id = btn.dataset.id;
@@ -317,8 +319,13 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+        // 初回アイコン描画（Lucideが読み込まれていれば）
+        if (window.lucide) lucide.createIcons();
+        else setTimeout(() => { if (window.lucide) lucide.createIcons(); }, 300);
+
         buildCatalog().then(() => {
             render();
+            if (window.lucide) lucide.createIcons();
         });
 
 
@@ -761,6 +768,9 @@
         document.getElementById('mixer-injected-css').textContent = injectedStyles.join('\n\n');
 
         updatePreviewTexts();
+
+        // Lucideアイコン再描画
+        if (window.lucide) lucide.createIcons();
     }
 
     /* ==================== テンプレート定義 ==================== */
