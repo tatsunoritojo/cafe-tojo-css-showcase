@@ -288,7 +288,9 @@ main {
 }
 
 .preview-area {
+    position: relative;         /* 子要素のabsolute positioningを閉じ込める */
     min-height: 120px;
+    max-height: 400px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -297,6 +299,12 @@ main {
     border: 1px dashed #ddd;
     border-radius: 4px;
     overflow: hidden;
+    contain: layout paint;      /* レイアウト漏れ防止 */
+}
+
+.preview-area > * {
+    max-width: 100%;
+    max-height: 100%;
 }
 
 #preview-text-el,

@@ -462,7 +462,9 @@ function injectStyles() {
         }
 
         .sb-preview-area {
+            position: relative;           /* absolute 子要素を閉じ込める */
             min-height: 90px;
+            max-height: 200px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -471,6 +473,11 @@ function injectStyles() {
             border: 1px dashed #ddd;
             border-radius: 4px;
             overflow: hidden;
+            contain: layout paint;
+        }
+        .sb-preview-area > * {
+            max-width: 100%;
+            max-height: 100%;
         }
         #sb-preview-el {
             font-size: 1.4rem;
