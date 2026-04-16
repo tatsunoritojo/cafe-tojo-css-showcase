@@ -1233,6 +1233,15 @@ input[type="color"].param-control {
     border-radius: 4px;
     background: #e5d9c7;
 }
+.drawer-preview .dp-anim {
+    background: #6b4423;
+    color: white;
+    padding: 0.5em 1em;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 0.85rem;
+    display: inline-block;
+}
 
 .drawer-item-name {
     margin: 0;

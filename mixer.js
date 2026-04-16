@@ -89,7 +89,7 @@ function instrumentShowcase() {
         return;
     }
 
-    const items = document.querySelectorAll('.btn-item, .text-item, .effect-item, .layout-item, .card-item, .color-item');
+    const items = document.querySelectorAll('.btn-item, .text-item, .effect-item, .layout-item, .card-item, .color-item, .anim-item');
     const pageKey = getPageKey();
 
     items.forEach((item, idx) => {
@@ -139,6 +139,7 @@ function getPageKey() {
     if (path.includes('layout')) return 'レイアウト';
     if (path.includes('card')) return 'カード';
     if (path.includes('color')) return 'カラー';
+    if (path.includes('animation')) return 'アニメ';
     if (path.includes('css_showcase')) return 'CSS Notes';
     return 'その他';
 }
@@ -290,6 +291,7 @@ function injectTopNav() {
             <a href="sample_layout_showcase.html" class="${path.includes('layout') ? 'tn-active' : ''}"><i data-lucide="layout-grid" class="icn"></i> レイアウト</a>
             <a href="sample_card_showcase.html" class="${path.includes('card') ? 'tn-active' : ''}"><i data-lucide="layers" class="icn"></i> カード</a>
             <a href="sample_color_showcase.html" class="${path.includes('color') ? 'tn-active' : ''}"><i data-lucide="palette" class="icn"></i> 色</a>
+            <a href="sample_animation_showcase.html" class="${path.includes('animation') ? 'tn-active' : ''}"><i data-lucide="zap" class="icn"></i> アニメ</a>
             <a href="sample_css_showcase.html" class="tn-note ${path.includes('css_showcase') ? 'tn-active' : ''}"><i data-lucide="book-open" class="icn"></i> Notes</a>
             <a href="mixer.html" class="tn-cta ${path.includes('mixer') ? 'tn-active' : ''}"><i data-lucide="shopping-cart" class="icn"></i> レジ</a>
         </div>
@@ -443,6 +445,10 @@ function updateSidebarPreview() {
         el.style.height = '100%';
         el.style.minHeight = '110px';
         el.style.borderRadius = '6px';
+    } else if (pageKey === 'アニメ') {
+        el = document.createElement('div');
+        el.className = 'preview-anim';
+        el.textContent = text;
     } else {
         el = document.createElement('span');
         el.textContent = text;
@@ -861,6 +867,15 @@ function injectStyles() {
             margin: 0;
             font-size: 0.78rem;
             color: #555;
+        }
+        .sb-preview-area .preview-anim {
+            background: #6b4423;
+            color: white;
+            padding: 0.6em 1.2em;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            display: inline-block;
         }
         .sb-preview-hint {
             margin: 0.5em 0 0;

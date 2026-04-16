@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <meta name="description" content="アニメーション 20種。登場・ホバー・注意喚起・ローディング・応用。各項目につまみで秒数や振れ幅をライブ調整。">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://css-showcase-tan.vercel.app/sample_animation_showcase.html">
+    <meta property="og:title" content="アニメーション見本市 | Mixable CSS">
+    <meta property="og:description" content="CSSアニメーション 20種。登場・ホバー・注意喚起・ローディング・応用。つまみで秒数や振れ幅をライブ調整。">
+    <meta property="og:image" content="https://css-showcase-tan.vercel.app/images/og-image.jpg">
+    <meta property="og:site_name" content="Mixable CSS">
+    <meta property="og:locale" content="ja_JP">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="アニメーション見本市 | Mixable CSS">
+    <meta name="twitter:description" content="CSSアニメーション 20種。">
+    <meta name="twitter:image" content="https://css-showcase-tan.vercel.app/images/og-image.jpg">
+    <title>アニメーション見本市 | Mixable CSS</title>
+    <link rel="stylesheet" href="sample_animation_showcase.css">
+    <script src="mixer.js" defer></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+<header class="page-header">
+    <h1>F. アニメーション見本市</h1>
+    <p>CSSアニメ 20種 — 登場・ホバー・注意喚起・ローディング・応用</p>
+    <p class="hint"><i data-lucide="sliders-horizontal" class="icn"></i> つまみで<strong>秒数</strong>・<strong>振れ幅</strong>・<strong>ループ速度</strong>をライブ調整。デモは無限ループで常時動いています。</p>
+    <p><a href="index.html">← ポータルに戻る</a></p>
+</header>
+
+<main>
+
+    <section class="intro">
+        <h2><i data-lucide="compass" class="icn"></i> アニメーション3原則</h2>
+        <div class="intro-grid">
+            <div class="intro-card">
+                <p class="intro-title"><i data-lucide="timer" class="icn"></i> 速度</p>
+                <p>UI反応 = <code>0.15-0.3s</code>、登場 = <code>0.3-0.8s</code>、注意喚起 = <code>1-2s</code>。遅すぎると重く、速すぎると見逃す。</p>
+            </div>
+            <div class="intro-card">
+                <p class="intro-title"><i data-lucide="wave-sine" class="icn"></i> イージング</p>
+                <p><code>ease-out</code>（速→遅）が自然。<code>linear</code>は機械的、<code>cubic-bezier</code>でこだわり。</p>
+            </div>
+            <div class="intro-card">
+                <p class="intro-title"><i data-lucide="accessibility" class="icn"></i> 配慮</p>
+                <p><code>@media (prefers-reduced-motion)</code> で<strong>アニメ不要ユーザー</strong>に配慮。実務で忘れがち。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- グループ1: 登場アニメ -->
+    <section class="group">
+        <h2>グループ1: 登場アニメ（infinite alternate でデモ表示中）</h2>
+        <div class="anim-grid">
+
+            <div class="anim-item" data-knobs='[{"label":"秒数","prop":"animation-duration","target":".fade-in","unit":"s","min":0.2,"max":3,"step":0.1,"value":1.5}]'>
+                <div class="anim-demo">
+                    <div class="fade-in">カフェ東城</div>
+                </div>
+                <p class="label">フェードイン</p>
+                <pre class="code"><code>@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.element {
+  animation: fadeIn 1.5s ease-out;
+}
+
+/* デモでは alternate infinite */
+animation-duration: 1.5s;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 0.3-0.8s が自然。長すぎると焦れったい</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> スクロール追従で要素を段階的に表示するライブラリ（AOS等）と組み合わせるのが定番</p>
+                </div>
+            </div>
+
+            <div class="anim-item">
+                <div class="anim-demo">
+                    <div class="slide-up">カフェ東城</div>
+                </div>
+                <p class="label">下からスライドイン</p>
+                <pre class="code"><code>@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.element {
+  animation: slideUp 0.6s ease-out;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>translateY</code> は 10-40px が自然。大きすぎると「飛んでくる」感</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 登場の王道。モーダルやトーストにも応用可</p>
+                </div>
+            </div>
+
+            <div class="anim-item" data-knobs='[{"label":"秒数","prop":"animation-duration","target":".scale-in","unit":"s","min":0.2,"max":3,"step":0.1,"value":1.5}]'>
+                <div class="anim-demo">
+                    <div class="scale-in">カフェ東城</div>
+                </div>
+                <p class="label">スケールイン（ポップ）</p>
+                <pre class="code"><code>@keyframes scaleIn {
+  from { transform: scale(0.5); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+.element {
+  animation: scaleIn 1.5s
+    cubic-bezier(0.25, 1.5, 0.5, 1);
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>cubic-bezier</code> で弾む動き。1.5 部分を大きくすると跳ねる</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> モーダル登場、バッジ追加時の通知等に</p>
+                </div>
+            </div>
+
+            <div class="anim-item">
+                <div class="anim-demo">
+                    <div class="rotate-in">カフェ東城</div>
+                </div>
+                <p class="label">回転イン</p>
+                <pre class="code"><code>@keyframes rotateIn {
+  from {
+    transform: rotate(-90deg) scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: rotate(0) scale(1);
+    opacity: 1;
+  }
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 回転角度 -90〜-180deg。派手すぎは禁物</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> アイコンの登場、達成バッジ等のご褒美演出に</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- グループ2: ホバー応答 -->
+    <section class="group">
+        <h2>グループ2: ホバー応答 <i data-lucide="star" class="icn"></i>マウスを乗せてみて</h2>
+        <div class="anim-grid">
+
+            <div class="anim-item">
+                <div class="anim-demo">
+                    <button class="hover-scale">ホバー拡大</button>
+                </div>
+                <p class="label">拡大（scale）</p>
+                <pre class="code"><code>button {
+  transition: transform 0.2s ease;
+}
+button:hover {
+  transform: scale(1.1);
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>scale(1.05-1.15)</code>。1.2以上だと「触った感」を超えて違和感</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> ボタン、カード、サムネで王道。スマホでは <code>:active</code> にも効かせる</p>
+                </div>
+            </div>
+
+            <div class="anim-item">
+                <div class="anim-demo">
+                    <div class="hover-rotate"><i data-lucide="settings" class="icn"></i></div>
+                </div>
+                <p class="label">回転</p>
+                <pre class="code"><code>.icon {
+  transition: transform 0.4s ease;
+}
+.icon:hover {
+  transform: rotate(90deg);
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 90deg(直角) / 180deg(反転) / 360deg(一周) で印象変化</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 設定アイコン、リロードボタン等の"回るもの"に限定</p>
+                </div>
+            </div>
+
+            <div class="anim-item">
+                <div class="anim-demo">
+                    <button class="hover-color">色が変わる</button>
+                </div>
+                <p class="label">色変化</p>
+                <pre class="code"><code>button {
+  background: #6b4423;
+  color: white;
+  transition: background-color 0.25s ease;
+}
+button:hover {
+  background: #c44;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 色相変化より明度変化が自然。同系色で濃く/薄く</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> CTAボタンの定番。トランジションは 0.15-0.3s が読み心地良い</p>
+                </div>
+            </div>
+
+            <div class="anim-item">
+                <div class="anim-demo">
+                    <div class="hover-shadow">影が濃く</div>
+                </div>
+                <p class="label">影強調</p>
+                <pre class="code"><code>.card {
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.card:hover {
+  box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+  transform: translateY(-3px);
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> blur を 3-4 倍、透明度を 2 倍。translateY-2〜-4px を併用</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> カードUIの選択可能感。クリッカブル表現の基本</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- グループ3: 注意喚起 -->
+    <section class="group">
+        <h2>グループ3: 注意喚起（無限ループ）</h2>
+        <div class="anim-grid">
+
+            <div class="anim-item" data-knobs='[{"label":"強さ","prop":"--pulse-scale","target":".pulse-el","min":1.02,"max":1.3,"step":0.02,"value":1.1}]'>
+                <div class="anim-demo">
+                    <button class="pulse-el">新着</button>
+                </div>
+                <p class="label">パルス（拡縮呼吸）</p>
+                <pre class="code"><code>--pulse-scale: 1.1;
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform:
+    scale(var(--pulse-scale)); }
+}
+.element {
+  animation: pulse 1.5s ease-in-out infinite;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 1.05-1.15 が自然。大きいほど「目立て」アピール強め</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 通知バッジ、CTAボタン、新着ラベルで定番</p>
+                </div>
+            </div>
+
+            <div class="anim-item" data-knobs='[{"label":"振れ","prop":"--shake-x","target":".shake-el","unit":"px","min":2,"max":20,"step":1,"value":8}]'>
+                <div class="anim-demo">
+                    <button class="shake-el">エラー</button>
+                </div>
+                <p class="label">シェイク（左右振動）</p>
+                <pre class="code"><code>--shake-x: 8px;
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform:
+    translateX(calc(var(--shake-x) * -1)); }
+  75% { transform:
+    translateX(var(--shake-x)); }
+}
+.element {
+  animation: shake 0.4s ease-in-out 3;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 4-10px。大きいほど激しい怒り風</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> フォームバリデーション失敗で定番。3回限定が自然</p>
+                </div>
+            </div>
+
+            <div class="anim-item" data-knobs='[{"label":"高さ","prop":"--bounce-h","target":".bounce-el","unit":"px","min":4,"max":40,"step":2,"value":16}]'>
+                <div class="anim-demo">
+                    <div class="bounce-el"><i data-lucide="arrow-down" class="icn"></i></div>
+                </div>
+                <p class="label">バウンス（跳ねる）</p>
+                <pre class="code"><code>--bounce-h: 16px;
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform:
+    translateY(calc(var(--bounce-h) * -1)); }
+}
+.element {
+  animation: bounce 1s ease-in-out infinite;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 10-25px が自然。大きすぎると「落ち着きがない」印象</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 「スクロールしてね」の矢印、ゲーム風UIで</p>
+                </div>
+            </div>
+
+            <div class="anim-item">
+                <div class="anim-demo">
+                    <span class="blink-el">録画中</span>
+                </div>
+                <p class="label">点滅</p>
+                <pre class="code"><code>@keyframes blink {
+  50% { opacity: 0.2; }
+}
+.element {
+  animation: blink 1s steps(2) infinite;
+  color: #c44;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>steps(2)</code> でカクカク点滅、<code>ease-in-out</code> でなだらか</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 録画中、リアルタイム通信、緊急性の表現。頻度は低く抑える（うるさい）</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- グループ4: ローディング -->
+    <section class="group">
+        <h2>グループ4: ローディング表現</h2>
+        <div class="anim-grid">
+
+            <div class="anim-item" data-knobs='[{"label":"秒数","prop":"animation-duration","target":".spinner-el","unit":"s","min":0.3,"max":3,"step":0.1,"value":0.8}]'>
+                <div class="anim-demo">
+                    <div class="spinner-el"></div>
+                </div>
+                <p class="label">スピナー（円形）</p>
+                <pre class="code"><code>@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #e5d9c7;
+  border-top-color: #6b4423;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 0.6-1s が定番。遅いと「止まってる?」と感じる</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> データ読込中の標準表現。SVGスピナーより CSS の方が軽量</p>
+                </div>
+            </div>
+
+            <div class="anim-item">
+                <div class="anim-demo">
+                    <div class="dots-load">
+                        <span></span><span></span><span></span>
+                    </div>
+                </div>
+                <p class="label">ドット3点（順次点滅）</p>
+                <pre class="code"><code>@keyframes dotBlink {
+  0%, 80%, 100% { opacity: 0.3; }
+  40%           { opacity: 1; }
+}
+.dots span {
+  animation: dotBlink 1.4s infinite;
+}
+.dots span:nth-child(2) { animation-delay: 0.2s; }
+.dots span:nth-child(3) { animation-delay: 0.4s; }</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>animation-delay</code> を 0.2s ずつずらして波の表現</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> チャットの「入力中...」表示でお馴染み</p>
+                </div>
+            </div>
+
+            <div class="anim-item" data-knobs='[{"label":"秒数","prop":"animation-duration","target":".progress-bar","unit":"s","min":0.5,"max":5,"step":0.1,"value":2}]'>
+                <div class="anim-demo">
+                    <div class="progress-wrap">
+                        <div class="progress-bar"></div>
+                    </div>
+                </div>
+                <p class="label">プログレスバー（連続流れ）</p>
+                <pre class="code"><code>@keyframes progress {
+  from { background-position: 0 0; }
+  to   { background-position: 40px 0; }
+}
+.bar {
+  height: 10px;
+  background: repeating-linear-gradient(
+    45deg, #6b4423 0, #6b4423 10px,
+    #8a5a30 10px, #8a5a30 20px);
+  animation: progress 2s linear infinite;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 1-3s が自然。速すぎるとストライプが流れ過ぎる</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 進行度不明のロード時に。%付きバーには使わない</p>
+                </div>
+            </div>
+
+            <div class="anim-item">
+                <div class="anim-demo skeleton-demo">
+                    <div class="skel-line skel-wide"></div>
+                    <div class="skel-line skel-mid"></div>
+                    <div class="skel-line skel-narrow"></div>
+                </div>
+                <p class="label">スケルトン（骨格ロード）</p>
+                <pre class="code"><code>@keyframes skel {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.skel-line {
+  height: 12px;
+  border-radius: 4px;
+  background: linear-gradient(90deg,
+    #eee 25%, #f5f5f5 50%, #eee 75%);
+  background-size: 200% 100%;
+  animation: skel 1.5s infinite;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> ハイライトの明度を少しだけ変える（<code>#eee</code>→<code>#f5f5f5</code>）</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> SNS系アプリの定番。実データの形と合わせるのがコツ</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- グループ5: 応用 -->
+    <section class="group">
+        <h2>グループ5: 応用</h2>
+        <div class="anim-grid">
+
+            <div class="anim-item">
+                <div class="anim-demo">
+                    <div class="typing-el">Mixable CSS</div>
+                </div>
+                <p class="label">タイピング風</p>
+                <pre class="code"><code>@keyframes typing {
+  from { width: 0; }
+  to   { width: 11ch; }
+}
+@keyframes caret {
+  50% { border-color: transparent; }
+}
+.text {
+  font-family: monospace;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid #6b4423;
+  animation: typing 2s steps(11) infinite,
+             caret 0.5s step-end infinite;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>steps(N)</code> の N は文字数と合わせる。<code>ch</code> 単位で幅指定</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> ヒーロー見出し、ポートフォリオで映える。長文には使わない</p>
+                </div>
+            </div>
+
+            <div class="anim-item">
+                <div class="anim-demo">
+                    <div class="flip-card">
+                        <div class="flip-inner">
+                            <div class="flip-front">表</div>
+                            <div class="flip-back">裏</div>
+                        </div>
+                    </div>
+                </div>
+                <p class="label">カードフリップ（ホバー）</p>
+                <pre class="code"><code>.card {
+  perspective: 600px;
+}
+.inner {
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+}
+.card:hover .inner {
+  transform: rotateY(180deg);
+}
+.front, .back {
+  position: absolute;
+  backface-visibility: hidden;
+}
+.back {
+  transform: rotateY(180deg);
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>perspective</code> 400-800px で遠近感。transition 0.5-0.8s</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> FAQの回答表示、ゲームUI、プロフィールカード裏面</p>
+                </div>
+            </div>
+
+            <div class="anim-item" data-knobs='[{"label":"秒数","prop":"animation-duration","target":".spin-loop","unit":"s","min":0.5,"max":10,"step":0.5,"value":4}]'>
+                <div class="anim-demo">
+                    <div class="spin-loop"><i data-lucide="loader" class="icn"></i></div>
+                </div>
+                <p class="label">無限回転</p>
+                <pre class="code"><code>@keyframes spinLoop {
+  to { transform: rotate(360deg); }
+}
+.icon {
+  animation: spinLoop 4s linear infinite;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 遅い(5-10s) = 背景装飾、速い(1-2s) = ロード感</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 歯車/地球儀/ディスク の象徴表現、背景のアクセント</p>
+                </div>
+            </div>
+
+            <div class="anim-item">
+                <div class="anim-demo">
+                    <div class="wave-text">
+                        <span>M</span><span>i</span><span>x</span><span>a</span><span>b</span><span>l</span><span>e</span>
+                    </div>
+                </div>
+                <p class="label">波打ち（文字別遅延）</p>
+                <pre class="code"><code>@keyframes wave {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+.wave span {
+  display: inline-block;
+  animation: wave 1.2s ease-in-out infinite;
+}
+.wave span:nth-child(2) { animation-delay: 0.1s; }
+.wave span:nth-child(3) { animation-delay: 0.2s; }
+/* ...以降も 0.1s ずつずらす */</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 遅延の間隔 0.08-0.15s。揃えるとウェーブ、不揃いだとランダム感</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> ロゴアニメ、ゲームのHPバー、音楽アプリのイコライザ表現に</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 教えるポイント -->
+    <section class="lesson">
+        <h2>教える時のポイント</h2>
+        <ul>
+            <li><strong>動かす前に「なぜ動かすか」</strong> — 注意喚起? 状態変化? 装飾? 目的不明なアニメはノイズ</li>
+            <li><code>transition</code> は「変化のルール」、<code>animation</code> は「キーフレームで定義された動き」</li>
+            <li>実務の速度基準: UI反応 <code>0.15-0.3s</code>、登場 <code>0.3-0.8s</code>、注意喚起 <code>1-2s</code></li>
+            <li>イージングは <code>ease-out</code> が8割。<code>linear</code>は時計やロード等の機械的な動きに限る</li>
+            <li><strong>パフォーマンス</strong>: <code>transform</code> と <code>opacity</code> のみがGPUアクセラレートされる。<code>width</code>/<code>top</code> 等は避ける</li>
+            <li><strong>アクセシビリティ</strong>: <code>@media (prefers-reduced-motion: reduce) { animation: none; }</code> を忘れずに</li>
+            <li>CSS変数を <code>@keyframes</code> 内で使えば、アニメの挙動をインスタンスごとに変えられる</li>
+        </ul>
+    </section>
+
+</main>
+
+<footer class="page-footer">
+    <p><a href="index.html">← ポータルに戻る</a></p>
+</footer>
+
+</body>
+</html>
