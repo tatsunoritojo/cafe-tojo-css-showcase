@@ -1242,6 +1242,15 @@ input[type="color"].param-control {
     font-size: 0.85rem;
     display: inline-block;
 }
+.drawer-preview .dp-form {
+    padding: 0.5em 0.8em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 0.85rem;
+    width: 90%;
+    background: white;
+}
 
 .drawer-item-name {
     margin: 0;

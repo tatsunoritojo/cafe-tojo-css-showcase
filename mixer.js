@@ -79,9 +79,9 @@ function instrumentShowcase() {
     // 全ページにトップナビを挿入
     injectTopNav();
 
-    // CSS Notes（学習リソース）ページではカート追加無効
-    const isCssNotes = location.pathname.includes('css_showcase');
-    if (isCssNotes) {
+    // 学習リソース系（CSS Notes / CSS Reference）ではカート追加無効
+    const isReferencePage = location.pathname.includes('css_showcase') || location.pathname.includes('css_reference');
+    if (isReferencePage) {
         // サイドバーは表示するが、+ボタンは一切つけない
         if (!location.pathname.includes('mixer.html')) {
             injectSidebar();
@@ -89,7 +89,7 @@ function instrumentShowcase() {
         return;
     }
 
-    const items = document.querySelectorAll('.btn-item, .text-item, .effect-item, .layout-item, .card-item, .color-item, .anim-item');
+    const items = document.querySelectorAll('.btn-item, .text-item, .effect-item, .layout-item, .card-item, .color-item, .anim-item, .form-item');
     const pageKey = getPageKey();
 
     items.forEach((item, idx) => {
@@ -140,6 +140,7 @@ function getPageKey() {
     if (path.includes('card')) return 'カード';
     if (path.includes('color')) return 'カラー';
     if (path.includes('animation')) return 'アニメ';
+    if (path.includes('form')) return 'フォーム';
     if (path.includes('css_showcase')) return 'CSS Notes';
     return 'その他';
 }
@@ -292,7 +293,9 @@ function injectTopNav() {
             <a href="sample_card_showcase.html" class="${path.includes('card') ? 'tn-active' : ''}"><i data-lucide="layers" class="icn"></i> カード</a>
             <a href="sample_color_showcase.html" class="${path.includes('color') ? 'tn-active' : ''}"><i data-lucide="palette" class="icn"></i> 色</a>
             <a href="sample_animation_showcase.html" class="${path.includes('animation') ? 'tn-active' : ''}"><i data-lucide="zap" class="icn"></i> アニメ</a>
+            <a href="sample_form_showcase.html" class="${path.includes('form') ? 'tn-active' : ''}"><i data-lucide="text-cursor-input" class="icn"></i> フォーム</a>
             <a href="sample_css_showcase.html" class="tn-note ${path.includes('css_showcase') ? 'tn-active' : ''}"><i data-lucide="book-open" class="icn"></i> Notes</a>
+            <a href="sample_css_reference.html" class="tn-note ${path.includes('css_reference') ? 'tn-active' : ''}"><i data-lucide="book-marked" class="icn"></i> Reference</a>
             <a href="mixer.html" class="tn-cta ${path.includes('mixer') ? 'tn-active' : ''}"><i data-lucide="shopping-cart" class="icn"></i> レジ</a>
         </div>
     `;
@@ -449,6 +452,11 @@ function updateSidebarPreview() {
         el = document.createElement('div');
         el.className = 'preview-anim';
         el.textContent = text;
+    } else if (pageKey === 'フォーム') {
+        el = document.createElement('input');
+        el.type = 'text';
+        el.placeholder = text || 'プレビュー入力';
+        el.className = 'preview-form';
     } else {
         el = document.createElement('span');
         el.textContent = text;
@@ -876,6 +884,15 @@ function injectStyles() {
             font-weight: bold;
             font-size: 0.9rem;
             display: inline-block;
+        }
+        .sb-preview-area .preview-form {
+            padding: 0.6em 0.9em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-family: inherit;
+            width: 90%;
+            background: white;
         }
         .sb-preview-hint {
             margin: 0.5em 0 0;

@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <meta name="description" content="フォーム部品 20種。input/checkbox/radio/toggle/textarea のデザイン集。フォーカス・エラー・実用例まで。">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://css-showcase-tan.vercel.app/sample_form_showcase.html">
+    <meta property="og:title" content="フォーム見本市 | Mixable CSS">
+    <meta property="og:description" content="フォーム部品 20種。入力欄・チェックボックス・トグル・バリデーション表現。">
+    <meta property="og:image" content="https://css-showcase-tan.vercel.app/images/og-image.jpg">
+    <meta property="og:site_name" content="Mixable CSS">
+    <meta property="og:locale" content="ja_JP">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="フォーム見本市 | Mixable CSS">
+    <meta name="twitter:description" content="フォーム部品 20種。">
+    <meta name="twitter:image" content="https://css-showcase-tan.vercel.app/images/og-image.jpg">
+    <title>フォーム見本市 | Mixable CSS</title>
+    <link rel="stylesheet" href="sample_form_showcase.css">
+    <script src="mixer.js" defer></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+<header class="page-header">
+    <h1>G. フォーム見本市</h1>
+    <p>入力部品 20種 — input / checkbox / radio / toggle / バリデーション</p>
+    <p class="hint"><i data-lucide="sliders-horizontal" class="icn"></i> フォームは「触って試す」のが一番。実際に入力・クリック・フォーカスしてみてください。つまみで角丸やパディングもライブ調整可能。</p>
+    <p><a href="index.html">← ポータルに戻る</a></p>
+</header>
+
+<main>
+
+    <section class="intro">
+        <h2><i data-lucide="compass" class="icn"></i> フォーム設計の3原則</h2>
+        <div class="intro-grid">
+            <div class="intro-card">
+                <p class="intro-title"><i data-lucide="eye" class="icn"></i> フォーカス明確</p>
+                <p><code>:focus</code>時の見た目を絶対に省略しない。キーボード操作のアクセシビリティに直結。</p>
+            </div>
+            <div class="intro-card">
+                <p class="intro-title"><i data-lucide="alert-circle" class="icn"></i> エラー即時</p>
+                <p>送信後ではなく、入力中/離脱時にバリデーション。ユーザーの労力を減らす。</p>
+            </div>
+            <div class="intro-card">
+                <p class="intro-title"><i data-lucide="ruler" class="icn"></i> タッチ基準</p>
+                <p>タップ領域 <code>44×44px</code> 以上。スマホで指が届く設計にする。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- グループ1: 入力欄のバリエーション -->
+    <section class="group">
+        <h2>グループ1: 入力欄のバリエーション</h2>
+        <div class="form-grid">
+
+            <div class="form-item" data-knobs='[{"label":"角丸","prop":"border-radius","target":".inp-standard","unit":"px","min":0,"max":20,"step":1,"value":4}]'>
+                <div class="form-demo">
+                    <input type="text" class="inp-standard" placeholder="メールアドレス">
+                </div>
+                <p class="label">標準 input</p>
+                <pre class="code"><code>padding: 0.6em 0.9em;
+border: 1px solid #ccc;
+border-radius: 4px;
+font-size: 1rem;
+width: 100%;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 角丸 0(硬め) 〜 12(柔らかめ)。プロダクトの雰囲気で選ぶ</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> スマホは <code>padding: 0.8em</code> 以上、<code>font-size: 16px</code> 必須（拡大表示防止）</p>
+                </div>
+            </div>
+
+            <div class="form-item">
+                <div class="form-demo">
+                    <input type="text" class="inp-underline" placeholder="メールアドレス">
+                </div>
+                <p class="label">下線のみ（Material Design風）</p>
+                <pre class="code"><code>padding: 0.6em 0;
+border: none;
+border-bottom: 2px solid #ccc;
+background: transparent;
+font-size: 1rem;
+width: 100%;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 下線の太さ 1-3px。太いほど存在感</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> Material Design、ミニマル系デザインで王道。フォーカス時の色変化必須</p>
+                </div>
+            </div>
+
+            <div class="form-item" data-knobs='[{"label":"角丸","prop":"border-radius","target":".inp-pill","unit":"px","min":0,"max":30,"step":1,"value":999}]'>
+                <div class="form-demo">
+                    <input type="text" class="inp-pill" placeholder="検索キーワード">
+                </div>
+                <p class="label">丸角（ピル型）</p>
+                <pre class="code"><code>padding: 0.6em 1.2em;
+border: 1px solid #ccc;
+border-radius: 999px;
+font-size: 1rem;
+width: 100%;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 999px=完全ピル、20-30px=丸角強め</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 検索ボックス、SNS系UIで頻出。カジュアルな印象</p>
+                </div>
+            </div>
+
+            <div class="form-item">
+                <div class="form-demo">
+                    <div class="inp-icon-wrap">
+                        <i data-lucide="search" class="icn"></i>
+                        <input type="text" class="inp-with-icon" placeholder="検索...">
+                    </div>
+                </div>
+                <p class="label">アイコン付き</p>
+                <pre class="code"><code>/* .wrap */
+position: relative;
+/* .icn */
+position: absolute;
+left: 0.8em;
+top: 50%;
+transform: translateY(-50%);
+color: #888;
+pointer-events: none;
+/* input */
+padding-left: 2.4em;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> アイコン色は<code>#888</code>程度に控えめに。主張しすぎない</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 検索・メール・パスワードで定番。アイコンは <code>pointer-events: none</code> でクリック素通り</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- グループ2: フォーカス表現 -->
+    <section class="group">
+        <h2>グループ2: フォーカス表現 <i data-lucide="star" class="icn"></i>クリックしてフォーカスしてみて</h2>
+        <div class="form-grid">
+
+            <div class="form-item">
+                <div class="form-demo">
+                    <input type="text" class="foc-outline" placeholder="フォーカスしてみて">
+                </div>
+                <p class="label">outline（青い枠）</p>
+                <pre class="code"><code>input {
+  padding: 0.6em 0.9em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+input:focus {
+  outline: 3px solid #4a90e2;
+  outline-offset: 1px;
+  border-color: #4a90e2;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> outline は 2-3px が視認性◯。<code>outline-offset</code> で浮かせる</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> アクセシビリティ観点で<strong>絶対に消さない</strong>。デフォルトで十分という立場も有力</p>
+                </div>
+            </div>
+
+            <div class="form-item">
+                <div class="form-demo">
+                    <input type="text" class="foc-ring" placeholder="フォーカスしてみて">
+                </div>
+                <p class="label">枠色 + リング影</p>
+                <pre class="code"><code>input:focus {
+  outline: none;
+  border-color: #6b4423;
+  box-shadow: 0 0 0 3px
+    rgba(107, 68, 35, 0.2);
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> リングの太さ 2-4px、透明度 0.15-0.3 が適正</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> Tailwind CSS 流の「リング」。ブランド色と揃えやすい</p>
+                </div>
+            </div>
+
+            <div class="form-item">
+                <div class="form-demo">
+                    <input type="text" class="foc-underline" placeholder="フォーカスしてみて">
+                </div>
+                <p class="label">下線アニメ（展開）</p>
+                <pre class="code"><code>.wrap { position: relative; }
+.wrap::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 0; height: 2px;
+  background: #6b4423;
+  transition: width 0.3s;
+}
+input:focus + .wrap::after {
+  width: 100%;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> transition 0.2-0.4s が気持ちいい速度</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> Material Design の InputField。「フォーカス中」を視覚で伝える高度UX</p>
+                </div>
+            </div>
+
+            <div class="form-item">
+                <div class="form-demo">
+                    <input type="text" class="foc-bg" placeholder="フォーカスしてみて">
+                </div>
+                <p class="label">背景色変化</p>
+                <pre class="code"><code>input {
+  background: #f5f5f5;
+  border: none;
+  border-radius: 4px;
+  padding: 0.7em 0.9em;
+  transition: background 0.2s;
+}
+input:focus {
+  outline: none;
+  background: #ffffff;
+  box-shadow: 0 0 0 2px #6b4423;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 非フォーカス時を濃く、フォーカスで白く。逆の発想</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> iOS風の「検索バー」表現。周囲から浮き上がる効果</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- グループ3: チェックボックス・ラジオ・トグル -->
+    <section class="group">
+        <h2>グループ3: チェックボックス・ラジオ・トグル</h2>
+        <div class="form-grid">
+
+            <div class="form-item">
+                <div class="form-demo">
+                    <label class="std-check">
+                        <input type="checkbox" checked>
+                        利用規約に同意
+                    </label>
+                </div>
+                <p class="label">標準チェック（accent-color）</p>
+                <pre class="code"><code>label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  cursor: pointer;
+}
+input[type="checkbox"] {
+  accent-color: #6b4423;
+  width: 1.2em;
+  height: 1.2em;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>accent-color</code> 1プロパティでブランド色に。2021年以降の新定番</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> OSネイティブ感を保つならこれが最善。カスタマイズは最小限で十分</p>
+                </div>
+            </div>
+
+            <div class="form-item">
+                <div class="form-demo">
+                    <label class="custom-check">
+                        <input type="checkbox" checked>
+                        <span class="check-box"></span>
+                        メールマガジンを購読
+                    </label>
+                </div>
+                <p class="label">カスタムチェック（独自デザイン）</p>
+                <pre class="code"><code>input { display: none; }
+.check-box {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #6b4423;
+  border-radius: 4px;
+  display: inline-block;
+  position: relative;
+}
+input:checked + .check-box {
+  background: #6b4423;
+}
+input:checked + .check-box::after {
+  content: '✓';
+  color: white;
+  position: absolute;
+  top: -2px;
+  left: 3px;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> チェック時に scale/bounce で動きをつけると触感◯</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> ブランド感重視なら。ネイティブの挙動（キーボード操作）が効くようにaccessibility注意</p>
+                </div>
+            </div>
+
+            <div class="form-item">
+                <div class="form-demo">
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                        <span class="toggle-label">通知ON</span>
+                    </label>
+                </div>
+                <p class="label">トグルスイッチ</p>
+                <pre class="code"><code>input { display: none; }
+.slider {
+  width: 44px;
+  height: 24px;
+  background: #ccc;
+  border-radius: 999px;
+  position: relative;
+  transition: background 0.25s;
+}
+.slider::before {
+  content: '';
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: left 0.25s;
+}
+input:checked + .slider { background: #6b4423; }
+input:checked + .slider::before { left: 22px; }</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 幅 40-50px / 高さ 22-28px が定番サイズ</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 設定ON/OFFで頻出。iOS発祥だが今は全環境で使用</p>
+                </div>
+            </div>
+
+            <div class="form-item">
+                <div class="form-demo">
+                    <div class="radio-group">
+                        <label class="std-radio">
+                            <input type="radio" name="size" checked>
+                            <span>S</span>
+                        </label>
+                        <label class="std-radio">
+                            <input type="radio" name="size">
+                            <span>M</span>
+                        </label>
+                        <label class="std-radio">
+                            <input type="radio" name="size">
+                            <span>L</span>
+                        </label>
+                    </div>
+                </div>
+                <p class="label">ボタン型ラジオ（セグメント）</p>
+                <pre class="code"><code>input { display: none; }
+label span {
+  padding: 0.5em 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+input:checked + span {
+  background: #6b4423;
+  color: white;
+  border-color: #6b4423;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 選択済みは太字+背景濃く、未選択は弱く</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> サイズ選択、カテゴリ選択で頻出。スマホで親指で押しやすいサイズにする</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- グループ4: バリデーション -->
+    <section class="group">
+        <h2>グループ4: エラー・成功・ヘルプ表示</h2>
+        <div class="form-grid">
+
+            <div class="form-item">
+                <div class="form-demo">
+                    <div class="field-wrap">
+                        <input type="text" class="inp-error" value="abc" placeholder="メールアドレス">
+                        <p class="error-msg"><i data-lucide="alert-circle" class="icn"></i> 有効なメール形式で入力</p>
+                    </div>
+                </div>
+                <p class="label">エラー状態（赤枠+メッセージ）</p>
+                <pre class="code"><code>input.error {
+  border-color: #c62828;
+  background: #fff5f5;
+}
+input.error:focus {
+  box-shadow: 0 0 0 3px
+    rgba(198, 40, 40, 0.2);
+}
+.error-msg {
+  color: #c62828;
+  font-size: 0.8rem;
+  margin-top: 0.3em;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 赤色は強すぎず <code>#c62828</code> 相当。背景をごく薄いピンクに</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 色だけでなく<strong>アイコン+テキスト</strong>も添える（色覚多様性への配慮）</p>
+                </div>
+            </div>
+
+            <div class="form-item">
+                <div class="form-demo">
+                    <div class="field-wrap">
+                        <input type="text" class="inp-success" value="user@example.com">
+                        <p class="success-msg"><i data-lucide="check-circle" class="icn"></i> OK</p>
+                    </div>
+                </div>
+                <p class="label">成功状態（緑チェック）</p>
+                <pre class="code"><code>input.success {
+  border-color: #2e7d32;
+  background: #f1f8f2;
+}
+.success-msg {
+  color: #2e7d32;
+  font-size: 0.8rem;
+  margin-top: 0.3em;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 緑は <code>#2e7d32</code>。明るすぎないビリジアン系が上品</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> リアルタイム検証で即時表示。ログインID重複チェック等で使う</p>
+                </div>
+            </div>
+
+            <div class="form-item">
+                <div class="form-demo">
+                    <div class="field-wrap">
+                        <label class="field-label">パスワード</label>
+                        <input type="password" class="inp-standard" placeholder="8文字以上">
+                        <p class="help-msg">英数記号を組み合わせ、8文字以上で入力</p>
+                    </div>
+                </div>
+                <p class="label">ヘルプテキスト（入力補助）</p>
+                <pre class="code"><code>.label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.3em;
+  font-size: 0.9rem;
+}
+.help-msg {
+  color: #888;
+  font-size: 0.78rem;
+  margin-top: 0.3em;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> ヘルプは <code>#888</code> 程度に控えめに。本文より小さく</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 入力ルール、文字数制限、フォーマット指示等に。placeholder の代わりに使う</p>
+                </div>
+            </div>
+
+            <div class="form-item">
+                <div class="form-demo">
+                    <div class="field-wrap">
+                        <label class="field-label">メールアドレス <span class="required">*必須</span></label>
+                        <input type="email" class="inp-standard" placeholder="your@example.com">
+                    </div>
+                </div>
+                <p class="label">必須マーク</p>
+                <pre class="code"><code>.required {
+  color: #c62828;
+  font-size: 0.75rem;
+  font-weight: bold;
+  margin-left: 0.3em;
+}
+
+/* 文字 "必須" と赤星 * の併用がわかりやすい */</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 赤<code>*</code>だけは不親切。「必須」テキスト併用を推奨</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 逆に「任意」を明示する方が実は親切。必須が多いフォームの場合</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- グループ5: 実用例 -->
+    <section class="group">
+        <h2>グループ5: 実用例 — そのまま使える組み合わせ</h2>
+        <div class="form-grid">
+
+            <div class="form-item">
+                <div class="form-demo">
+                    <div class="search-box">
+                        <i data-lucide="search" class="icn"></i>
+                        <input type="text" placeholder="商品を検索">
+                        <button type="button"><i data-lucide="x" class="icn"></i></button>
+                    </div>
+                </div>
+                <p class="label">検索ボックス（クリアボタン付き）</p>
+                <pre class="code"><code>.search-box {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 999px;
+  padding: 0 0.4em 0 0.9em;
+  background: white;
+}
+.search-box input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 0.6em 0.4em;
+}
+.search-box button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #888;
+  padding: 0.3em;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 高さ 36-44px、丸角は pill (999px) が基本</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> クリアボタンは入力があるときだけ表示（JS制御）が親切</p>
+                </div>
+            </div>
+
+            <div class="form-item">
+                <div class="form-demo">
+                    <div class="combo-form">
+                        <div class="field-wrap">
+                            <label class="field-label">お名前</label>
+                            <input type="text" class="inp-standard" placeholder="東城 立憲">
+                        </div>
+                        <div class="field-wrap">
+                            <label class="field-label">電話番号</label>
+                            <input type="tel" class="inp-standard" placeholder="090-0000-0000">
+                        </div>
+                    </div>
+                </div>
+                <p class="label">複数入力+ラベル</p>
+                <pre class="code"><code>.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+}
+.label {
+  font-weight: bold;
+  font-size: 0.9rem;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> フィールド間隔 0.8-1.2em、ラベル→入力間 0.3em</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> <code>&lt;label for&gt;</code> で紐付け必須。クリック範囲が広がり、アクセシビリティ向上</p>
+                </div>
+            </div>
+
+            <div class="form-item">
+                <div class="form-demo">
+                    <textarea class="ta-standard" rows="3" placeholder="お問い合わせ内容をご記入ください"></textarea>
+                </div>
+                <p class="label">textarea（複数行）</p>
+                <pre class="code"><code>textarea {
+  width: 100%;
+  padding: 0.6em 0.9em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 1rem;
+  resize: vertical;
+  min-height: 80px;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>resize: vertical</code> で縦のみリサイズ許可。<code>none</code>はユーザーの自由を奪う</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> <code>font-family: inherit</code> で input と揃える。<code>rows</code> で初期高さ指定</p>
+                </div>
+            </div>
+
+            <div class="form-item">
+                <div class="form-demo">
+                    <label class="file-input">
+                        <input type="file">
+                        <span class="file-btn">
+                            <i data-lucide="upload" class="icn"></i>
+                            ファイルを選択
+                        </span>
+                        <span class="file-name">選択なし</span>
+                    </label>
+                </div>
+                <p class="label">ファイル選択（カスタムUI）</p>
+                <pre class="code"><code>input[type="file"] {
+  display: none;
+}
+.file-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.6em 1em;
+  background: #6b4423;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.file-name {
+  color: #888;
+  margin-left: 0.8em;
+  font-size: 0.9rem;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> ブラウザ標準の file input はデザインバラバラ → 必ずカスタム化</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> ファイル名表示はJSで更新。<code>accept="image/*"</code> で種類制限</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 教えるポイント -->
+    <section class="lesson">
+        <h2>教える時のポイント</h2>
+        <ul>
+            <li><strong><code>:focus</code> を絶対に省略しない</strong>。<code>outline: none</code>だけは犯罪級。必ず代替の見た目を用意</li>
+            <li>スマホの iOS では input の <code>font-size &lt; 16px</code> で自動拡大される。<strong>常に 16px 以上</strong></li>
+            <li>タップ領域は <strong>44×44px</strong> 以上。Apple/Googleのガイドライン</li>
+            <li><code>&lt;label for="id"&gt;</code> と <code>&lt;input id="id"&gt;</code> の紐付けで、ラベルクリック→入力フォーカス。アクセシビリティの基本</li>
+            <li><code>accent-color</code>（2021年以降）で checkbox/radio をブランド色に1行で変えられる</li>
+            <li>エラー表示は<strong>色だけに頼らない</strong>。アイコン・テキストを併用（色覚多様性配慮）</li>
+            <li><code>:invalid</code> / <code>:valid</code> 疑似クラスでバリデーション結果を純CSSで表現可能</li>
+            <li>placeholder は入力ヒント専用。ラベルの代わりにはしない（入力後消えて困る）</li>
+        </ul>
+    </section>
+
+</main>
+
+<footer class="page-footer">
+    <p><a href="index.html">← ポータルに戻る</a></p>
+</footer>
+
+</body>
+</html>
