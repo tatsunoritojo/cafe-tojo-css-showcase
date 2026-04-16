@@ -1,0 +1,698 @@
+/* ==========================================
+   C. カード見本市
+   ========================================== */
+
+* { box-sizing: border-box; }
+
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fdfaf4;
+    color: #333;
+    line-height: 1.6;
+}
+
+.page-header {
+    background: linear-gradient(135deg, #6b4423, #8a5a30);
+    color: white;
+    padding: 2em 1em;
+    text-align: center;
+}
+
+.page-header h1 { margin: 0 0 0.3em; }
+.page-header p { margin: 0.3em 0; }
+.page-header a { color: #f5efe6; }
+.page-header .hint {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+main {
+    max-width: 1200px;
+    margin: 2em auto;
+    padding: 0 1em;
+}
+
+.page-footer {
+    text-align: center;
+    margin-top: 3em;
+    padding: 1.5em;
+    border-top: 1px solid #ddd;
+}
+.page-footer a { color: #6b4423; }
+
+
+/* ----- 導入セクション ----- */
+.intro {
+    background-color: white;
+    padding: 1.5em;
+    border-radius: 8px;
+    border-left: 4px solid #c8860d;
+    margin-bottom: 2.5em;
+}
+.intro h2 {
+    margin-top: 0;
+    color: #8a6a00;
+}
+.intro-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1em;
+    margin-top: 1em;
+}
+.intro-card {
+    background: #fffbea;
+    padding: 0.9em 1em;
+    border-radius: 6px;
+    border: 1px solid #f5e0a0;
+}
+.intro-card .intro-title {
+    margin: 0 0 0.3em;
+    font-weight: bold;
+    color: #8a6a00;
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+}
+.intro-card p {
+    margin: 0;
+    font-size: 0.88rem;
+    line-height: 1.55;
+}
+.intro-card code {
+    background: rgba(0, 0, 0, 0.06);
+    padding: 0.05em 0.3em;
+    border-radius: 3px;
+    font-size: 0.82rem;
+}
+
+
+/* ----- グループ共通 ----- */
+.group {
+    margin-bottom: 3em;
+    background-color: white;
+    padding: 1.5em;
+    border-radius: 8px;
+    border-left: 4px solid #6b4423;
+}
+
+.group h2 {
+    margin-top: 0;
+    color: #6b4423;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5em;
+    align-items: start;
+}
+
+.card-item {
+    background-color: #fafafa;
+    padding: 1.2em 1em;
+    border-radius: 6px;
+    border: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7em;
+}
+
+.card-item > .label {
+    font-size: 0.9rem;
+    color: #444;
+    font-weight: bold;
+    margin: 0;
+    text-align: center;
+}
+
+.card-item pre.code {
+    background: #2d2d2d;
+    color: #f5efe6;
+    padding: 0.7em 0.9em;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    text-align: left;
+    overflow-x: auto;
+    margin: 0;
+    font-family: 'Courier New', monospace;
+    line-height: 1.5;
+    white-space: pre;
+}
+
+.card-item pre.code code {
+    font-family: inherit;
+    color: inherit;
+    background: transparent;
+    padding: 0;
+    display: block;
+}
+
+
+/* ----- 調整ポイント ----- */
+.tuning {
+    background: #fff8e7;
+    border-left: 3px solid #ffc107;
+    border-radius: 4px;
+    padding: 0.55em 0.75em;
+    font-size: 0.76rem;
+    line-height: 1.55;
+}
+
+.tuning-row {
+    margin: 0.25em 0;
+    color: #4a3a0a;
+}
+.tuning-row:first-child { margin-top: 0; }
+.tuning-row:last-child { margin-bottom: 0; }
+.tuning-row strong {
+    color: #8a6a00;
+    margin-right: 0.2em;
+}
+.tuning-row .icn {
+    color: #c8860d;
+    vertical-align: -0.2em;
+    margin-right: 0.15em;
+}
+.tuning-row code {
+    background: rgba(0, 0, 0, 0.06);
+    padding: 0.05em 0.3em;
+    border-radius: 3px;
+    font-size: 0.72rem;
+    color: #6b4423;
+    font-family: 'Courier New', monospace;
+}
+
+
+/* ==========================================
+   カードデモ共通
+   ========================================== */
+
+.card-demo {
+    font-family: sans-serif;
+    line-height: 1.5;
+    color: #333;
+}
+.card-demo h3 {
+    margin: 0 0 0.3em;
+    font-size: 1.1rem;
+    color: #6b4423;
+}
+.card-demo p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+
+/* ==========================================
+   グループ1: 骨格
+   ========================================== */
+
+.card-simple {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 1em;
+    background: white;
+}
+
+.card-shadow {
+    border-radius: 6px;
+    padding: 1em;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.card-rounded-s {
+    border-radius: 6px;
+    padding: 1em;
+    background: white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-rounded-l {
+    border-radius: 20px;
+    padding: 1.3em;
+    background: white;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+
+/* ==========================================
+   グループ2: 画像配置
+   ========================================== */
+
+.card-img-top {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.card-img-top img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    display: block;
+}
+.card-img-top .body {
+    padding: 1em;
+}
+
+.card-img-side {
+    display: grid;
+    grid-template-columns: 40% 1fr;
+    gap: 0.8em;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.card-img-side img {
+    width: 100%;
+    height: 100%;
+    min-height: 100px;
+    object-fit: cover;
+    display: block;
+}
+.card-img-side .body {
+    padding: 0.8em 0.8em 0.8em 0;
+}
+
+.card-img-bg {
+    position: relative;
+    background-image: url('images/cafe-exterior.jpg');
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+    overflow: hidden;
+    min-height: 160px;
+    color: white;
+}
+.card-img-bg .overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent 70%);
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+.card-img-bg h3 {
+    color: white;
+}
+.card-img-bg p {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.card-poster {
+    background: #1a1a1a;
+    color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.card-poster img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    display: block;
+}
+.card-poster .caption {
+    padding: 0.8em 1em;
+}
+.card-poster .tag {
+    display: inline-block;
+    background: #c44;
+    color: white;
+    padding: 0.2em 0.6em;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    font-weight: bold;
+    margin-bottom: 0.4em;
+}
+.card-poster h3 {
+    color: white;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+
+/* ==========================================
+   グループ3: 情報階層
+   ========================================== */
+
+.card-minimal {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5em 1em;
+    border-left: 4px solid #6b4423;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+.card-minimal h3 {
+    margin: 0;
+}
+
+.card-meta {
+    background: white;
+    border-radius: 8px;
+    padding: 1em;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+.card-meta .meta {
+    display: flex;
+    gap: 1em;
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 0.8em;
+}
+.card-meta .meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+}
+.card-meta .meta .icn {
+    width: 14px;
+    height: 14px;
+}
+
+.card-badge {
+    position: relative;
+    background: white;
+    border-radius: 8px;
+    padding: 1em;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+.card-badge .badge-new {
+    position: absolute;
+    top: 0.6em;
+    right: 0.6em;
+    background: #c44;
+    color: white;
+    padding: 0.2em 0.6em;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+.card-icon {
+    background: white;
+    border-radius: 8px;
+    padding: 1.3em 1em;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+.card-icon .icon-wrap {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 0.8em;
+    background: #f5efe6;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6b4423;
+}
+.card-icon .icon-wrap .icn {
+    width: 22px;
+    height: 22px;
+}
+
+
+/* ==========================================
+   グループ4: 実用例
+   ========================================== */
+
+.card-product {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.card-product img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    display: block;
+}
+.card-product .body {
+    padding: 1em;
+}
+.card-product .price {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #c44;
+    margin: 0.3em 0 0.8em;
+}
+.card-product button {
+    width: 100%;
+    padding: 0.7em;
+    background: #6b4423;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.9rem;
+}
+
+.card-profile {
+    text-align: center;
+    background: white;
+    border-radius: 12px;
+    padding: 1.5em 1em;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+.card-profile .avatar {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 0.8em;
+    background: #6b4423;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-family: serif;
+}
+.card-profile h3 {
+    margin-bottom: 0.2em;
+}
+.card-profile .role {
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 0.8em;
+}
+.card-profile .sns {
+    display: flex;
+    justify-content: center;
+    gap: 0.8em;
+    color: #6b4423;
+}
+.card-profile .sns .icn {
+    width: 18px;
+    height: 18px;
+}
+
+.card-pricing {
+    background: white;
+    border: 2px solid #6b4423;
+    border-radius: 12px;
+    padding: 1.5em 1.2em;
+    text-align: center;
+    transform: scale(1);
+}
+.card-pricing .plan {
+    margin: 0 0 0.3em;
+    font-weight: bold;
+    color: #6b4423;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+}
+.card-pricing .pricing-price {
+    margin: 0.4em 0 0.6em;
+}
+.card-pricing .pricing-price .num {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #6b4423;
+}
+.card-pricing .pricing-price .per {
+    font-size: 0.9rem;
+    color: #888;
+    margin-left: 0.2em;
+}
+.card-pricing ul {
+    text-align: left;
+    list-style: none;
+    padding: 0;
+    margin: 1em 0;
+    font-size: 0.85rem;
+}
+.card-pricing ul li {
+    padding: 0.3em 0;
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+}
+.card-pricing ul li .icn {
+    color: #2e7d32;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+.card-pricing button {
+    width: 100%;
+    padding: 0.8em;
+    background: #6b4423;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.card-article {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+.card-article img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    display: block;
+}
+.card-article .body {
+    padding: 1em;
+}
+.card-article .category {
+    display: inline-block;
+    background: #f5efe6;
+    color: #6b4423;
+    padding: 0.2em 0.6em;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    margin-bottom: 0.4em;
+}
+.card-article h3 {
+    margin: 0 0 0.3em;
+    font-size: 1rem;
+}
+.card-article p {
+    font-size: 0.85rem;
+}
+.card-article .date {
+    color: #999;
+    font-size: 0.8rem;
+    margin-top: 0.5em;
+}
+
+
+/* ==========================================
+   グループ5: ホバー動作
+   ========================================== */
+
+.card-hover-lift {
+    background: white;
+    border-radius: 8px;
+    padding: 1em;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    transition: all 0.25s;
+    cursor: pointer;
+}
+.card-hover-lift:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.card-hover-shadow {
+    background: white;
+    border-radius: 8px;
+    padding: 1em;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.3s;
+    cursor: pointer;
+}
+.card-hover-shadow:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+}
+
+.card-hover-zoom {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+.card-hover-zoom .zoom-wrap {
+    overflow: hidden;
+}
+.card-hover-zoom img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s;
+}
+.card-hover-zoom:hover img {
+    transform: scale(1.08);
+}
+.card-hover-zoom .body {
+    padding: 1em;
+}
+
+.card-hover-border {
+    background: white;
+    border: 2px solid #eee;
+    border-radius: 8px;
+    padding: 1em;
+    transition: border-color 0.25s;
+    cursor: pointer;
+}
+.card-hover-border:hover {
+    border-color: #6b4423;
+}
+
+
+/* ==========================================
+   レッスン
+   ========================================== */
+
+.lesson {
+    background-color: #fff8e7;
+    padding: 1.5em 2em;
+    border-radius: 8px;
+    border-left: 4px solid #ffc107;
+    margin-top: 3em;
+}
+
+.lesson h2 {
+    color: #8a6a00;
+    margin-top: 0;
+}
+
+.lesson ul {
+    line-height: 1.8;
+}
+
+.lesson code {
+    background-color: #f5f5f5;
+    padding: 0.1em 0.4em;
+    border-radius: 3px;
+    font-size: 0.9em;
+}

@@ -62,12 +62,13 @@
     <section class="empty-state" id="empty">
         <h2><i data-lucide="shopping-cart" class="icn"></i> カートは空です</h2>
         <p>各見本市のページで、右上の <strong class="add-hint"><i data-lucide="plus" class="icn"></i></strong> ボタンを押してカートに追加してください。</p>
-        <p class="small-note"><i data-lucide="star" class="icn"></i> 画像活用・ボタン・文字装飾・レイアウト の <strong>4つの見本市から選択</strong> できます。</p>
+        <p class="small-note"><i data-lucide="star" class="icn"></i> 画像活用・ボタン・文字装飾・レイアウト・カード の <strong>5つの見本市から選択</strong> できます。</p>
         <div class="quick-links">
             <a href="sample_button_showcase.html">ボタン見本市へ</a>
             <a href="sample_text_showcase.html">文字装飾見本市へ</a>
             <a href="sample_image_effects.html">画像活用見本市へ</a>
             <a href="sample_layout_showcase.html">レイアウト見本市へ</a>
+            <a href="sample_card_showcase.html">カード見本市へ</a>
         </div>
     </section>
 
@@ -151,6 +152,7 @@
             <button class="tab-btn" data-cat="文字装飾"><i data-lucide="type" class="icn"></i> 文字装飾</button>
             <button class="tab-btn" data-cat="画像活用"><i data-lucide="image" class="icn"></i> 画像活用</button>
             <button class="tab-btn" data-cat="レイアウト"><i data-lucide="layout-grid" class="icn"></i> レイアウト</button>
+            <button class="tab-btn" data-cat="カード"><i data-lucide="layers" class="icn"></i> カード</button>
         </div>
         <button class="drawer-close" id="drawer-close" aria-label="閉じる"><i data-lucide="x" class="icn"></i></button>
     </div>
@@ -179,7 +181,8 @@
             { url: 'sample_button_showcase.html', key: 'ボタン' },
             { url: 'sample_text_showcase.html', key: '文字装飾' },
             { url: 'sample_image_effects.html', key: '画像活用' },
-            { url: 'sample_layout_showcase.html', key: 'レイアウト' }
+            { url: 'sample_layout_showcase.html', key: 'レイアウト' },
+            { url: 'sample_card_showcase.html', key: 'カード' }
         ];
         const catalog = {};
         for (const page of pages) {
@@ -188,7 +191,7 @@
                 if (!res.ok) continue;
                 const html = await res.text();
                 const doc = new DOMParser().parseFromString(html, 'text/html');
-                const items = doc.querySelectorAll('.btn-item, .text-item, .effect-item, .layout-item');
+                const items = doc.querySelectorAll('.btn-item, .text-item, .effect-item, .layout-item, .card-item');
                 catalog[page.key] = [];
                 items.forEach((item, idx) => {
                     const codeEl = item.querySelector('pre.code, pre.code-block-wide')
@@ -312,6 +315,7 @@
         if (category === '文字装飾') return `<span class="dp-text">カフェ</span>`;
         if (category === '画像活用') return `<img class="dp-img" src="images/cafe-exterior.jpg" alt="">`;
         if (category === 'レイアウト') return `<div class="dp-layout"><span class="dp-lbox">A</span><span class="dp-lbox">B</span><span class="dp-lbox">C</span></div>`;
+        if (category === 'カード') return `<div class="dp-card"><strong>カフェ東城</strong><span>こだわりの一杯を。</span></div>`;
         return `<div class="dp-generic">カフェ</div>`;
     }
 
@@ -742,7 +746,7 @@
 
     function renderPreviews(selections) {
         // カテゴリ別に分類
-        const byCategory = { '文字装飾': [], 'ボタン': [], '画像活用': [], 'レイアウト': [] };
+        const byCategory = { '文字装飾': [], 'ボタン': [], '画像活用': [], 'レイアウト': [], 'カード': [] };
         selections.forEach(s => {
             if (byCategory[s.category]) byCategory[s.category].push(s);
         });
@@ -874,7 +878,8 @@
         '画像活用': '<i data-lucide="image" class="icn"></i> 画像',
         '文字装飾': '<i data-lucide="type" class="icn"></i> 文字',
         'ボタン': '<i data-lucide="mouse-pointer-click" class="icn"></i> ボタン',
-        'レイアウト': '<i data-lucide="layout-grid" class="icn"></i> レイアウト'
+        'レイアウト': '<i data-lucide="layout-grid" class="icn"></i> レイアウト',
+        'カード': '<i data-lucide="layers" class="icn"></i> カード'
     };
 
     let selectedTemplateId = null;

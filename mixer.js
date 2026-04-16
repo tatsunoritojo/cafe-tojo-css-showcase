@@ -89,7 +89,7 @@ function instrumentShowcase() {
         return;
     }
 
-    const items = document.querySelectorAll('.btn-item, .text-item, .effect-item, .layout-item');
+    const items = document.querySelectorAll('.btn-item, .text-item, .effect-item, .layout-item, .card-item');
     const pageKey = getPageKey();
 
     items.forEach((item, idx) => {
@@ -137,6 +137,7 @@ function getPageKey() {
     if (path.includes('text')) return '文字装飾';
     if (path.includes('image')) return '画像活用';
     if (path.includes('layout')) return 'レイアウト';
+    if (path.includes('card')) return 'カード';
     if (path.includes('css_showcase')) return 'CSS Notes';
     return 'その他';
 }
@@ -285,6 +286,7 @@ function injectTopNav() {
             <a href="sample_text_showcase.html" class="${path.includes('text') ? 'tn-active' : ''}"><i data-lucide="type" class="icn"></i> 文字</a>
             <a href="sample_image_effects.html" class="${path.includes('image') ? 'tn-active' : ''}"><i data-lucide="image" class="icn"></i> 画像活用</a>
             <a href="sample_layout_showcase.html" class="${path.includes('layout') ? 'tn-active' : ''}"><i data-lucide="layout-grid" class="icn"></i> レイアウト</a>
+            <a href="sample_card_showcase.html" class="${path.includes('card') ? 'tn-active' : ''}"><i data-lucide="layers" class="icn"></i> カード</a>
             <a href="sample_css_showcase.html" class="tn-note ${path.includes('css_showcase') ? 'tn-active' : ''}"><i data-lucide="book-open" class="icn"></i> Notes</a>
             <a href="mixer.html" class="tn-cta ${path.includes('mixer') ? 'tn-active' : ''}"><i data-lucide="shopping-cart" class="icn"></i> レジ</a>
         </div>
@@ -427,6 +429,10 @@ function updateSidebarPreview() {
         el.innerHTML = '<span class="demo-box">A</span><span class="demo-box">B</span><span class="demo-box">C</span>';
         el.style.width = '100%';
         el.style.height = '100%';
+    } else if (pageKey === 'カード') {
+        el = document.createElement('div');
+        el.className = 'preview-card';
+        el.innerHTML = `<h4>${escapeHtmlStr(text)}</h4><p>こだわりの一杯を。</p>`;
     } else {
         el = document.createElement('span');
         el.textContent = text;
@@ -829,6 +835,22 @@ function injectStyles() {
             font-size: 0.8rem;
             font-weight: bold;
             display: inline-block;
+        }
+        .sb-preview-area .preview-card {
+            width: 100%;
+            padding: 0.8em;
+            background: white;
+            font-family: sans-serif;
+        }
+        .sb-preview-area .preview-card h4 {
+            margin: 0 0 0.3em;
+            font-size: 0.95rem;
+            color: #6b4423;
+        }
+        .sb-preview-area .preview-card p {
+            margin: 0;
+            font-size: 0.78rem;
+            color: #555;
         }
         .sb-preview-hint {
             margin: 0.5em 0 0;

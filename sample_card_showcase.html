@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <!-- SEO -->
+    <meta name="description" content="カードUI 20種。商品・プロフィール・料金プラン・記事の設計集。各項目にスライダー式つまみと実機運用メモ付き。">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://css-showcase-tan.vercel.app/sample_card_showcase.html">
+    <meta property="og:title" content="カード見本市 | Mixable CSS">
+    <meta property="og:description" content="カードUI 20種。商品・プロフィール・料金プラン・記事の設計集。各項目にスライダー式つまみと実機運用メモ付き。">
+    <meta property="og:image" content="https://css-showcase-tan.vercel.app/images/og-image.jpg">
+    <meta property="og:site_name" content="Mixable CSS">
+    <meta property="og:locale" content="ja_JP">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="カード見本市 | Mixable CSS">
+    <meta name="twitter:description" content="カードUI 20種。商品・プロフィール・料金プラン・記事の設計集。">
+    <meta name="twitter:image" content="https://css-showcase-tan.vercel.app/images/og-image.jpg">
+    <title>カード見本市 | Mixable CSS</title>
+    <link rel="stylesheet" href="sample_card_showcase.css">
+    <script src="mixer.js" defer></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+<header class="page-header">
+    <h1>C. カード見本市</h1>
+    <p>カードUIの20パターン — 商品・プロフィール・料金プラン・記事</p>
+    <p class="hint"><i data-lucide="sliders-horizontal" class="icn"></i> 各項目に <strong>つまみ</strong>・<strong>実機運用</strong>メモを併記。多くの項目でスライダーでライブ調整できます。</p>
+    <p><a href="index.html">← ポータルに戻る</a></p>
+</header>
+
+<main>
+
+    <!-- 導入 -->
+    <section class="intro">
+        <h2><i data-lucide="compass" class="icn"></i> カードの3要素</h2>
+        <div class="intro-grid">
+            <div class="intro-card">
+                <p class="intro-title"><i data-lucide="box" class="icn"></i> コンテナ</p>
+                <p>背景色・角丸・影・パディングで「カード感」を出す。padding は <code>1em〜2em</code> が実務の常識。</p>
+            </div>
+            <div class="intro-card">
+                <p class="intro-title"><i data-lucide="layout" class="icn"></i> 階層</p>
+                <p>画像 → タイトル → 本文 → メタ → CTA の順で視線誘導。余白で区切る。</p>
+            </div>
+            <div class="intro-card">
+                <p class="intro-title"><i data-lucide="mouse-pointer" class="icn"></i> インタラクション</p>
+                <p>カード全体をリンクにするなら <code>&lt;a&gt;</code> でラップ＋ <code>:hover</code> で持ち上げる。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- グループ1: 骨格と余白 -->
+    <section class="group">
+        <h2>グループ1: 骨格 — 枠・影・角丸・余白</h2>
+        <div class="card-grid">
+
+            <div class="card-item" data-knobs='[{"label":"余白","prop":"padding","unit":"em","min":0.3,"max":3,"step":0.1,"value":1}]'>
+                <div class="card-demo card-simple">
+                    <h3>カフェ東城</h3>
+                    <p>こだわりの一杯を。</p>
+                </div>
+                <p class="label">シンプル枠</p>
+                <pre class="code"><code>border: 1px solid #ddd;
+border-radius: 4px;
+padding: 1em;
+background: white;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>padding</code> 0.3em→3em。狭いと窮屈、広いとゆとり</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> スマホでは 0.8em、PCでは 1.5em が相場</p>
+                </div>
+            </div>
+
+            <div class="card-item" data-knobs='[{"label":"ぼかし","prop":"box-shadow","template":"0 4px {v}px rgba(0, 0, 0, 0.12)","displayUnit":"px","min":0,"max":40,"step":1,"value":12,"match":"0 4px \\d+px","replace":"0 4px {v}px"}]'>
+                <div class="card-demo card-shadow">
+                    <h3>カフェ東城</h3>
+                    <p>こだわりの一杯を。</p>
+                </div>
+                <p class="label">影付き（浮遊感）</p>
+                <pre class="code"><code>border-radius: 6px;
+padding: 1em;
+background: white;
+box-shadow: 0 4px 12px
+  rgba(0, 0, 0, 0.12);</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 影の<code>ぼかし</code>値。小(くっきり) ↔ 大(ふんわり)</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> Material Design 準拠なら 2dp→4dp→8dp の段階設計が定石</p>
+                </div>
+            </div>
+
+            <div class="card-item" data-knobs='[{"label":"角丸","prop":"border-radius","unit":"px","min":0,"max":32,"step":1,"value":6}]'>
+                <div class="card-demo card-rounded-s">
+                    <h3>カフェ東城</h3>
+                    <p>こだわりの一杯を。</p>
+                </div>
+                <p class="label">角丸 控えめ（6px）</p>
+                <pre class="code"><code>border-radius: 6px;
+padding: 1em;
+background: white;
+box-shadow: 0 2px 6px rgba(0,0,0,0.1);</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 4-8px = ビジネス/堅め、16-24px = 親しみ/カジュアル</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> ブランド全体で <code>--radius-md</code> 等に統一するのが実務</p>
+                </div>
+            </div>
+
+            <div class="card-item" data-knobs='[{"label":"角丸","prop":"border-radius","unit":"px","min":0,"max":32,"step":1,"value":20}]'>
+                <div class="card-demo card-rounded-l">
+                    <h3>カフェ東城</h3>
+                    <p>こだわりの一杯を。</p>
+                </div>
+                <p class="label">角丸 大きめ（20px）</p>
+                <pre class="code"><code>border-radius: 20px;
+padding: 1.3em;
+background: white;
+box-shadow: 0 6px 16px rgba(0,0,0,0.12);</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 大きくすると途端に SNS風/モバイル感。使い所を選ぶ</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> モバイル特化UI（金融・教育アプリ）で主流。B2Bでは控えめが無難</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- グループ2: 画像配置 -->
+    <section class="group">
+        <h2>グループ2: 画像の置き方</h2>
+        <div class="card-grid">
+
+            <div class="card-item">
+                <div class="card-demo card-img-top">
+                    <img src="images/cafe-exterior.jpg" alt="">
+                    <div class="body">
+                        <h3>カフェ東城</h3>
+                        <p>こだわりの一杯を。</p>
+                    </div>
+                </div>
+                <p class="label">上に画像（標準形）</p>
+                <pre class="code"><code>/* 親 */
+display: flex;
+flex-direction: column;
+overflow: hidden;
+border-radius: 8px;
+box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+/* img */
+width: 100%;
+aspect-ratio: 16/9;
+object-fit: cover;
+/* .body */
+padding: 1em;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>aspect-ratio</code> 16/9(映像) / 4/3(記事) / 1/1(SNS)</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> <code>object-fit: cover</code> は必須。画像の縦横比バラつきを吸収</p>
+                </div>
+            </div>
+
+            <div class="card-item">
+                <div class="card-demo card-img-side">
+                    <img src="images/cafe-exterior.jpg" alt="">
+                    <div class="body">
+                        <h3>カフェ東城</h3>
+                        <p>こだわりの一杯を。</p>
+                    </div>
+                </div>
+                <p class="label">横並び（左画像・右本文）</p>
+                <pre class="code"><code>display: grid;
+grid-template-columns: 40% 1fr;
+gap: 0.8em;
+overflow: hidden;
+border-radius: 8px;
+/* img */
+object-fit: cover;
+height: 100%;
+/* .body */
+padding: 0.8em;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 画像比率 <code>30%〜50%</code>。記事リストは 30%、商品は 50%</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> スマホでは縦積みに切替が多い → <code>@media (max-width: 600px) { grid-template-columns: 1fr }</code></p>
+                </div>
+            </div>
+
+            <div class="card-item">
+                <div class="card-demo card-img-bg">
+                    <div class="overlay">
+                        <h3>カフェ東城</h3>
+                        <p>こだわりの一杯を。</p>
+                    </div>
+                </div>
+                <p class="label">背景画像＋文字重ね</p>
+                <pre class="code"><code>position: relative;
+background-image: url(cafe.jpg);
+background-size: cover;
+background-position: center;
+border-radius: 8px;
+overflow: hidden;
+min-height: 160px;
+/* .overlay */
+position: absolute;
+inset: 0;
+background: linear-gradient(
+  to top,
+  rgba(0,0,0,0.7), transparent);
+color: white;
+padding: 1em;
+display: flex;
+flex-direction: column;
+justify-content: flex-end;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> グラデの <code>rgba(0,0,0,X)</code>。0.4〜0.8 で可読性調整</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> ヒーロー・ギャラリー・映画サムネで頻出。文字は必ずグラデで可読性確保</p>
+                </div>
+            </div>
+
+            <div class="card-item">
+                <div class="card-demo card-poster">
+                    <img src="images/cafe-exterior.jpg" alt="">
+                    <div class="caption">
+                        <span class="tag">CAFE</span>
+                        <h3>カフェ東城</h3>
+                    </div>
+                </div>
+                <p class="label">ポスター型（大画像＋下キャプション）</p>
+                <pre class="code"><code>/* 親 */
+border-radius: 8px;
+overflow: hidden;
+background: #1a1a1a;
+color: white;
+/* img */
+width: 100%;
+aspect-ratio: 3/4;
+object-fit: cover;
+/* .caption */
+padding: 0.8em 1em;
+/* .tag */
+display: inline-block;
+background: #c44;
+padding: 0.2em 0.6em;
+font-size: 0.75rem;
+letter-spacing: 0.1em;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>aspect-ratio: 3/4</code> がポスター感。正方形や 2/3 でも雰囲気が変わる</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> Netflix等の縦長サムネイル表現。ECの「特集」でも使える</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- グループ3: 情報階層 -->
+    <section class="group">
+        <h2>グループ3: 情報の階層表現</h2>
+        <div class="card-grid">
+
+            <div class="card-item">
+                <div class="card-demo card-minimal">
+                    <h3>カフェ東城</h3>
+                </div>
+                <p class="label">タイトルのみ</p>
+                <pre class="code"><code>border-radius: 8px;
+padding: 1.5em 1em;
+background: white;
+border-left: 4px solid #6b4423;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>border-left</code> の色でカテゴリ分けが一瞬で可能</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> ダッシュボードのステータスカード、TODOリストで頻出</p>
+                </div>
+            </div>
+
+            <div class="card-item">
+                <div class="card-demo card-meta">
+                    <h3>カフェ東城</h3>
+                    <p>こだわりの一杯を。</p>
+                    <div class="meta">
+                        <span><i data-lucide="calendar" class="icn"></i> 2026-04-16</span>
+                        <span><i data-lucide="tag" class="icn"></i> Coffee</span>
+                    </div>
+                </div>
+                <p class="label">タイトル + 本文 + メタ情報</p>
+                <pre class="code"><code>padding: 1em;
+background: white;
+border-radius: 8px;
+box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+/* .meta */
+display: flex;
+gap: 1em;
+font-size: 0.8rem;
+color: #888;
+margin-top: 0.8em;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> メタ情報は <code>font-size: 0.75-0.85rem</code> で本文より小さく</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 記事/ブログの定番。日付・カテゴリ・著者等が入る</p>
+                </div>
+            </div>
+
+            <div class="card-item">
+                <div class="card-demo card-badge">
+                    <span class="badge-new">新着</span>
+                    <h3>カフェ東城</h3>
+                    <p>こだわりの一杯を。</p>
+                </div>
+                <p class="label">バッジ付き（新着/セール）</p>
+                <pre class="code"><code>position: relative;
+padding: 1em;
+background: white;
+border-radius: 8px;
+box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+/* .badge-new */
+position: absolute;
+top: 0.6em;
+right: 0.6em;
+background: #c44;
+color: white;
+padding: 0.2em 0.6em;
+border-radius: 999px;
+font-size: 0.7rem;
+font-weight: bold;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> バッジ色で意味づけ。赤=緊急、緑=OK、黄=注意、青=情報</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> EC・求人・通知リストで必須。文字色とのコントラストを4.5:1以上に</p>
+                </div>
+            </div>
+
+            <div class="card-item">
+                <div class="card-demo card-icon">
+                    <div class="icon-wrap"><i data-lucide="coffee" class="icn"></i></div>
+                    <h3>コーヒー講座</h3>
+                    <p>抽出の基本から応用まで。</p>
+                </div>
+                <p class="label">アイコン付き（機能カード）</p>
+                <pre class="code"><code>padding: 1.3em 1em;
+background: white;
+border-radius: 8px;
+text-align: center;
+box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+/* .icon-wrap */
+width: 48px;
+height: 48px;
+margin: 0 auto 0.8em;
+background: #f5efe6;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+color: #6b4423;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> アイコン丸背景の <code>border-radius</code>。50%=円、8px=角丸正方形</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 機能説明セクション「3つの特徴」等で頻出。グリッド 3-4 列で整列</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- グループ4: 実用例 -->
+    <section class="group">
+        <h2>グループ4: 実用例 — そのまま使える完成形</h2>
+        <div class="card-grid">
+
+            <div class="card-item" data-knobs='[{"label":"角丸","prop":"border-radius","unit":"px","min":0,"max":24,"step":1,"value":8}]'>
+                <div class="card-demo card-product">
+                    <img src="images/cafe-exterior.jpg" alt="">
+                    <div class="body">
+                        <h3>ブレンドコーヒー</h3>
+                        <p class="price">¥580</p>
+                        <button>カートに追加</button>
+                    </div>
+                </div>
+                <p class="label">商品カード</p>
+                <pre class="code"><code>/* 親 */
+display: flex;
+flex-direction: column;
+border-radius: 8px;
+overflow: hidden;
+background: white;
+box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+/* .price */
+font-size: 1.4rem;
+font-weight: bold;
+color: #c44;
+margin: 0.3em 0 0.8em;
+/* button */
+width: 100%;
+padding: 0.7em;
+background: #6b4423;
+color: white;
+border: none;
+border-radius: 4px;
+cursor: pointer;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> カード全体の <code>border-radius</code>。ECサイトのブランド印象を左右</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> スマホでは1列、PC 2-4列が定番。<code>auto-fit + minmax(240px)</code> が万能</p>
+                </div>
+            </div>
+
+            <div class="card-item">
+                <div class="card-demo card-profile">
+                    <div class="avatar">東</div>
+                    <h3>東城 立憲</h3>
+                    <p class="role">オーナー / バリスタ</p>
+                    <div class="sns">
+                        <i data-lucide="twitter" class="icn"></i>
+                        <i data-lucide="instagram" class="icn"></i>
+                        <i data-lucide="github" class="icn"></i>
+                    </div>
+                </div>
+                <p class="label">プロフィールカード</p>
+                <pre class="code"><code>text-align: center;
+padding: 1.5em 1em;
+background: white;
+border-radius: 12px;
+box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+/* .avatar */
+width: 64px;
+height: 64px;
+margin: 0 auto 0.8em;
+background: #6b4423;
+color: white;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 1.5rem;
+font-weight: bold;
+/* .sns */
+display: flex;
+justify-content: center;
+gap: 0.8em;
+margin-top: 0.8em;
+color: #6b4423;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> アバターサイズ 48-96px。大きいほど「主役感」</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> チームページ、著者紹介で頻出。画像が無い時は頭文字で代替</p>
+                </div>
+            </div>
+
+            <div class="card-item" data-knobs='[{"label":"強調","prop":"transform","template":"scale({v})","min":1,"max":1.1,"step":0.01,"value":1,"match":"scale\\([\\d.]+\\)","replace":"scale({v})"}]'>
+                <div class="card-demo card-pricing">
+                    <p class="plan">PRO プラン</p>
+                    <p class="pricing-price"><span class="num">¥1,980</span><span class="per">/月</span></p>
+                    <ul>
+                        <li><i data-lucide="check" class="icn"></i> 全メニュー注文可能</li>
+                        <li><i data-lucide="check" class="icn"></i> 豆のサブスク10%OFF</li>
+                        <li><i data-lucide="check" class="icn"></i> 限定イベント招待</li>
+                    </ul>
+                    <button>このプランを選ぶ</button>
+                </div>
+                <p class="label">料金プラン</p>
+                <pre class="code"><code>padding: 1.5em 1.2em;
+background: white;
+border: 2px solid #6b4423;
+border-radius: 12px;
+text-align: center;
+transform: scale(1);
+/* .num */
+font-size: 2rem;
+font-weight: bold;
+color: #6b4423;
+/* ul */
+text-align: left;
+list-style: none;
+padding: 0;
+margin: 1em 0;
+/* button */
+width: 100%;
+padding: 0.8em;
+background: #6b4423;
+color: white;
+border: none;
+border-radius: 6px;
+font-weight: bold;
+cursor: pointer;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>transform: scale()</code> で「おすすめプラン」を他より1.05倍大きく表示</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 価格は大きく。特徴は箇条書き。CTAは1つだけ（選択肢多すぎは逆効果）</p>
+                </div>
+            </div>
+
+            <div class="card-item">
+                <div class="card-demo card-article">
+                    <img src="images/cafe-exterior.jpg" alt="">
+                    <div class="body">
+                        <span class="category">コーヒー</span>
+                        <h3>焙煎度合いで変わる香り</h3>
+                        <p>同じ豆でも焙煎時間を変えると全く違う顔を見せる...</p>
+                        <p class="date">2026-04-16</p>
+                    </div>
+                </div>
+                <p class="label">記事カード</p>
+                <pre class="code"><code>/* 親 */
+display: flex;
+flex-direction: column;
+border-radius: 8px;
+overflow: hidden;
+background: white;
+box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+/* img */
+aspect-ratio: 16/9;
+object-fit: cover;
+/* .category */
+display: inline-block;
+background: #f5efe6;
+color: #6b4423;
+padding: 0.2em 0.6em;
+border-radius: 4px;
+font-size: 0.75rem;
+font-weight: bold;
+/* .date */
+color: #999;
+font-size: 0.8rem;
+margin-top: 0.5em;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 本文は <code>-webkit-line-clamp: 2</code> で省略表示するのが実務</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> メディアサイトの定番。カテゴリ→タイトル→本文→日付 の順が読みやすい</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- グループ5: ホバー・インタラクション -->
+    <section class="group">
+        <h2>グループ5: ホバー動作 <i data-lucide="star" class="icn"></i>マウスを乗せてみて</h2>
+        <div class="card-grid">
+
+            <div class="card-item">
+                <div class="card-demo card-hover-lift">
+                    <h3>カフェ東城</h3>
+                    <p>こだわりの一杯を。</p>
+                </div>
+                <p class="label">ホバーで浮き上がる</p>
+                <pre class="code"><code>padding: 1em;
+background: white;
+border-radius: 8px;
+box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+transition: all 0.25s;
+
+/* :hover {
+     transform: translateY(-6px);
+     box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+   } */</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>translateY(-4px〜-10px)</code>。大きく動かしすぎるとチカチカする</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> スマホにはホバー無し → <code>:active</code> で押下効果を用意するのが親切</p>
+                </div>
+            </div>
+
+            <div class="card-item">
+                <div class="card-demo card-hover-shadow">
+                    <h3>カフェ東城</h3>
+                    <p>こだわりの一杯を。</p>
+                </div>
+                <p class="label">ホバーで影が濃く</p>
+                <pre class="code"><code>padding: 1em;
+background: white;
+border-radius: 8px;
+box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+transition: box-shadow 0.3s;
+
+/* :hover {
+     box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+   } */</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> ぼかし値を 2-3倍に。rgba の透明度も 0.08→0.18 程度</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 位置移動がない分、レイアウトが崩れない。クリック誘導の基本形</p>
+                </div>
+            </div>
+
+            <div class="card-item">
+                <div class="card-demo card-hover-zoom">
+                    <div class="zoom-wrap">
+                        <img src="images/cafe-exterior.jpg" alt="">
+                    </div>
+                    <div class="body">
+                        <h3>カフェ東城</h3>
+                        <p>こだわりの一杯を。</p>
+                    </div>
+                </div>
+                <p class="label">ホバーで画像ズーム</p>
+                <pre class="code"><code>/* .zoom-wrap */
+overflow: hidden;
+border-radius: 8px 8px 0 0;
+/* img */
+width: 100%;
+aspect-ratio: 16/9;
+object-fit: cover;
+transition: transform 0.4s;
+
+/* :hover img {
+     transform: scale(1.08);
+   } */</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>scale(1.05-1.15)</code>。大きすぎるとボケて品位が下がる</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 親に <code>overflow: hidden</code> 必須。ECの商品一覧で定番</p>
+                </div>
+            </div>
+
+            <div class="card-item">
+                <div class="card-demo card-hover-border">
+                    <h3>カフェ東城</h3>
+                    <p>こだわりの一杯を。</p>
+                </div>
+                <p class="label">ホバーで枠色変化</p>
+                <pre class="code"><code>padding: 1em;
+background: white;
+border: 2px solid #eee;
+border-radius: 8px;
+transition: border-color 0.25s;
+
+/* :hover {
+     border-color: #6b4423;
+   } */</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>border</code>幅 1-3px。太すぎるとゴツくなる</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 選択UIで使う。ラジオボタン的な「このカードを選んだ」表現に最適</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 教えるポイント -->
+    <section class="lesson">
+        <h2>教える時のポイント</h2>
+        <ul>
+            <li><strong>カードは「コンテナ」+「コンテンツ」の2層構造</strong>。親のスタイル（角丸・影・余白）と中身のスタイルは分けて考える</li>
+            <li><code>overflow: hidden</code> を親に掛けると、内側の角張った画像も角丸にクリップされる — カードの定番テク</li>
+            <li><code>aspect-ratio</code> + <code>object-fit: cover</code> で画像の縦横比バラつきを吸収。レスポンシブで絶対必要</li>
+            <li>カード全体をクリック可能にするなら <code>&lt;a&gt;</code> で全体をラップ（中のテキストも自動で pointer に）</li>
+            <li>ホバー効果は <code>transition</code> 必須。未指定だと瞬間的に変わって安っぽい</li>
+            <li><code>auto-fit + minmax(240px, 1fr)</code> でカードグリッドがメディアクエリなしで完成</li>
+        </ul>
+    </section>
+
+</main>
+
+<footer class="page-footer">
+    <p><a href="index.html">← ポータルに戻る</a></p>
+</footer>
+
+</body>
+</html>
