@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <!-- SEO -->
+    <meta name="description" content="Flexbox / Grid のレイアウトパターン20種。各項目に調整ポイント・デバイス別実機運用を記述。実務で使えるレスポンシブ設計の指針つき。">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://css-showcase-tan.vercel.app/sample_layout_showcase.html">
+    <meta property="og:title" content="レイアウト見本市 | Mixable CSS">
+    <meta property="og:description" content="Flexbox / Grid のレイアウトパターン20種。各項目に調整ポイント・デバイス別実機運用を記述。">
+    <meta property="og:image" content="https://css-showcase-tan.vercel.app/images/og-image.jpg">
+    <meta property="og:site_name" content="Mixable CSS">
+    <meta property="og:locale" content="ja_JP">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="レイアウト見本市 | Mixable CSS">
+    <meta name="twitter:description" content="Flexbox / Grid のレイアウトパターン20種。各項目に調整ポイント・デバイス別実機運用を記述。">
+    <meta name="twitter:image" content="https://css-showcase-tan.vercel.app/images/og-image.jpg">
+    <title>レイアウト見本市 | Mixable CSS</title>
+    <link rel="stylesheet" href="sample_layout_showcase.css">
+    <script src="mixer.js" defer></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+<header class="page-header">
+    <h1>D. レイアウト見本市</h1>
+    <p>Flexbox と Grid の20パターン — 実務で使える「調整のつまみ」付き</p>
+    <p class="hint"><i data-lucide="sliders" class="icn"></i> 各項目に <strong>調整ポイント</strong>（値をどう変えれば何が変わるか）と <strong>実機運用</strong>（PC/タブレット/スマホでの定石）を併記。</p>
+    <p><a href="index.html">← ポータルに戻る</a></p>
+</header>
+
+<main>
+
+    <!-- 設計思想の導入 -->
+    <section class="intro">
+        <h2><i data-lucide="compass" class="icn"></i> 実務で読むための3つの視点</h2>
+        <div class="intro-grid">
+            <div class="intro-card">
+                <p class="intro-title"><i data-lucide="sliders" class="icn"></i> つまみ</p>
+                <p>どの値を変えると何が動くか。実務はほぼ「既存CSSの値を調整」作業。</p>
+            </div>
+            <div class="intro-card">
+                <p class="intro-title"><i data-lucide="smartphone" class="icn"></i> 実機</p>
+                <p>PC で見て完成でも、スマホで崩れる。ブレイクポイント前提の書き方を身につける。</p>
+            </div>
+            <div class="intro-card">
+                <p class="intro-title"><i data-lucide="target" class="icn"></i> 第一選択</p>
+                <p>同じ結果でも今どきの実務では <code>auto-fit + minmax()</code>。レガシー保守で <code>margin: auto</code>。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- グループ1: Flexbox 基本 -->
+    <section class="group">
+        <h2>グループ1: Flexbox 基本 — 方向と間隔</h2>
+        <div class="layout-grid">
+
+            <div class="layout-item" data-knobs='[{"label":"gap","prop":"gap","unit":"em","min":0,"max":3,"step":0.1,"value":0.5}]'>
+                <div class="layout-demo lay-flex-row">
+                    <span class="box">A</span>
+                    <span class="box">B</span>
+                    <span class="box">C</span>
+                </div>
+                <p class="label">横並び（flex row）</p>
+                <pre class="code"><code>display: flex;
+gap: 0.5em;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>gap</code> を 0.3em→2em で密度変更。子に <code>flex-shrink: 0</code> で縮小防止</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 480px 以下では <code>flex-direction: column</code> に切替が定石</p>
+                </div>
+            </div>
+
+            <div class="layout-item" data-knobs='[{"label":"gap","prop":"gap","unit":"em","min":0,"max":3,"step":0.1,"value":0.5}]'>
+                <div class="layout-demo lay-flex-column">
+                    <span class="box">A</span>
+                    <span class="box">B</span>
+                    <span class="box">C</span>
+                </div>
+                <p class="label">縦並び（flex column）</p>
+                <pre class="code"><code>display: flex;
+flex-direction: column;
+gap: 0.5em;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>gap</code> で行間。<code>order: -1</code> で特定要素を先頭に移動</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> モバイルファーストの基準形。PC で <code>@media (min-width: 768px) { flex-direction: row }</code></p>
+                </div>
+            </div>
+
+            <div class="layout-item" data-knobs='[{"label":"gap","prop":"gap","unit":"em","min":0,"max":3,"step":0.1,"value":1.5}]'>
+                <div class="layout-demo lay-flex-gap">
+                    <span class="box">A</span>
+                    <span class="box">B</span>
+                    <span class="box">C</span>
+                </div>
+                <p class="label">広めのギャップ</p>
+                <pre class="code"><code>display: flex;
+gap: 1.5em;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 0.5em(詰) / 1em(標準) / 2em(ゆったり) の3段階が実務基準</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> デバイス幅で可変に → <code>gap: clamp(0.5em, 2vw, 2em)</code></p>
+                </div>
+            </div>
+
+            <div class="layout-item" data-knobs='[{"label":"gap","prop":"gap","unit":"em","min":0,"max":3,"step":0.1,"value":0.5}]'>
+                <div class="layout-demo lay-flex-wrap">
+                    <span class="box">A</span>
+                    <span class="box">B</span>
+                    <span class="box">C</span>
+                    <span class="box">D</span>
+                    <span class="box">E</span>
+                    <span class="box">F</span>
+                </div>
+                <p class="label">折り返し（wrap）</p>
+                <pre class="code"><code>display: flex;
+flex-wrap: wrap;
+gap: 0.5em;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 子に <code>flex: 1 1 200px</code> で最小200pxの可変カード列に</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 折り返し前提なら Grid <code>auto-fit</code> の方が列数制御が楽（G3-10参照）</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- グループ2: Flexbox 配置 -->
+    <section class="group">
+        <h2>グループ2: Flexbox 配置 — 主軸／交差軸</h2>
+        <div class="layout-grid">
+
+            <div class="layout-item" data-knobs='[{"label":"gap","prop":"gap","unit":"em","min":0,"max":3,"step":0.1,"value":0.5}]'>
+                <div class="layout-demo lay-flex-center">
+                    <span class="box">A</span>
+                    <span class="box">B</span>
+                    <span class="box">C</span>
+                </div>
+                <p class="label">中央揃え</p>
+                <pre class="code"><code>display: flex;
+justify-content: center;
+align-items: center;
+gap: 0.5em;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 親の <code>height</code> or <code>min-height</code> が必要。<code>vh</code> で画面全体中央に</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> ヒーロー領域は <code>min-height: 80vh</code> が相場。スマホ 100vh は下部UIで切れるので避ける</p>
+                </div>
+            </div>
+
+            <div class="layout-item">
+                <div class="layout-demo lay-flex-between">
+                    <span class="box">A</span>
+                    <span class="box">B</span>
+                    <span class="box">C</span>
+                </div>
+                <p class="label">両端配置（space-between）</p>
+                <pre class="code"><code>display: flex;
+justify-content: space-between;
+align-items: center;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 子が奇数だと中央要素がそのまま中央に残る。左右2要素前提で使うのが安全</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> ヘッダーの最頻出形。スマホでは右側をハンバーガー1個に集約</p>
+                </div>
+            </div>
+
+            <div class="layout-item">
+                <div class="layout-demo lay-flex-around">
+                    <span class="box">A</span>
+                    <span class="box">B</span>
+                    <span class="box">C</span>
+                </div>
+                <p class="label">均等配置（space-around）</p>
+                <pre class="code"><code>display: flex;
+justify-content: space-around;
+align-items: center;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>space-evenly</code> なら両端余白も等しい（2020年以降主流）</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> タブバー、下部ナビで頻出。5個以上並ぶとスマホで窮屈 → 横スクロール化</p>
+                </div>
+            </div>
+
+            <div class="layout-item">
+                <div class="layout-demo lay-flex-end">
+                    <span class="box">A</span>
+                    <span class="box">B</span>
+                    <span class="box">C</span>
+                </div>
+                <p class="label">右寄せ（flex-end）</p>
+                <pre class="code"><code>display: flex;
+justify-content: flex-end;
+gap: 0.5em;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 特定の1子だけ右寄せなら子に <code>margin-left: auto</code> が定石</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> フォーム送信ボタン、モーダル OK/Cancel の配置で頻出</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- グループ3: Grid 基本 -->
+    <section class="group">
+        <h2>グループ3: Grid 基本 — 列と行の指定</h2>
+        <div class="layout-grid">
+
+            <div class="layout-item" data-knobs='[{"label":"列数","prop":"grid-template-columns","template":"repeat({v}, 1fr)","displayUnit":"列","min":1,"max":6,"step":1,"value":3,"match":"repeat\\(\\d+,","replace":"repeat({v},"}]'>
+                <div class="layout-demo lay-grid-3col">
+                    <span class="box">A</span>
+                    <span class="box">B</span>
+                    <span class="box">C</span>
+                </div>
+                <p class="label">3等分グリッド</p>
+                <pre class="code"><code>display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 0.5em;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>repeat(3, 1fr)</code> で3等分。固定+可変混在なら <code>200px 1fr 1fr</code></p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> スマホで潰れる → <code>@media (max-width: 600px) { grid-template-columns: 1fr }</code> 必須</p>
+                </div>
+            </div>
+
+            <div class="layout-item" data-knobs='[{"label":"最小幅","prop":"grid-template-columns","template":"repeat(auto-fit, minmax({v}px, 1fr))","displayUnit":"px","min":40,"max":320,"step":20,"value":60,"match":"minmax\\(\\d+px","replace":"minmax({v}px"}]'>
+                <div class="layout-demo lay-grid-autofit">
+                    <span class="box">A</span>
+                    <span class="box">B</span>
+                    <span class="box">C</span>
+                    <span class="box">D</span>
+                </div>
+                <p class="label">自動フィット（レスポンシブ）</p>
+                <pre class="code"><code>display: grid;
+grid-template-columns:
+  repeat(auto-fit, minmax(60px, 1fr));
+gap: 0.5em;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>minmax(240px, 1fr)</code> の 240px が1列の最小幅。商品カードなら 240-320px</p>
+                    <p class="tuning-row"><i data-lucide="target" class="icn"></i> <strong>実務の第一選択:</strong> メディアクエリ不要で全デバイス対応。迷ったらこれ</p>
+                </div>
+            </div>
+
+            <div class="layout-item" data-knobs='[{"label":"Side幅","prop":"grid-template-columns","template":"{v}px 1fr","displayUnit":"px","min":40,"max":300,"step":10,"value":60,"match":"\\d+px 1fr","replace":"{v}px 1fr"}]'>
+                <div class="layout-demo lay-grid-sidebar">
+                    <span class="box">A</span>
+                    <span class="box">B</span>
+                </div>
+                <p class="label">サイドバー（固定＋可変）</p>
+                <pre class="code"><code>display: grid;
+grid-template-columns: 60px 1fr;
+gap: 0.5em;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 60px を 240px 等に。右サイドなら <code>1fr 240px</code></p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> スマホで縦積み必須 → <code>@media (max-width: 768px) { grid-template-columns: 1fr }</code></p>
+                </div>
+            </div>
+
+            <div class="layout-item">
+                <div class="layout-demo lay-grid-mix">
+                    <span class="box">A</span>
+                    <span class="box">B</span>
+                    <span class="box">C</span>
+                    <span class="box">D</span>
+                </div>
+                <p class="label">2×2 グリッド</p>
+                <pre class="code"><code>display: grid;
+grid-template-columns: 1fr 1fr;
+grid-template-rows: auto auto;
+gap: 0.5em;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 1要素を縦2段に伸ばすなら子に <code>grid-row: span 2</code></p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> ダッシュボードで頻出。スマホでは <code>grid-template-columns: 1fr</code> で1列化</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- グループ4: よくある全体レイアウト -->
+    <section class="group">
+        <h2>グループ4: よくある全体レイアウト</h2>
+        <div class="layout-grid">
+
+            <div class="layout-item">
+                <div class="layout-demo lay-holy-grail">
+                    <span class="box box-h">Header</span>
+                    <span class="box box-m">Main</span>
+                    <span class="box box-f">Footer</span>
+                </div>
+                <p class="label">ヘッダー/メイン/フッター</p>
+                <pre class="code"><code>display: grid;
+grid-template-rows: auto 1fr auto;
+gap: 0.3em;
+min-height: 100vh;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>1fr</code> が可変領域。<code>min-height: 100vh</code> で全画面カバー</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 全デバイス共通の骨格。スマホ時は <code>100dvh</code>（動的vh）推奨でアドレスバー問題回避</p>
+                </div>
+            </div>
+
+            <div class="layout-item">
+                <div class="layout-demo lay-sidebar-main">
+                    <span class="box box-side">Side</span>
+                    <span class="box box-m">Main</span>
+                </div>
+                <p class="label">サイドバー + メイン</p>
+                <pre class="code"><code>display: grid;
+grid-template-columns: 1fr 3fr;
+gap: 0.5em;
+min-height: 100%;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>1fr 3fr</code> の比率変更。固定幅なら <code>240px 1fr</code></p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 管理画面の定番。スマホではサイドバーをドロワー/オフキャンバス化が必須</p>
+                </div>
+            </div>
+
+            <div class="layout-item" data-knobs='[{"label":"最小幅","prop":"grid-template-columns","template":"repeat(auto-fill, minmax({v}px, 1fr))","displayUnit":"px","min":40,"max":320,"step":20,"value":50,"match":"minmax\\(\\d+px","replace":"minmax({v}px"}]'>
+                <div class="layout-demo lay-card-grid">
+                    <span class="box">1</span>
+                    <span class="box">2</span>
+                    <span class="box">3</span>
+                    <span class="box">4</span>
+                    <span class="box">5</span>
+                    <span class="box">6</span>
+                </div>
+                <p class="label">カードグリッド</p>
+                <pre class="code"><code>display: grid;
+grid-template-columns:
+  repeat(auto-fill, minmax(50px, 1fr));
+gap: 0.4em;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>minmax</code> の最小値で列数が決まる（120px→多数列、320px→少数列）</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 商品/記事一覧で必須。実務では 240-320px が現実解。<code>auto-fill</code> vs <code>auto-fit</code> は空列の扱いが違う</p>
+                </div>
+            </div>
+
+            <div class="layout-item">
+                <div class="layout-demo lay-named-area">
+                    <span class="box box-h" style="grid-area: h;">H</span>
+                    <span class="box box-side" style="grid-area: s;">S</span>
+                    <span class="box box-m" style="grid-area: m;">M</span>
+                </div>
+                <p class="label">名前付きエリア</p>
+                <pre class="code"><code>display: grid;
+grid-template-columns: 1fr 2fr;
+grid-template-areas:
+  "h h"
+  "s m";
+gap: 0.3em;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>"h h"</code> のような文字列で構造が一目瞭然。エリア名を変えれば順序も変わる</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> スマホ用に <code>grid-template-areas: "h" "m" "s"</code> と上書きで縦積みへ切替可能</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- グループ5: センタリング技法 -->
+    <section class="group">
+        <h2>グループ5: センタリング技法 — 4つの流派を比較</h2>
+        <div class="layout-grid">
+
+            <div class="layout-item">
+                <div class="layout-demo lay-center-flex">
+                    <span class="box">中</span>
+                </div>
+                <p class="label">Flex で中央</p>
+                <pre class="code"><code>display: flex;
+justify-content: center;
+align-items: center;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>gap</code> で複数子要素の中央配置も可能。親の高さが必要</p>
+                    <p class="tuning-row"><i data-lucide="target" class="icn"></i> <strong>実務の第一選択:</strong> 2024年以降の標準。全ブラウザ対応で迷う要素なし</p>
+                </div>
+            </div>
+
+            <div class="layout-item">
+                <div class="layout-demo lay-center-grid">
+                    <span class="box">中</span>
+                </div>
+                <p class="label">Grid で中央（place-items）</p>
+                <pre class="code"><code>display: grid;
+place-items: center;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>place-items</code> = <code>align-items</code> + <code>justify-items</code> の短縮形</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 最短1行。Safari 14 未満で非対応のため古い端末サポート時は Flex 版を選ぶ</p>
+                </div>
+            </div>
+
+            <div class="layout-item">
+                <div class="layout-demo lay-center-absolute">
+                    <span class="box">中</span>
+                </div>
+                <p class="label">absolute + transform</p>
+                <pre class="code"><code>position: relative;
+/* 子要素:
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%); */</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 親に <code>position: relative</code> 必須。子の幅/高さ未知でも中央に置ける</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> モーダル、ツールチップで現役。Flex/Grid が使えない特殊環境の最終手段</p>
+                </div>
+            </div>
+
+            <div class="layout-item">
+                <div class="layout-demo lay-center-margin">
+                    <span class="box">中</span>
+                </div>
+                <p class="label">margin: auto（水平のみ）</p>
+                <pre class="code"><code>display: block;
+/* 子要素:
+   margin: 0 auto;
+   width: fit-content; */</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>width</code> 指定必須（auto では効かない）。<code>width: fit-content</code> で可変幅に対応</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> メールHTML（Flex/Grid 非サポート）、レガシーコード保守で頻出</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- レスポンシブ設計の思考フロー -->
+    <section class="flow">
+        <h2><i data-lucide="git-branch" class="icn"></i> レスポンシブ設計の判断フロー</h2>
+        <ol class="flow-list">
+            <li><strong>auto-fit + minmax() で解決できないか</strong> をまず検討（G3-10 / G4-15）。これで済むなら <em>メディアクエリ不要</em></li>
+            <li>固定+可変の明確な2カラム構造なら <strong>Grid の サイドバー型</strong>（G3-11）＋スマホ時 1fr に切替</li>
+            <li>1方向の並びのみなら <strong>Flex row → スマホで column</strong> の定石（G1-1 / G1-2）</li>
+            <li>全体骨格は <strong>Holy Grail（G4-13）</strong> で <code>min-height: 100dvh</code> が 2024 年以降のベストプラクティス</li>
+            <li>センタリングは <strong>Flex or Grid place-items</strong>（G5-17 / G5-18）。それ以外は保守・特殊用途のみ</li>
+        </ol>
+    </section>
+
+    <!-- 教えるポイント -->
+    <section class="lesson">
+        <h2>教える時のポイント</h2>
+        <ul>
+            <li><strong>「つまみ」思考</strong> — 実務はゼロから書くより既存の値を調整するほうが圧倒的に多い。どの値が可変かを意識する</li>
+            <li><strong>モバイルファースト</strong> — スマホ用CSSを基準にし、<code>@media (min-width: 768px)</code> で PC 用を上書きする書き方が今どき</li>
+            <li>Flexbox は「1方向」、Grid は「2次元」 — 選び方の第一基準</li>
+            <li><code>gap</code> は Flex でも Grid でも使える。<code>margin</code> より圧倒的に楽</li>
+            <li>レイアウトは <strong>親のCSS</strong>。子側に書いても動かない、という混乱が初学者の8割の詰まりどころ</li>
+            <li>レスポンシブの第一選択は <code>auto-fit + minmax()</code>。メディアクエリはその後</li>
+            <li><code>dvh</code> / <code>svh</code> / <code>lvh</code>（2024年主流）はスマホのアドレスバー問題を解決する新単位</li>
+        </ul>
+    </section>
+
+</main>
+
+<footer class="page-footer">
+    <p><a href="index.html">← ポータルに戻る</a></p>
+</footer>
+
+</body>
+</html>

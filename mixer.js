@@ -89,7 +89,7 @@ function instrumentShowcase() {
         return;
     }
 
-    const items = document.querySelectorAll('.btn-item, .text-item, .effect-item');
+    const items = document.querySelectorAll('.btn-item, .text-item, .effect-item, .layout-item');
     const pageKey = getPageKey();
 
     items.forEach((item, idx) => {
@@ -100,7 +100,6 @@ function instrumentShowcase() {
 
         const id = `${pageKey}-${idx}`;
         const name = labelEl ? labelEl.textContent.trim() : `${pageKey}項目${idx + 1}`;
-        const css = codeEl.textContent.trim();
 
         const btn = document.createElement('button');
         btn.className = 'add-to-mixer';
@@ -115,11 +114,11 @@ function instrumentShowcase() {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            // デモ要素のHTMLも保存（プレビュー時の正確な再現のため）
-            const demoEl = Array.from(item.children).find(ch =>
-                !ch.matches('figcaption, pre.code, pre.code-block-wide, .add-to-mixer, .label'));
+            // CSSとHTMLは click時に再取得する（つまみ調整後の値を拾うため）
+            const currentCSS = codeEl.textContent.trim();
+            const demoEl = findKnobDemoTarget(item);
             const html = demoEl ? demoEl.outerHTML : '';
-            toggleSelection({ id, name, css, category: pageKey, html });
+            toggleSelection({ id, name, css: currentCSS, category: pageKey, html });
         });
 
         item.style.position = 'relative';
@@ -137,9 +136,136 @@ function getPageKey() {
     if (path.includes('button')) return 'ボタン';
     if (path.includes('text')) return '文字装飾';
     if (path.includes('image')) return '画像活用';
+    if (path.includes('layout')) return 'レイアウト';
     if (path.includes('css_showcase')) return 'CSS Notes';
     return 'その他';
 }
+
+/* ---------------- つまみ（インタラクティブプレビュー） ---------------- */
+
+function initKnobs() {
+    document.querySelectorAll('[data-knobs]').forEach(item => {
+        if (item.dataset.knobsInit === '1') return;
+        item.dataset.knobsInit = '1';
+
+        let knobs;
+        try {
+            knobs = JSON.parse(item.dataset.knobs);
+        } catch (e) {
+            console.warn('Invalid data-knobs JSON', item, e);
+            return;
+        }
+        if (!Array.isArray(knobs) || knobs.length === 0) return;
+
+        const panel = document.createElement('div');
+        panel.className = 'knob-panel';
+        panel.innerHTML = `
+            <p class="knob-panel-title"><i data-lucide="sliders-horizontal" class="icn"></i> つまみで試す</p>
+            ${knobs.map((k, idx) => `
+                <label class="knob-row" data-knob-idx="${idx}">
+                    <span class="knob-label" title="${escapeHtmlStr(k.prop)}">${escapeHtmlStr(k.label || k.prop)}</span>
+                    <input type="range" class="knob-input"
+                        min="${k.min}" max="${k.max}" step="${k.step}" value="${k.value}"
+                        data-idx="${idx}">
+                    <span class="knob-value">${escapeHtmlStr(renderKnobDisplay(k, k.value))}</span>
+                </label>
+            `).join('')}
+        `;
+
+        const codeEl = item.querySelector('pre.code, pre.code-block-wide');
+        if (codeEl) {
+            codeEl.insertAdjacentElement('afterend', panel);
+        } else {
+            item.appendChild(panel);
+        }
+
+        // 元のコード文字列を保存（逐次書き換えるため）
+        const codeInner = item.querySelector('pre.code code, pre.code-block-wide code');
+        if (codeInner && !codeInner.dataset.origText) {
+            codeInner.dataset.origText = codeInner.textContent;
+        }
+
+        panel.querySelectorAll('.knob-input').forEach(input => {
+            input.addEventListener('input', () => applyKnob(item, knobs, input));
+        });
+    });
+}
+
+function applyKnob(item, knobs, input) {
+    const idx = parseInt(input.dataset.idx, 10);
+    const knob = knobs[idx];
+    if (!knob) return;
+
+    const val = input.value;
+    const fullValue = renderKnobFull(knob, val);
+
+    // 表示値を更新
+    const valueEl = input.parentElement.querySelector('.knob-value');
+    if (valueEl) valueEl.textContent = renderKnobDisplay(knob, val);
+
+    // デモ要素のプロパティを更新（ページ側CSSが !important を使うケースに備えて important 付き）
+    const demoEl = findKnobDemoTarget(item);
+    if (demoEl && knob.prop) {
+        demoEl.style.setProperty(knob.prop, fullValue, 'important');
+    }
+
+    // コードブロックの該当行を書き換え（origから全つまみを再適用）
+    const codeInner = item.querySelector('pre.code code, pre.code-block-wide code');
+    if (codeInner) {
+        const base = codeInner.dataset.origText || codeInner.textContent;
+        let newText = base;
+        knobs.forEach((k, i) => {
+            const ki = item.querySelector(`.knob-input[data-idx="${i}"]`);
+            if (!ki) return;
+            newText = applyKnobToText(newText, k, ki.value);
+        });
+        codeInner.textContent = newText;
+    }
+}
+
+function applyKnobToText(text, knob, val) {
+    // 部分置換モード（match/replace が指定されていれば優先）
+    if (knob.match && knob.replace) {
+        const regex = new RegExp(knob.match);
+        return text.replace(regex, knob.replace.replace(/\{v\}/g, val));
+    }
+    // フォールバック: プロパティ値全体を置換
+    if (!knob.prop) return text;
+    const fullValue = renderKnobFull(knob, val);
+    return replaceCSSValue(text, knob.prop, fullValue);
+}
+
+function renderKnobFull(knob, val) {
+    const tpl = knob.template || `{v}${knob.unit || ''}`;
+    return tpl.replace(/\{v\}/g, val);
+}
+
+function renderKnobDisplay(knob, val) {
+    const u = knob.displayUnit != null ? knob.displayUnit : (knob.unit || '');
+    return `${val}${u}`;
+}
+
+function findKnobDemoTarget(item) {
+    return Array.from(item.children).find(ch =>
+        !ch.matches('figcaption, pre.code, pre.code-block-wide, .add-to-mixer, .label, .tuning, .knob-panel'));
+}
+
+function replaceCSSValue(text, prop, newValue) {
+    const escaped = prop.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    // コメント部分と非コメント部分に分割して、非コメント部分の最初の一致のみ置換
+    const parts = text.split(/(\/\*[\s\S]*?\*\/)/);
+    const regex = new RegExp(`(${escaped}\\s*:\\s*)([^;]+)(;)`);
+    let done = false;
+    return parts.map(part => {
+        if (done || part.startsWith('/*')) return part;
+        const next = part.replace(regex, (m, before, old, after) => {
+            done = true;
+            return before + newValue + after;
+        });
+        return next;
+    }).join('');
+}
+
 
 /* ---------------- トップナビゲーション ---------------- */
 
@@ -158,6 +284,7 @@ function injectTopNav() {
             <a href="sample_button_showcase.html" class="${path.includes('button') ? 'tn-active' : ''}"><i data-lucide="mouse-pointer-click" class="icn"></i> ボタン</a>
             <a href="sample_text_showcase.html" class="${path.includes('text') ? 'tn-active' : ''}"><i data-lucide="type" class="icn"></i> 文字</a>
             <a href="sample_image_effects.html" class="${path.includes('image') ? 'tn-active' : ''}"><i data-lucide="image" class="icn"></i> 画像活用</a>
+            <a href="sample_layout_showcase.html" class="${path.includes('layout') ? 'tn-active' : ''}"><i data-lucide="layout-grid" class="icn"></i> レイアウト</a>
             <a href="sample_css_showcase.html" class="tn-note ${path.includes('css_showcase') ? 'tn-active' : ''}"><i data-lucide="book-open" class="icn"></i> Notes</a>
             <a href="mixer.html" class="tn-cta ${path.includes('mixer') ? 'tn-active' : ''}"><i data-lucide="shopping-cart" class="icn"></i> レジ</a>
         </div>
@@ -294,6 +421,12 @@ function updateSidebarPreview() {
         el.alt = 'プレビュー';
         el.style.maxWidth = '100%';
         el.style.maxHeight = '160px';
+    } else if (pageKey === 'レイアウト') {
+        el = document.createElement('div');
+        el.className = 'preview-layout';
+        el.innerHTML = '<span class="demo-box">A</span><span class="demo-box">B</span><span class="demo-box">C</span>';
+        el.style.width = '100%';
+        el.style.height = '100%';
     } else {
         el = document.createElement('span');
         el.textContent = text;
@@ -635,6 +768,68 @@ function injectStyles() {
             cursor: pointer;
             font-family: inherit;
         }
+        /* つまみパネル */
+        .knob-panel {
+            background: #eff6ff;
+            border-left: 3px solid #4a90e2;
+            border-radius: 4px;
+            padding: 0.55em 0.75em;
+            font-size: 0.75rem;
+            margin: 0;
+            font-family: sans-serif;
+        }
+        .knob-panel-title {
+            margin: 0 0 0.45em;
+            font-size: 0.78rem;
+            color: #2c5282;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.4em;
+        }
+        .knob-panel-title .icn {
+            color: #4a90e2;
+        }
+        .knob-row {
+            display: grid;
+            grid-template-columns: minmax(60px, 90px) 1fr minmax(48px, 62px);
+            align-items: center;
+            gap: 0.45em;
+            margin: 0.3em 0;
+            cursor: pointer;
+        }
+        .knob-label {
+            font-family: 'Courier New', monospace;
+            font-size: 0.7rem;
+            color: #2c5282;
+            font-weight: bold;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .knob-input {
+            width: 100%;
+            accent-color: #4a90e2;
+            cursor: pointer;
+            margin: 0;
+        }
+        .knob-value {
+            text-align: right;
+            font-family: 'Courier New', monospace;
+            font-size: 0.7rem;
+            color: #2c5282;
+            font-weight: bold;
+        }
+
+        .sb-preview-area .preview-layout .demo-box {
+            background: #6b4423;
+            color: white;
+            padding: 0.3em 0.6em;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: inline-block;
+        }
         .sb-preview-hint {
             margin: 0.5em 0 0;
             font-size: 0.8rem;
@@ -780,6 +975,7 @@ function refreshIcons() {
 
 function init() {
     instrumentShowcase();
+    initKnobs();
     // Lucideが読み込まれるまで少し待ってからcreateIcons
     if (window.lucide) {
         refreshIcons();

@@ -110,7 +110,7 @@ font-weight: 700;</code></pre>
         <h2>グループ2: サイズと太さ</h2>
         <div class="text-grid">
 
-            <div class="text-item">
+            <div class="text-item" data-knobs='[{"label":"大きさ","prop":"font-size","unit":"rem","min":0.5,"max":6,"step":0.1,"value":3}]'>
                 <p class="txt-huge">カフェ東城</p>
                 <p class="label">巨大（3rem）</p>
                 <pre class="code"><code>font-size: 3rem;
@@ -144,7 +144,7 @@ color: #888;</code></pre>
 font-size: 2rem;</code></pre>
             </div>
 
-            <div class="text-item">
+            <div class="text-item" data-knobs='[{"label":"太さ","prop":"font-weight","min":100,"max":900,"step":100,"value":900}]'>
                 <p class="txt-black">カフェ東城</p>
                 <p class="label">極太（weight 900）</p>
                 <pre class="code"><code>font-weight: 900;
@@ -206,14 +206,14 @@ background-clip: text;
 color: transparent;</code></pre>
             </div>
 
-            <div class="text-item">
+            <div class="text-item" data-knobs='[{"label":"ズレ","prop":"text-shadow","template":"{v}px {v}px 0 #d4a574","displayUnit":"px","min":0,"max":10,"step":1,"value":3,"match":"\\d+px \\d+px 0 #d4a574","replace":"{v}px {v}px 0 #d4a574"}]'>
                 <p class="txt-shadow-drop">カフェ東城</p>
                 <p class="label">立体影（右下）</p>
                 <pre class="code"><code>color: #6b4423;
 text-shadow: 3px 3px 0 #d4a574;</code></pre>
             </div>
 
-            <div class="text-item">
+            <div class="text-item" data-knobs='[{"label":"ぼかし","prop":"text-shadow","template":"2px 2px {v}px rgba(0, 0, 0, 0.4)","displayUnit":"px","min":0,"max":30,"step":1,"value":8,"match":"2px 2px \\d+px","replace":"2px 2px {v}px"}]'>
                 <p class="txt-shadow-blur">カフェ東城</p>
                 <p class="label">ぼかし影</p>
                 <pre class="code"><code>color: #6b4423;
@@ -294,7 +294,7 @@ text-shadow:
         <h2>グループ4: 間隔・配置・変形</h2>
         <div class="text-grid">
 
-            <div class="text-item">
+            <div class="text-item" data-knobs='[{"label":"字間","prop":"letter-spacing","unit":"em","min":-0.2,"max":1,"step":0.05,"value":0.5}]'>
                 <p class="txt-wide">カフェ東城</p>
                 <p class="label">文字間隔 広</p>
                 <pre class="code"><code>letter-spacing: 0.5em;</code></pre>
@@ -312,7 +312,7 @@ text-shadow:
                 <pre class="code"><code>writing-mode: vertical-rl;</code></pre>
             </div>
 
-            <div class="text-item">
+            <div class="text-item" data-knobs='[{"label":"角度","prop":"transform","template":"rotate({v}deg)","displayUnit":"deg","min":-45,"max":45,"step":1,"value":-8,"match":"rotate\\(-?\\d+deg\\)","replace":"rotate({v}deg)"}]'>
                 <p class="txt-rotate">カフェ東城</p>
                 <p class="label">傾き（8度）</p>
                 <pre class="code"><code>transform: rotate(-8deg);

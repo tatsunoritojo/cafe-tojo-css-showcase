@@ -1,0 +1,477 @@
+/* ==========================================
+   D. レイアウト見本市
+   ========================================== */
+
+* { box-sizing: border-box; }
+
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fdfaf4;
+    color: #333;
+    line-height: 1.6;
+}
+
+.page-header {
+    background: linear-gradient(135deg, #6b4423, #8a5a30);
+    color: white;
+    padding: 2em 1em;
+    text-align: center;
+}
+
+.page-header h1 { margin: 0 0 0.3em; }
+.page-header p { margin: 0.3em 0; }
+.page-header a { color: #f5efe6; }
+.page-header .hint {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+main {
+    max-width: 1200px;
+    margin: 2em auto;
+    padding: 0 1em;
+}
+
+.page-footer {
+    text-align: center;
+    margin-top: 3em;
+    padding: 1.5em;
+    border-top: 1px solid #ddd;
+}
+.page-footer a { color: #6b4423; }
+
+/* ----- 導入セクション ----- */
+.intro {
+    background-color: white;
+    padding: 1.5em;
+    border-radius: 8px;
+    border-left: 4px solid #c8860d;
+    margin-bottom: 2.5em;
+}
+
+.intro h2 {
+    margin-top: 0;
+    color: #8a6a00;
+}
+
+.intro-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1em;
+    margin-top: 1em;
+}
+
+.intro-card {
+    background: #fffbea;
+    padding: 0.9em 1em;
+    border-radius: 6px;
+    border: 1px solid #f5e0a0;
+}
+
+.intro-card .intro-title {
+    margin: 0 0 0.3em;
+    font-weight: bold;
+    color: #8a6a00;
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+}
+
+.intro-card p {
+    margin: 0;
+    font-size: 0.88rem;
+    line-height: 1.55;
+}
+
+.intro-card code {
+    background: rgba(0, 0, 0, 0.06);
+    padding: 0.05em 0.3em;
+    border-radius: 3px;
+    font-size: 0.82rem;
+}
+
+/* ----- グループ共通 ----- */
+.group {
+    margin-bottom: 3em;
+    background-color: white;
+    padding: 1.5em;
+    border-radius: 8px;
+    border-left: 4px solid #6b4423;
+}
+
+.group h2 {
+    margin-top: 0;
+    color: #6b4423;
+}
+
+.layout-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 1.5em;
+    align-items: start;
+}
+
+.layout-item {
+    background-color: #fafafa;
+    padding: 1.2em 1em;
+    border-radius: 6px;
+    border: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7em;
+    min-height: 260px;
+}
+
+.layout-item .label {
+    font-size: 0.9rem;
+    color: #444;
+    font-weight: bold;
+    margin: 0;
+    text-align: center;
+}
+
+.layout-item pre.code {
+    background: #2d2d2d;
+    color: #f5efe6;
+    padding: 0.7em 0.9em;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    text-align: left;
+    overflow-x: auto;
+    margin: 0;
+    font-family: 'Courier New', monospace;
+    line-height: 1.5;
+    white-space: pre;
+}
+
+.layout-item pre.code code {
+    font-family: inherit;
+    color: inherit;
+    background: transparent;
+    padding: 0;
+    display: block;
+}
+
+/* ----- 調整ポイント（実務メモ） ----- */
+.tuning {
+    background: #fff8e7;
+    border-left: 3px solid #ffc107;
+    border-radius: 4px;
+    padding: 0.55em 0.75em;
+    font-size: 0.76rem;
+    line-height: 1.55;
+}
+
+.tuning-row {
+    margin: 0.25em 0;
+    color: #4a3a0a;
+}
+
+.tuning-row:first-child { margin-top: 0; }
+.tuning-row:last-child { margin-bottom: 0; }
+
+.tuning-row strong {
+    color: #8a6a00;
+    margin-right: 0.2em;
+}
+
+.tuning-row .icn {
+    color: #c8860d;
+    vertical-align: -0.2em;
+    margin-right: 0.15em;
+}
+
+.tuning-row code {
+    background: rgba(0, 0, 0, 0.06);
+    padding: 0.05em 0.3em;
+    border-radius: 3px;
+    font-size: 0.72rem;
+    color: #6b4423;
+    font-family: 'Courier New', monospace;
+}
+
+/* ----- デモ枠とボックスの共通スタイル ----- */
+.layout-demo {
+    background: #f5efe6;
+    border: 1px dashed #c4a577;
+    border-radius: 4px;
+    padding: 0.6em;
+    min-height: 110px;
+    position: relative;
+    overflow: hidden;
+}
+
+.layout-demo .box {
+    background-color: #6b4423;
+    color: white;
+    padding: 0.35em 0.7em;
+    border-radius: 3px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-align: center;
+    display: inline-block;
+    min-width: 28px;
+}
+
+.layout-demo .box.box-h { background-color: #c44; }
+.layout-demo .box.box-f { background-color: #555; }
+.layout-demo .box.box-m { background-color: #8a5a30; }
+.layout-demo .box.box-side { background-color: #a56b3a; }
+
+
+/* ==========================================
+   グループ1: Flexbox 基本
+   ========================================== */
+
+.lay-flex-row {
+    display: flex;
+    gap: 0.5em;
+}
+
+.lay-flex-column {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.lay-flex-gap {
+    display: flex;
+    gap: 1.5em;
+}
+
+.lay-flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+}
+
+
+/* ==========================================
+   グループ2: Flexbox 配置
+   ========================================== */
+
+.lay-flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
+    min-height: 110px;
+}
+
+.lay-flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 110px;
+}
+
+.lay-flex-around {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 110px;
+}
+
+.lay-flex-end {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5em;
+}
+
+
+/* ==========================================
+   グループ3: Grid 基本
+   ========================================== */
+
+.lay-grid-3col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5em;
+}
+
+.lay-grid-autofit {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    gap: 0.5em;
+}
+
+.lay-grid-sidebar {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 0.5em;
+}
+
+.lay-grid-mix {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 0.5em;
+}
+
+
+/* ==========================================
+   グループ4: よくある全体レイアウト
+   ========================================== */
+
+.lay-holy-grail {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 0.3em;
+    min-height: 130px;
+}
+.lay-holy-grail .box {
+    text-align: center;
+    display: block;
+}
+
+.lay-sidebar-main {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 0.5em;
+    min-height: 110px;
+}
+.lay-sidebar-main .box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lay-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    gap: 0.4em;
+}
+.lay-card-grid .box {
+    padding: 0.6em 0.3em;
+    text-align: center;
+    display: block;
+}
+
+.lay-named-area {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+        "h h"
+        "s m";
+    gap: 0.3em;
+    min-height: 130px;
+}
+.lay-named-area .box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* ==========================================
+   グループ5: センタリング技法
+   ========================================== */
+
+.lay-center-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 110px;
+}
+
+.lay-center-grid {
+    display: grid;
+    place-items: center;
+    min-height: 110px;
+}
+
+.lay-center-absolute {
+    position: relative;
+    min-height: 110px;
+}
+.lay-center-absolute .box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.lay-center-margin {
+    min-height: 110px;
+    padding-top: 2.5em;
+}
+.lay-center-margin .box {
+    display: block;
+    margin: 0 auto;
+    width: fit-content;
+}
+
+
+/* ==========================================
+   判断フロー
+   ========================================== */
+
+.flow {
+    background-color: white;
+    padding: 1.5em 1.8em;
+    border-radius: 8px;
+    border-left: 4px solid #2e7d32;
+    margin-top: 3em;
+}
+
+.flow h2 {
+    color: #2e7d32;
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+}
+
+.flow-list {
+    padding-left: 1.2em;
+    line-height: 1.9;
+}
+
+.flow-list li {
+    margin-bottom: 0.4em;
+}
+
+.flow-list code {
+    background-color: #f5f5f5;
+    padding: 0.1em 0.4em;
+    border-radius: 3px;
+    font-size: 0.9em;
+}
+
+.flow-list em {
+    color: #2e7d32;
+    font-style: normal;
+    font-weight: bold;
+}
+
+
+/* ==========================================
+   レッスンセクション
+   ========================================== */
+
+.lesson {
+    background-color: #fff8e7;
+    padding: 1.5em 2em;
+    border-radius: 8px;
+    border-left: 4px solid #ffc107;
+    margin-top: 3em;
+}
+
+.lesson h2 {
+    color: #8a6a00;
+    margin-top: 0;
+}
+
+.lesson ul {
+    line-height: 1.8;
+}
+
+.lesson code {
+    background-color: #f5f5f5;
+    padding: 0.1em 0.4em;
+    border-radius: 3px;
+    font-size: 0.9em;
+}

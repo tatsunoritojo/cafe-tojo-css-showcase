@@ -44,7 +44,7 @@
         <h2>グループ1: 基本形 — 形と余白</h2>
         <div class="btn-grid">
 
-            <div class="btn-item">
+            <div class="btn-item" data-knobs='[{"label":"角丸","prop":"border-radius","unit":"px","min":0,"max":30,"step":1,"value":4}]'>
                 <button class="btn-flat">カートに追加</button>
                 <p class="label">フラット</p>
                 <pre class="code"><code>background-color: #6b4423;
@@ -55,7 +55,7 @@ border: none;
 cursor: pointer;</code></pre>
             </div>
 
-            <div class="btn-item">
+            <div class="btn-item" data-knobs='[{"label":"角丸","prop":"border-radius","unit":"px","min":0,"max":30,"step":1,"value":4}]'>
                 <button class="btn-outline">カートに追加</button>
                 <p class="label">アウトライン</p>
                 <pre class="code"><code>background-color: transparent;
@@ -77,7 +77,7 @@ border: none;
 cursor: pointer;</code></pre>
             </div>
 
-            <div class="btn-item">
+            <div class="btn-item" data-knobs='[{"label":"角丸","prop":"border-radius","unit":"px","min":0,"max":30,"step":1,"value":0}]'>
                 <button class="btn-square">カートに追加</button>
                 <p class="label">角丸なし</p>
                 <pre class="code"><code>background-color: #6b4423;
@@ -153,7 +153,7 @@ border: none;</code></pre>
         <h2>グループ3: 影 — 立体感の表現</h2>
         <div class="btn-grid">
 
-            <div class="btn-item">
+            <div class="btn-item" data-knobs='[{"label":"影距離","prop":"box-shadow","template":"0 {v}px 4px rgba(0, 0, 0, 0.2)","displayUnit":"px","min":0,"max":20,"step":1,"value":2,"match":"0 \\d+px 4px","replace":"0 {v}px 4px"}]'>
                 <button class="btn-shadow">カートに追加</button>
                 <p class="label">box-shadow 基本</p>
                 <pre class="code"><code>background-color: #6b4423;
@@ -177,7 +177,7 @@ box-shadow: 0 8px 20px
   rgba(107, 68, 35, 0.5);</code></pre>
             </div>
 
-            <div class="btn-item">
+            <div class="btn-item" data-knobs='[{"label":"段差","prop":"box-shadow","template":"0 {v}px 0 #4a2e18","displayUnit":"px","min":0,"max":12,"step":1,"value":4,"match":"0 \\d+px 0 #","replace":"0 {v}px 0 #"}]'>
                 <button class="btn-3d">カートに追加</button>
                 <p class="label">3D（下に固い影）</p>
                 <pre class="code"><code>background-color: #6b4423;
@@ -323,7 +323,7 @@ opacity: 0.7;
 /* HTML属性: disabled */</code></pre>
             </div>
 
-            <div class="btn-item">
+            <div class="btn-item" data-knobs='[{"label":"光量","prop":"box-shadow","template":"0 0 {v}px #00ffaa, inset 0 0 10px rgba(0,255,170,0.2)","displayUnit":"px","min":0,"max":40,"step":1,"value":10,"match":"0 0 \\d+px #00ffaa","replace":"0 0 {v}px #00ffaa"}]'>
                 <button class="btn-neon">カートに追加</button>
                 <p class="label">ネオン発光</p>
                 <pre class="code"><code>background-color: #1a1a1a;
