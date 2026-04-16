@@ -1227,6 +1227,12 @@ input[type="color"].param-control {
     color: #666;
     font-size: 0.72rem;
 }
+.drawer-preview .dp-color {
+    width: 100%;
+    min-height: 60px;
+    border-radius: 4px;
+    background: #e5d9c7;
+}
 
 .drawer-item-name {
     margin: 0;

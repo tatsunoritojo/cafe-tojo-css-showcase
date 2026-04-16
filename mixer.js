@@ -89,7 +89,7 @@ function instrumentShowcase() {
         return;
     }
 
-    const items = document.querySelectorAll('.btn-item, .text-item, .effect-item, .layout-item, .card-item');
+    const items = document.querySelectorAll('.btn-item, .text-item, .effect-item, .layout-item, .card-item, .color-item');
     const pageKey = getPageKey();
 
     items.forEach((item, idx) => {
@@ -138,6 +138,7 @@ function getPageKey() {
     if (path.includes('image')) return '画像活用';
     if (path.includes('layout')) return 'レイアウト';
     if (path.includes('card')) return 'カード';
+    if (path.includes('color')) return 'カラー';
     if (path.includes('css_showcase')) return 'CSS Notes';
     return 'その他';
 }
@@ -205,7 +206,8 @@ function applyKnob(item, knobs, input) {
     if (valueEl) valueEl.textContent = renderKnobDisplay(knob, val);
 
     // デモ要素のプロパティを更新（ページ側CSSが !important を使うケースに備えて important 付き）
-    const demoEl = findKnobDemoTarget(item);
+    // knob.target（CSSセレクタ）が指定されていれば内側要素を狙える
+    const demoEl = knob.target ? item.querySelector(knob.target) : findKnobDemoTarget(item);
     if (demoEl && knob.prop) {
         demoEl.style.setProperty(knob.prop, fullValue, 'important');
     }
@@ -287,6 +289,7 @@ function injectTopNav() {
             <a href="sample_image_effects.html" class="${path.includes('image') ? 'tn-active' : ''}"><i data-lucide="image" class="icn"></i> 画像活用</a>
             <a href="sample_layout_showcase.html" class="${path.includes('layout') ? 'tn-active' : ''}"><i data-lucide="layout-grid" class="icn"></i> レイアウト</a>
             <a href="sample_card_showcase.html" class="${path.includes('card') ? 'tn-active' : ''}"><i data-lucide="layers" class="icn"></i> カード</a>
+            <a href="sample_color_showcase.html" class="${path.includes('color') ? 'tn-active' : ''}"><i data-lucide="palette" class="icn"></i> 色</a>
             <a href="sample_css_showcase.html" class="tn-note ${path.includes('css_showcase') ? 'tn-active' : ''}"><i data-lucide="book-open" class="icn"></i> Notes</a>
             <a href="mixer.html" class="tn-cta ${path.includes('mixer') ? 'tn-active' : ''}"><i data-lucide="shopping-cart" class="icn"></i> レジ</a>
         </div>
@@ -433,6 +436,13 @@ function updateSidebarPreview() {
         el = document.createElement('div');
         el.className = 'preview-card';
         el.innerHTML = `<h4>${escapeHtmlStr(text)}</h4><p>こだわりの一杯を。</p>`;
+    } else if (pageKey === 'カラー') {
+        el = document.createElement('div');
+        el.className = 'preview-color';
+        el.style.width = '100%';
+        el.style.height = '100%';
+        el.style.minHeight = '110px';
+        el.style.borderRadius = '6px';
     } else {
         el = document.createElement('span');
         el.textContent = text;

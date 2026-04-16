@@ -1,0 +1,467 @@
+/* ==========================================
+   E. 色とグラデーション見本市
+   ========================================== */
+
+* { box-sizing: border-box; }
+
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fdfaf4;
+    color: #333;
+    line-height: 1.6;
+}
+
+.page-header {
+    background: linear-gradient(135deg, #6b4423, #8a5a30);
+    color: white;
+    padding: 2em 1em;
+    text-align: center;
+}
+
+.page-header h1 { margin: 0 0 0.3em; }
+.page-header p { margin: 0.3em 0; }
+.page-header a { color: #f5efe6; }
+.page-header .hint {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+main {
+    max-width: 1200px;
+    margin: 2em auto;
+    padding: 0 1em;
+}
+
+.page-footer {
+    text-align: center;
+    margin-top: 3em;
+    padding: 1.5em;
+    border-top: 1px solid #ddd;
+}
+.page-footer a { color: #6b4423; }
+
+
+/* ----- 導入セクション ----- */
+.intro {
+    background-color: white;
+    padding: 1.5em;
+    border-radius: 8px;
+    border-left: 4px solid #c8860d;
+    margin-bottom: 2.5em;
+}
+.intro h2 {
+    margin-top: 0;
+    color: #8a6a00;
+}
+.intro-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1em;
+    margin-top: 1em;
+}
+.intro-card {
+    background: #fffbea;
+    padding: 0.9em 1em;
+    border-radius: 6px;
+    border: 1px solid #f5e0a0;
+}
+.intro-card .intro-title {
+    margin: 0 0 0.3em;
+    font-weight: bold;
+    color: #8a6a00;
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+}
+.intro-card p {
+    margin: 0;
+    font-size: 0.88rem;
+    line-height: 1.55;
+}
+.intro-card code {
+    background: rgba(0, 0, 0, 0.06);
+    padding: 0.05em 0.3em;
+    border-radius: 3px;
+    font-size: 0.82rem;
+}
+
+
+/* ----- グループ共通 ----- */
+.group {
+    margin-bottom: 3em;
+    background-color: white;
+    padding: 1.5em;
+    border-radius: 8px;
+    border-left: 4px solid #6b4423;
+}
+
+.group h2 {
+    margin-top: 0;
+    color: #6b4423;
+}
+
+.color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.5em;
+    align-items: start;
+}
+
+.color-item {
+    background-color: #fafafa;
+    padding: 1.2em 1em;
+    border-radius: 6px;
+    border: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7em;
+}
+
+.color-item > .label {
+    font-size: 0.9rem;
+    color: #444;
+    font-weight: bold;
+    margin: 0;
+    text-align: center;
+}
+
+.color-item pre.code {
+    background: #2d2d2d;
+    color: #f5efe6;
+    padding: 0.7em 0.9em;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    text-align: left;
+    overflow-x: auto;
+    margin: 0;
+    font-family: 'Courier New', monospace;
+    line-height: 1.5;
+    white-space: pre;
+}
+
+.color-item pre.code code {
+    font-family: inherit;
+    color: inherit;
+    background: transparent;
+    padding: 0;
+    display: block;
+}
+
+
+/* ----- tuning（共通） ----- */
+.tuning {
+    background: #fff8e7;
+    border-left: 3px solid #ffc107;
+    border-radius: 4px;
+    padding: 0.55em 0.75em;
+    font-size: 0.76rem;
+    line-height: 1.55;
+}
+.tuning-row {
+    margin: 0.25em 0;
+    color: #4a3a0a;
+}
+.tuning-row:first-child { margin-top: 0; }
+.tuning-row:last-child { margin-bottom: 0; }
+.tuning-row strong {
+    color: #8a6a00;
+    margin-right: 0.2em;
+}
+.tuning-row .icn {
+    color: #c8860d;
+    vertical-align: -0.2em;
+    margin-right: 0.15em;
+}
+.tuning-row code {
+    background: rgba(0, 0, 0, 0.06);
+    padding: 0.05em 0.3em;
+    border-radius: 3px;
+    font-size: 0.72rem;
+    color: #6b4423;
+    font-family: 'Courier New', monospace;
+}
+
+
+/* ==========================================
+   デモ共通
+   ========================================== */
+
+.color-demo {
+    min-height: 110px;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+
+/* ==========================================
+   グループ1: パレット
+   ========================================== */
+
+.palette-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
+    min-height: 100px;
+}
+.palette-row > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+    padding: 0.3em;
+    text-align: center;
+}
+
+.ui-layers {
+    position: relative;
+    min-height: 110px;
+    background: #fdfaf4;
+    padding: 0.8em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4em;
+    font-size: 0.8rem;
+}
+.ui-layers .layer-bg {
+    color: #999;
+    font-size: 0.7rem;
+}
+.ui-layers .layer-card {
+    background: #ffffff;
+    padding: 0.5em 0.8em;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    color: #333;
+}
+.ui-layers .layer-border {
+    background: #ffffff;
+    padding: 0.5em 0.8em;
+    border-radius: 4px;
+    border: 1px solid #e5e7eb;
+    color: #333;
+}
+
+
+/* ==========================================
+   グループ2-3: グラデーション
+   ========================================== */
+
+.grad {
+    min-height: 110px;
+}
+
+.grad-horizontal {
+    background: linear-gradient(to right, #6b4423, #a56b3a);
+}
+
+.grad-vertical {
+    background: linear-gradient(to bottom, #8a5a30, #4a2e18);
+}
+
+.grad-diagonal {
+    background: linear-gradient(135deg, #c44, #6b4423);
+}
+
+.grad-3color {
+    background: linear-gradient(to right, #6b4423, #ffd700 50%, #c44);
+}
+
+.grad-radial {
+    background: radial-gradient(circle at center, #ffd700, #6b4423);
+}
+
+.grad-conic {
+    background: conic-gradient(
+        from 0deg at center,
+        #c44, #ffd700, #2e7d32, #1565c0, #c44
+    );
+}
+
+.grad-rainbow {
+    background: linear-gradient(
+        to right,
+        #e53935, #fb8c00, #fdd835,
+        #43a047, #1e88e5, #5e35b1
+    );
+}
+
+.grad-fade {
+    background: linear-gradient(to right, rgba(107, 68, 35, 0.8), transparent), #f5efe6;
+}
+
+
+/* ==========================================
+   グループ4: パターン
+   ========================================== */
+
+.pattern {
+    min-height: 110px;
+}
+
+.pat-stripes {
+    background: repeating-linear-gradient(
+        0deg,
+        #6b4423,
+        #6b4423 12px,
+        #8a5a30 12px,
+        #8a5a30 24px
+    );
+}
+
+.pat-diagonal {
+    background: repeating-linear-gradient(
+        45deg,
+        #f5efe6,
+        #f5efe6 6px,
+        #e5d9c7 6px,
+        #e5d9c7 12px
+    );
+}
+
+.pat-dots {
+    background-image: radial-gradient(circle, #6b4423 2px, transparent 2px);
+    background-size: 24px 24px;
+    background-color: #fdfaf4;
+}
+
+.pat-grid {
+    background-image:
+        linear-gradient(#e5d9c7 1px, transparent 1px),
+        linear-gradient(90deg, #e5d9c7 1px, transparent 1px);
+    background-size: 20px 20px;
+    background-color: #fdfaf4;
+}
+
+
+/* ==========================================
+   グループ5: 応用
+   ========================================== */
+
+.blur-demo {
+    position: relative;
+    min-height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.blur-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #c44, #6b4423, #ffd700);
+    filter: blur(8px);
+    transform: scale(1.1);
+}
+.blur-content {
+    position: relative;
+    color: white;
+    font-weight: bold;
+    font-size: 1.1rem;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.glass-demo {
+    position: relative;
+    min-height: 110px;
+    background: linear-gradient(135deg, #c44, #6b4423, #ffd700);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1em;
+}
+.glass-card {
+    background: rgba(255, 255, 255, 0.3);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 12px;
+    padding: 0.8em 1.6em;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.shine-demo {
+    min-height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fdfaf4;
+}
+.shine-box {
+    position: relative;
+    overflow: hidden;
+    background: #6b4423;
+    color: white;
+    padding: 0.8em 1.6em;
+    border-radius: 6px;
+    font-weight: bold;
+}
+.shine-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.4),
+        transparent
+    );
+    animation: shine 2.5s infinite;
+}
+@keyframes shine {
+    to { left: 100%; }
+}
+
+.text-grad-demo {
+    min-height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fdfaf4;
+}
+.grad-text {
+    background: linear-gradient(135deg, #c44, #ffd700, #6b4423);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+
+/* ==========================================
+   レッスン
+   ========================================== */
+
+.lesson {
+    background-color: #fff8e7;
+    padding: 1.5em 2em;
+    border-radius: 8px;
+    border-left: 4px solid #ffc107;
+    margin-top: 3em;
+}
+
+.lesson h2 {
+    color: #8a6a00;
+    margin-top: 0;
+}
+
+.lesson ul {
+    line-height: 1.8;
+}
+
+.lesson code {
+    background-color: #f5f5f5;
+    padding: 0.1em 0.4em;
+    border-radius: 3px;
+    font-size: 0.9em;
+}

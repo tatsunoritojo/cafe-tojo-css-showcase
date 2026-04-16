@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <meta name="description" content="色とグラデーション・背景パターン 20種。実務カラーパレット、線形/放射状/円錐グラデ、CSSだけで作る模様、ガラスモーフィズム等。">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://css-showcase-tan.vercel.app/sample_color_showcase.html">
+    <meta property="og:title" content="色とグラデーション見本市 | Mixable CSS">
+    <meta property="og:description" content="色とグラデーション・背景パターン 20種。つまみ付きで角度・幅・透明度をライブ調整。">
+    <meta property="og:image" content="https://css-showcase-tan.vercel.app/images/og-image.jpg">
+    <meta property="og:site_name" content="Mixable CSS">
+    <meta property="og:locale" content="ja_JP">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="色とグラデーション見本市 | Mixable CSS">
+    <meta name="twitter:description" content="色とグラデーション・背景パターン 20種。">
+    <meta name="twitter:image" content="https://css-showcase-tan.vercel.app/images/og-image.jpg">
+    <title>色とグラデーション見本市 | Mixable CSS</title>
+    <link rel="stylesheet" href="sample_color_showcase.css">
+    <script src="mixer.js" defer></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+<header class="page-header">
+    <h1>E. 色とグラデーション見本市</h1>
+    <p>色・グラデ・パターン 20種 — 角度や幅をスライダーで動かしながら学ぶ</p>
+    <p class="hint"><i data-lucide="sliders-horizontal" class="icn"></i> つまみで角度・ぼかし・透明度をライブ調整。実務で使えるパレットも収録。</p>
+    <p><a href="index.html">← ポータルに戻る</a></p>
+</header>
+
+<main>
+
+    <section class="intro">
+        <h2><i data-lucide="compass" class="icn"></i> 色選びの3原則</h2>
+        <div class="intro-grid">
+            <div class="intro-card">
+                <p class="intro-title"><i data-lucide="palette" class="icn"></i> 限定する</p>
+                <p>基本色 + アクセント + ニュートラルの<strong>3系統</strong>で足りる。多すぎはノイズ。</p>
+            </div>
+            <div class="intro-card">
+                <p class="intro-title"><i data-lucide="contrast" class="icn"></i> 対比を確保</p>
+                <p>本文と背景は最低 <code>4.5:1</code> のコントラスト比。WCAG AA の基準。</p>
+            </div>
+            <div class="intro-card">
+                <p class="intro-title"><i data-lucide="variable" class="icn"></i> 変数化する</p>
+                <p>色は <code>--primary</code>, <code>--bg</code> 等で CSS 変数に。テーマ切替が楽になる。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- グループ1: 実務カラーパレット -->
+    <section class="group">
+        <h2>グループ1: 実務カラーパレット</h2>
+        <div class="color-grid">
+
+            <div class="color-item">
+                <div class="color-demo palette-row pal-brand">
+                    <div style="background:#4a2e18">#4a2e18</div>
+                    <div style="background:#6b4423">#6b4423</div>
+                    <div style="background:#8a5a30">#8a5a30</div>
+                    <div style="background:#a56b3a">#a56b3a</div>
+                    <div style="background:#c4a577">#c4a577</div>
+                </div>
+                <p class="label">ブランドカラー階調（茶系5段）</p>
+                <pre class="code"><code>/* 主色 + 濃淡4段 */
+--brand-900: #4a2e18;
+--brand-700: #6b4423;
+--brand-500: #8a5a30; /* 主色 */
+--brand-300: #a56b3a;
+--brand-100: #c4a577;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>選び方:</strong> 主色を決めたら明度±20%で2段ずつ派生。Material/Tailwind は100〜900の9段が定番</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 500=本体、700=ホバー、300=無効状態 という役割分担が実務の定石</p>
+                </div>
+            </div>
+
+            <div class="color-item">
+                <div class="color-demo palette-row pal-semantic">
+                    <div style="background:#2e7d32">成功</div>
+                    <div style="background:#f9a825;color:#333">警告</div>
+                    <div style="background:#c62828">エラー</div>
+                    <div style="background:#1565c0">情報</div>
+                </div>
+                <p class="label">セマンティックカラー（4色）</p>
+                <pre class="code"><code>--success: #2e7d32; /* 緑 */
+--warning: #f9a825; /* 黄 */
+--error:   #c62828; /* 赤 */
+--info:    #1565c0; /* 青 */</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>選び方:</strong> 「意味が色で伝わる」順序感は世界共通。赤=危険は文化を超えて通じる</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> トースト通知、フォームエラー、バッジで頻出。明度は全色揃える（本文配色時のバランス）</p>
+                </div>
+            </div>
+
+            <div class="color-item">
+                <div class="color-demo palette-row pal-gray">
+                    <div style="background:#f9fafb;color:#333">50</div>
+                    <div style="background:#e5e7eb;color:#333">200</div>
+                    <div style="background:#6b7280">500</div>
+                    <div style="background:#1f2937">800</div>
+                    <div style="background:#030712">950</div>
+                </div>
+                <p class="label">グレースケール（5段）</p>
+                <pre class="code"><code>--gray-50:  #f9fafb; /* 背景 */
+--gray-200: #e5e7eb; /* 罫線 */
+--gray-500: #6b7280; /* 補助文字 */
+--gray-800: #1f2937; /* 本文 */
+--gray-950: #030712; /* 見出し */</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>選び方:</strong> 純粋な黒 <code>#000</code> は強すぎる。本文は <code>#1f2937</code> 相当が読みやすい</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> Tailwind の slate/gray シリーズが実務標準。自作するより流用が効率的</p>
+                </div>
+            </div>
+
+            <div class="color-item">
+                <div class="color-demo ui-layers">
+                    <div class="layer-bg">背景</div>
+                    <div class="layer-card">カード</div>
+                    <div class="layer-border">ボーダー付き</div>
+                </div>
+                <p class="label">UI 3層（背景・カード・ボーダー）</p>
+                <pre class="code"><code>--surface-bg:     #fdfaf4; /* ページ背景 */
+--surface-card:   #ffffff; /* カード */
+--surface-border: #e5e7eb; /* 罫線 */
+--surface-hover:  #f5efe6; /* ホバー時 */</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>選び方:</strong> 背景→カードはごくわずかに明度差（2-5%）で十分。強すぎる差は浮いて見える</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> ダークモードに対応するなら最初から変数化が必須</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- グループ2: 線形グラデーション -->
+    <section class="group">
+        <h2>グループ2: 線形グラデーション</h2>
+        <div class="color-grid">
+
+            <div class="color-item">
+                <div class="color-demo grad grad-horizontal"></div>
+                <p class="label">横方向（to right）</p>
+                <pre class="code"><code>background: linear-gradient(
+  to right,
+  #6b4423,
+  #a56b3a
+);</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>to right</code> は <code>90deg</code> と同じ。キーワードか角度かは好みで</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> ヒーロー背景、ボタン、プログレスバーで頻出。左→右＝進行の方向</p>
+                </div>
+            </div>
+
+            <div class="color-item">
+                <div class="color-demo grad grad-vertical"></div>
+                <p class="label">縦方向（to bottom）</p>
+                <pre class="code"><code>background: linear-gradient(
+  to bottom,
+  #8a5a30,
+  #4a2e18
+);</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 上=明、下=暗 にすると重力のある自然な立体感</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> ヒーロー下部のフェード、フッター、モバイルのドロワー背景等</p>
+                </div>
+            </div>
+
+            <div class="color-item" data-knobs='[{"label":"角度","prop":"background","template":"linear-gradient({v}deg, #c44, #6b4423)","displayUnit":"deg","min":0,"max":360,"step":5,"value":135,"match":"linear-gradient\\(\\d+deg","replace":"linear-gradient({v}deg"}]'>
+                <div class="color-demo grad grad-diagonal"></div>
+                <p class="label">斜め（135deg）</p>
+                <pre class="code"><code>background: linear-gradient(
+  135deg,
+  #c44,
+  #6b4423
+);</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 角度 0-360deg。0=下向き、90=右、180=上、270=左</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 45/135deg が最も使用頻度高。動きを感じさせる斜め</p>
+                </div>
+            </div>
+
+            <div class="color-item" data-knobs='[{"label":"中間位置","prop":"background","template":"linear-gradient(to right, #6b4423, #ffd700 {v}%, #c44)","displayUnit":"%","min":10,"max":90,"step":5,"value":50,"match":"#ffd700 \\d+%","replace":"#ffd700 {v}%"}]'>
+                <div class="color-demo grad grad-3color"></div>
+                <p class="label">3色グラデ（停止位置指定）</p>
+                <pre class="code"><code>background: linear-gradient(
+  to right,
+  #6b4423,
+  #ffd700 50%,
+  #c44
+);</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 中間色の<code>停止位置</code> 10-90%。偏らせると劇的に印象が変わる</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> ロゴ背景、特設ページ見出しで映える。実務ページでは控えめに</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- グループ3: 特殊グラデーション -->
+    <section class="group">
+        <h2>グループ3: 特殊グラデーション</h2>
+        <div class="color-grid">
+
+            <div class="color-item">
+                <div class="color-demo grad grad-radial"></div>
+                <p class="label">放射状（radial-gradient）</p>
+                <pre class="code"><code>background: radial-gradient(
+  circle at center,
+  #ffd700,
+  #6b4423
+);</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>at top left</code>等で中心位置を変更。<code>ellipse</code>で楕円</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> スポットライト効果、ボタンのホバー光沢で活躍</p>
+                </div>
+            </div>
+
+            <div class="color-item">
+                <div class="color-demo grad grad-conic"></div>
+                <p class="label">円錐（conic-gradient）</p>
+                <pre class="code"><code>background: conic-gradient(
+  from 0deg at center,
+  #c44, #ffd700,
+  #2e7d32, #1565c0,
+  #c44
+);</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>from</code> で開始角度。色を循環させると放射状パイチャート風</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> ローディング進捗、カラーピッカー、パイチャートに応用可能</p>
+                </div>
+            </div>
+
+            <div class="color-item">
+                <div class="color-demo grad grad-rainbow"></div>
+                <p class="label">虹色グラデ</p>
+                <pre class="code"><code>background: linear-gradient(
+  to right,
+  #e53935, #fb8c00, #fdd835,
+  #43a047, #1e88e5, #5e35b1
+);</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 色の数だけ継ぎ目が増える。6-7色が自然</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> Pride/多様性の文脈、音楽アプリ等で象徴的に使われる</p>
+                </div>
+            </div>
+
+            <div class="color-item" data-knobs='[{"label":"透明度","prop":"background","template":"linear-gradient(to right, rgba(107, 68, 35, {v}), transparent)","min":0,"max":1,"step":0.05,"value":0.8,"match":"rgba\\(107, 68, 35, [\\d.]+\\)","replace":"rgba(107, 68, 35, {v})"}]'>
+                <div class="color-demo grad grad-fade"></div>
+                <p class="label">透明フェード（色 → 透明）</p>
+                <pre class="code"><code>background: linear-gradient(
+  to right,
+  rgba(107, 68, 35, 0.8),
+  transparent
+);</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>rgba</code>の透明度 0-1。画像の上に重ねると文字が読みやすくなる</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> ヒーロー画像のオーバーレイ、スクロールフェードで必須のテクニック</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- グループ4: 背景パターン -->
+    <section class="group">
+        <h2>グループ4: 背景パターン — CSSだけで絵柄を作る</h2>
+        <div class="color-grid">
+
+            <div class="color-item" data-knobs='[{"label":"角度","prop":"background","template":"repeating-linear-gradient({v}deg, #6b4423, #6b4423 12px, #8a5a30 12px, #8a5a30 24px)","displayUnit":"deg","min":0,"max":180,"step":5,"value":0,"match":"repeating-linear-gradient\\(\\d+deg","replace":"repeating-linear-gradient({v}deg"}]'>
+                <div class="color-demo pattern pat-stripes"></div>
+                <p class="label">縞模様（repeating-linear）</p>
+                <pre class="code"><code>background: repeating-linear-gradient(
+  0deg,
+  #6b4423,
+  #6b4423 12px,
+  #8a5a30 12px,
+  #8a5a30 24px
+);</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 角度 0-180deg。0=横縞、90=縦縞、45=斜め</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 工事中/警告、ローディングバー、プリント風意匠で頻出</p>
+                </div>
+            </div>
+
+            <div class="color-item">
+                <div class="color-demo pattern pat-diagonal"></div>
+                <p class="label">斜めストライプ（細め）</p>
+                <pre class="code"><code>background: repeating-linear-gradient(
+  45deg,
+  #f5efe6,
+  #f5efe6 6px,
+  #e5d9c7 6px,
+  #e5d9c7 12px
+);</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 幅を揃えると正方形、変えると非対称。明度差は小さいほど上品</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> ブランド背景、壁紙代わりに。濃い色は目がチカチカするので淡色で</p>
+                </div>
+            </div>
+
+            <div class="color-item" data-knobs='[{"label":"間隔","prop":"background-size","template":"{v}px {v}px","displayUnit":"px","min":12,"max":60,"step":2,"value":24,"match":"background-size: \\d+px \\d+px","replace":"background-size: {v}px {v}px"}]'>
+                <div class="color-demo pattern pat-dots"></div>
+                <p class="label">ドット（radial）</p>
+                <pre class="code"><code>background-image: radial-gradient(
+  circle, #6b4423 2px, transparent 2px
+);
+background-size: 24px 24px;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>background-size</code> で格子の間隔。広げるとまばらに</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 紙物印刷風の背景、メモ帳UIで使える。ドットサイズを小さく保つのが上品</p>
+                </div>
+            </div>
+
+            <div class="color-item" data-knobs='[{"label":"マス目","prop":"background-size","template":"{v}px {v}px","displayUnit":"px","min":10,"max":80,"step":5,"value":20,"match":"background-size: \\d+px \\d+px","replace":"background-size: {v}px {v}px"}]'>
+                <div class="color-demo pattern pat-grid"></div>
+                <p class="label">グリッド線</p>
+                <pre class="code"><code>background-image:
+  linear-gradient(#e5d9c7 1px, transparent 1px),
+  linear-gradient(90deg, #e5d9c7 1px, transparent 1px);
+background-size: 20px 20px;
+background-color: #fdfaf4;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> マス目のサイズ。細かいほど方眼紙感、粗いほど建築図面感</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 設計系UI、メモアプリ、Figmaライクな背景で活躍</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- グループ5: 応用エフェクト -->
+    <section class="group">
+        <h2>グループ5: 応用エフェクト</h2>
+        <div class="color-grid">
+
+            <div class="color-item" data-knobs='[{"label":"ぼかし","prop":"filter","target":".blur-bg","template":"blur({v}px)","displayUnit":"px","min":0,"max":30,"step":1,"value":8,"match":"blur\\(\\d+px\\)","replace":"blur({v}px)"}]'>
+                <div class="color-demo blur-demo">
+                    <div class="blur-bg"></div>
+                    <div class="blur-content">くっきり文字</div>
+                </div>
+                <p class="label">ぼかし背景（filter: blur）</p>
+                <pre class="code"><code>/* .blur-bg */
+background: linear-gradient(135deg, #c44, #6b4423, #ffd700);
+filter: blur(8px);
+position: absolute;
+inset: 0;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> blur 0-30px。文字の後ろに敷くと読みやすくなる</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> ヒーロー背景、ローディング時の画像マスクで使う</p>
+                </div>
+            </div>
+
+            <div class="color-item" data-knobs='[{"label":"透過","prop":"background","target":".glass-card","template":"rgba(255, 255, 255, {v})","min":0,"max":1,"step":0.05,"value":0.3,"match":"rgba\\(255, 255, 255, [\\d.]+\\)","replace":"rgba(255, 255, 255, {v})"}]'>
+                <div class="color-demo glass-demo">
+                    <div class="glass-card">Glass</div>
+                </div>
+                <p class="label">ガラスモーフィズム</p>
+                <pre class="code"><code>/* .glass-card */
+background: rgba(255, 255, 255, 0.3);
+backdrop-filter: blur(10px);
+-webkit-backdrop-filter: blur(10px);
+border: 1px solid rgba(255, 255, 255, 0.4);
+border-radius: 12px;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 透過度 0.1-0.5 が適正。低すぎると見えない、高すぎると普通の白箱に</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> iOS風UI、映えるダッシュボードに。背景が複雑でないと効果が薄い</p>
+                </div>
+            </div>
+
+            <div class="color-item">
+                <div class="color-demo shine-demo">
+                    <div class="shine-box">光沢</div>
+                </div>
+                <p class="label">光沢アニメーション</p>
+                <pre class="code"><code>position: relative;
+overflow: hidden;
+background: #6b4423;
+
+/* ::before で斜めの光を流す */
+/* background: linear-gradient(
+     120deg, transparent,
+     rgba(255,255,255,0.4), transparent); */
+/* animation: shine 2.5s infinite; */</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> アニメーション秒数 2-4s が上品。高速だと安っぽくなる</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> プレミアム感の演出、スケルトンローディングで活用</p>
+                </div>
+            </div>
+
+            <div class="color-item">
+                <div class="color-demo text-grad-demo">
+                    <span class="grad-text">Mixable CSS</span>
+                </div>
+                <p class="label">グラデーション文字</p>
+                <pre class="code"><code>background: linear-gradient(
+  135deg, #c44, #ffd700, #6b4423);
+background-clip: text;
+-webkit-background-clip: text;
+color: transparent;
+font-weight: bold;</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> グラデ色の数と角度を変えれば無限バリエ。文字色<code>transparent</code>必須</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> ロゴ、ヒーロー見出しで映える。本文には使わない（可読性低下）</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 教えるポイント -->
+    <section class="lesson">
+        <h2>教える時のポイント</h2>
+        <ul>
+            <li><strong>色は変数化する</strong> — <code>--primary</code>, <code>--bg</code> 等の CSS 変数で定義。テーマ切替・保守が段違いに楽</li>
+            <li>コントラスト比 <strong>4.5:1</strong>（本文）・<strong>3:1</strong>（大文字）を守る。WCAG AA が業界標準</li>
+            <li><code>linear-gradient</code> の角度は <code>to right</code> キーワードか <code>90deg</code> 数値。キーワードは直感的、数値は知識必要</li>
+            <li><code>repeating-*-gradient</code> で <strong>CSSだけで絵柄</strong> を作れる。画像不要でファイルサイズ圧縮</li>
+            <li><code>backdrop-filter</code> は iOS/macOS 風のガラス表現。古い Android で非対応なのでフォールバック背景を用意</li>
+            <li>グラデ色は <strong>3色以下</strong> が上品。4色以上は「虹」か「宇宙」の印象になる</li>
+            <li><code>background-clip: text</code> 系は <code>-webkit-</code> プレフィックスも併記が無難</li>
+        </ul>
+    </section>
+
+</main>
+
+<footer class="page-footer">
+    <p><a href="index.html">← ポータルに戻る</a></p>
+</footer>
+
+</body>
+</html>
