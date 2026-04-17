@@ -82,7 +82,7 @@ body {
 /* ---------- セクション ---------- */
 .ref-section {
     margin: 2.5em 0;
-    scroll-margin-top: 110px;
+    scroll-margin-top: 150px;
 }
 
 .ref-section > h2 {
@@ -117,7 +117,7 @@ body {
     gap: 0.5em;
     font-size: 0.9rem;
     position: relative;
-    scroll-margin-top: 110px;
+    scroll-margin-top: 150px;
 }
 
 /* 番号バッジ（右上） */
