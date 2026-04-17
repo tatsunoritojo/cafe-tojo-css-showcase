@@ -209,10 +209,14 @@ function applyKnob(item, knobs, input) {
     if (valueEl) valueEl.textContent = renderKnobDisplay(knob, val);
 
     // デモ要素のプロパティを更新（ページ側CSSが !important を使うケースに備えて important 付き）
-    // knob.target（CSSセレクタ）が指定されていれば内側要素を狙える
-    const demoEl = knob.target ? item.querySelector(knob.target) : findKnobDemoTarget(item);
-    if (demoEl && knob.prop) {
-        demoEl.style.setProperty(knob.prop, fullValue, 'important');
+    // knob.target（CSSセレクタ）が指定されていれば内側要素を狙える。複数一致する場合は全要素に適用
+    if (knob.prop) {
+        if (knob.target) {
+            item.querySelectorAll(knob.target).forEach(el => el.style.setProperty(knob.prop, fullValue, 'important'));
+        } else {
+            const demoEl = findKnobDemoTarget(item);
+            if (demoEl) demoEl.style.setProperty(knob.prop, fullValue, 'important');
+        }
     }
 
     // コードブロックの該当行を書き換え（origから全つまみを再適用）
