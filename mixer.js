@@ -89,7 +89,7 @@ function instrumentShowcase() {
         return;
     }
 
-    const items = document.querySelectorAll('.btn-item, .text-item, .effect-item, .layout-item, .card-item, .color-item, .anim-item, .form-item');
+    const items = document.querySelectorAll('.btn-item, .text-item, .effect-item, .layout-item, .card-item, .color-item, .anim-item, .form-item, .nav-item');
     const pageKey = getPageKey();
 
     items.forEach((item, idx) => {
@@ -141,6 +141,7 @@ function getPageKey() {
     if (path.includes('color')) return 'カラー';
     if (path.includes('animation')) return 'アニメ';
     if (path.includes('form')) return 'フォーム';
+    if (path.includes('nav')) return 'ナビ';
     if (path.includes('css_showcase')) return 'CSS Notes';
     return 'その他';
 }

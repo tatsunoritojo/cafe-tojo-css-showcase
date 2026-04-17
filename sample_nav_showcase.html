@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <meta name="description" content="ナビゲーション部品 20種。横ナビ・パンくず・タブ・ページネーション・ステッパー・サイドバーのデザイン集。">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://css-showcase-tan.vercel.app/sample_nav_showcase.html">
+    <meta property="og:title" content="ナビゲーション見本市 | Mixable CSS">
+    <meta property="og:description" content="ナビゲーション部品 20種。横ナビ・パンくず・タブ・ページネーション・ステッパー。">
+    <meta property="og:image" content="https://css-showcase-tan.vercel.app/images/og-image.jpg">
+    <meta property="og:site_name" content="Mixable CSS">
+    <meta property="og:locale" content="ja_JP">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ナビゲーション見本市 | Mixable CSS">
+    <meta name="twitter:description" content="ナビゲーション部品 20種。">
+    <meta name="twitter:image" content="https://css-showcase-tan.vercel.app/images/og-image.jpg">
+    <title>ナビゲーション見本市 | Mixable CSS</title>
+    <link rel="stylesheet" href="sample_nav_showcase.css">
+    <script src="mixer.js" defer></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+<header class="page-header">
+    <h1>H. ナビゲーション見本市</h1>
+    <p>サイト導線部品 20種 — ナビ / パンくず / タブ / ページネーション / ステッパー / メニュー</p>
+    <p class="hint"><i data-lucide="sliders-horizontal" class="icn"></i> ナビは「迷わせない」が全て。現在位置を示し、次の一歩を見せる。つまみで余白・角丸・太さをライブ調整。</p>
+    <p><a href="index.html">← ポータルに戻る</a></p>
+</header>
+
+<main>
+
+    <section class="intro">
+        <h2><i data-lucide="compass" class="icn"></i> ナビゲーション設計の3原則</h2>
+        <div class="intro-grid">
+            <div class="intro-card">
+                <p class="intro-title"><i data-lucide="map-pin" class="icn"></i> 現在地を示す</p>
+                <p><code>aria-current="page"</code> と視覚的アクティブ状態を両方つける。どこにいるか一瞬でわかる。</p>
+            </div>
+            <div class="intro-card">
+                <p class="intro-title"><i data-lucide="hand" class="icn"></i> タップ領域は広く</p>
+                <p>リンク文字だけでなく、周囲の余白までクリック可能に。指でも確実に押せる。</p>
+            </div>
+            <div class="intro-card">
+                <p class="intro-title"><i data-lucide="eye" class="icn"></i> ホバー/フォーカス明示</p>
+                <p>ホバーとフォーカスで見た目を変える。キーボード操作者にも現在位置を伝える。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- グループ1: 水平ナビゲーション -->
+    <section class="group">
+        <h2>グループ1: 水平ナビゲーション</h2>
+        <div class="nav-grid">
+
+            <div class="nav-item" data-knobs='[{"label":"項目間","prop":"gap","target":".hnav-basic","unit":"px","min":0,"max":48,"step":1,"value":24}]'>
+                <div class="nav-demo">
+                    <nav class="hnav-basic">
+                        <a href="#">ホーム</a>
+                        <a href="#" class="active">メニュー</a>
+                        <a href="#">店舗情報</a>
+                        <a href="#">ご予約</a>
+                    </nav>
+                </div>
+                <p class="label">標準ナビ（装飾なし）</p>
+                <pre class="code"><code>nav {
+  display: flex;
+  gap: 24px;
+}
+nav a {
+  color: #333;
+  text-decoration: none;
+}
+nav a.active {
+  color: #6b4423;
+  font-weight: bold;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 項目間 16〜32px が読みやすい。詰めると誤タップの原因に</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 最もシンプル。ヘッダー下の補助ナビや記事内の目次に向く</p>
+                </div>
+            </div>
+
+            <div class="nav-item" data-knobs='[{"label":"下線太さ","prop":"border-bottom-width","target":".hnav-underline a.active, .hnav-underline a:hover","unit":"px","min":1,"max":6,"step":1,"value":2}]'>
+                <div class="nav-demo">
+                    <nav class="hnav-underline">
+                        <a href="#">ホーム</a>
+                        <a href="#" class="active">メニュー</a>
+                        <a href="#">店舗情報</a>
+                        <a href="#">ご予約</a>
+                    </nav>
+                </div>
+                <p class="label">下線ホバーナビ</p>
+                <pre class="code"><code>nav a {
+  padding: 0.6em 0;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.2s;
+}
+nav a:hover,
+nav a.active {
+  border-bottom-color: #6b4423;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 下線 2〜3px が定番。太いほど存在感は強いが主張しすぎに注意</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> ヘッダーナビの王道。透明ボーダーで高さを固定するのがコツ</p>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-demo">
+                    <nav class="hnav-slide">
+                        <a href="#">ホーム</a>
+                        <a href="#" class="active">メニュー</a>
+                        <a href="#">店舗情報</a>
+                        <a href="#">ご予約</a>
+                    </nav>
+                </div>
+                <p class="label">下線スライドイン</p>
+                <pre class="code"><code>nav a {
+  position: relative;
+  padding: 0.6em 0;
+}
+nav a::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 2px;
+  background: #6b4423;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s;
+}
+nav a:hover::after,
+nav a.active::after {
+  transform: scaleX(1);
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>transform-origin</code> を <code>right</code> にすると逆方向、<code>center</code> で中央から</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> ブランディング重視のサイトで好相性。動きで現在位置を印象づける</p>
+                </div>
+            </div>
+
+            <div class="nav-item" data-knobs='[{"label":"角丸","prop":"border-radius","target":".hnav-fill a","unit":"px","min":0,"max":20,"step":1,"value":4}]'>
+                <div class="nav-demo">
+                    <nav class="hnav-fill">
+                        <a href="#">ホーム</a>
+                        <a href="#" class="active">メニュー</a>
+                        <a href="#">店舗情報</a>
+                        <a href="#">ご予約</a>
+                    </nav>
+                </div>
+                <p class="label">背景塗りホバーナビ</p>
+                <pre class="code"><code>nav a {
+  padding: 0.5em 0.9em;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+nav a:hover {
+  background: #f0e6d8;
+}
+nav a.active {
+  background: #6b4423;
+  color: white;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 角丸 0=硬派 / 4=一般的 / 999=ピル型。雰囲気で使い分け</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> タップ領域が広く押しやすい。管理画面のタブ風ナビに最適</p>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-demo">
+                    <nav class="hnav-topbar">
+                        <a href="#">ホーム</a>
+                        <a href="#" class="active">メニュー</a>
+                        <a href="#">店舗情報</a>
+                        <a href="#">ご予約</a>
+                    </nav>
+                </div>
+                <p class="label">上線アクティブ（タブ風）</p>
+                <pre class="code"><code>nav a {
+  padding: 0.8em 1em;
+  border-top: 3px solid transparent;
+}
+nav a.active {
+  border-top-color: #c8860d;
+  background: #fff8e7;
+  font-weight: bold;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 上線の色を変えればアクセントになる。背景色とセットで効く</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> ダッシュボードやエディタのタブバーに多い。現在位置が明確</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- グループ2: パンくずリスト -->
+    <section class="group">
+        <h2>グループ2: パンくずリスト</h2>
+        <div class="nav-grid">
+
+            <div class="nav-item">
+                <div class="nav-demo">
+                    <nav class="bread-slash" aria-label="パンくず">
+                        <a href="#">ホーム</a>
+                        <a href="#">メニュー</a>
+                        <span aria-current="page">季節のドリンク</span>
+                    </nav>
+                </div>
+                <p class="label">スラッシュ区切り</p>
+                <pre class="code"><code>nav {
+  display: flex;
+  gap: 0.5em;
+  font-size: 0.85rem;
+  color: #666;
+}
+nav a:not(:last-child)::after {
+  content: '/';
+  margin-left: 0.5em;
+  color: #bbb;
+}
+nav [aria-current] {
+  color: #333;
+  font-weight: bold;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 区切り文字は <code>/</code> <code>&gt;</code> <code>»</code> 等。サイトのトーンで選ぶ</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> <code>aria-label="パンくず"</code> と <code>aria-current="page"</code> で支援技術対応</p>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-demo">
+                    <nav class="bread-arrow" aria-label="パンくず">
+                        <a href="#">ホーム</a>
+                        <i data-lucide="chevron-right" class="icn sep"></i>
+                        <a href="#">メニュー</a>
+                        <i data-lucide="chevron-right" class="icn sep"></i>
+                        <span aria-current="page">季節のドリンク</span>
+                    </nav>
+                </div>
+                <p class="label">矢印アイコン区切り</p>
+                <pre class="code"><code>nav {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  font-size: 0.85rem;
+}
+nav .sep {
+  width: 14px;
+  height: 14px;
+  color: #bbb;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> Lucide の <code>chevron-right</code> は細身で上品。<code>arrow-right</code> は存在感</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> ECサイトや企業サイトで定番。区切り色は文字色より薄く</p>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-demo">
+                    <nav class="bread-icon" aria-label="パンくず">
+                        <a href="#"><i data-lucide="home" class="icn"></i></a>
+                        <span class="sep">/</span>
+                        <a href="#">メニュー</a>
+                        <span class="sep">/</span>
+                        <span aria-current="page">季節のドリンク</span>
+                    </nav>
+                </div>
+                <p class="label">ホームアイコン付き</p>
+                <pre class="code"><code>nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: 0.85rem;
+}
+nav a:first-child .icn {
+  width: 16px;
+  height: 16px;
+  vertical-align: -3px;
+}
+nav .sep { color: #bbb; }</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 先頭をアイコンに置き換えて横幅を節約。モバイルで有効</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> ホーム以外にもカテゴリアイコンを先頭につけて階層を視覚化する手も</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- グループ3: タブ -->
+    <section class="group">
+        <h2>グループ3: タブ切り替え</h2>
+        <div class="nav-grid">
+
+            <div class="nav-item">
+                <div class="nav-demo">
+                    <div class="tab-underline" role="tablist">
+                        <button role="tab" aria-selected="true">ホット</button>
+                        <button role="tab">アイス</button>
+                        <button role="tab">フード</button>
+                    </div>
+                </div>
+                <p class="label">下線タブ</p>
+                <pre class="code"><code>[role="tablist"] {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+}
+[role="tab"] {
+  padding: 0.7em 1.2em;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -1px;
+  cursor: pointer;
+}
+[role="tab"][aria-selected="true"] {
+  border-bottom-color: #6b4423;
+  color: #6b4423;
+  font-weight: bold;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>margin-bottom: -1px</code> でタブ下線が親の border と重なる</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 最も汎用的。設定画面・商品詳細のカテゴリ切り替えに</p>
+                </div>
+            </div>
+
+            <div class="nav-item" data-knobs='[{"label":"角丸","prop":"border-radius","target":".tab-pill [role=\"tab\"]","unit":"px","min":0,"max":24,"step":1,"value":999}]'>
+                <div class="nav-demo">
+                    <div class="tab-pill" role="tablist">
+                        <button role="tab" aria-selected="true">ホット</button>
+                        <button role="tab">アイス</button>
+                        <button role="tab">フード</button>
+                    </div>
+                </div>
+                <p class="label">ピル型タブ</p>
+                <pre class="code"><code>[role="tablist"] {
+  display: inline-flex;
+  gap: 0.4em;
+  padding: 0.3em;
+  background: #f0e6d8;
+  border-radius: 999px;
+}
+[role="tab"] {
+  padding: 0.5em 1.1em;
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+}
+[role="tab"][aria-selected="true"] {
+  background: white;
+  color: #6b4423;
+  font-weight: bold;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 角丸 999=ピル、4〜8=矩形。軽快さは丸いほど強調される</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> iOS風。フィルタUIや期間切替に向く。影をつけると立体感アップ</p>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-demo">
+                    <div class="tab-solid" role="tablist">
+                        <button role="tab" aria-selected="true">ホット</button>
+                        <button role="tab">アイス</button>
+                        <button role="tab">フード</button>
+                    </div>
+                </div>
+                <p class="label">塗りつぶしタブ</p>
+                <pre class="code"><code>[role="tablist"] {
+  display: inline-flex;
+  border: 1px solid #6b4423;
+  border-radius: 4px;
+  overflow: hidden;
+}
+[role="tab"] {
+  padding: 0.6em 1.2em;
+  background: white;
+  border: none;
+  cursor: pointer;
+}
+[role="tab"]:not(:last-child) {
+  border-right: 1px solid #6b4423;
+}
+[role="tab"][aria-selected="true"] {
+  background: #6b4423;
+  color: white;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>overflow: hidden</code> で親の角丸に合わせて子も切り取る</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> セグメンテッドコントロール。2-4項目の排他選択に最適</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- グループ4: ページネーション -->
+    <section class="group">
+        <h2>グループ4: ページネーション</h2>
+        <div class="nav-grid">
+
+            <div class="nav-item" data-knobs='[{"label":"角丸","prop":"border-radius","target":".pg-numbers a","unit":"px","min":0,"max":30,"step":1,"value":4}]'>
+                <div class="nav-demo">
+                    <nav class="pg-numbers" aria-label="ページ送り">
+                        <a href="#">1</a>
+                        <a href="#">2</a>
+                        <a href="#" class="active" aria-current="page">3</a>
+                        <a href="#">4</a>
+                        <a href="#">5</a>
+                    </nav>
+                </div>
+                <p class="label">番号リスト</p>
+                <pre class="code"><code>nav {
+  display: flex;
+  gap: 0.3em;
+}
+nav a {
+  min-width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-decoration: none;
+}
+nav a.active {
+  background: #6b4423;
+  color: white;
+  border-color: #6b4423;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 角丸 4=矩形、999=円形。円形はアクセント色と好相性</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> <code>min-width</code> と <code>height</code> を揃えて正方形に。タップ領域 38px 以上</p>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-demo">
+                    <nav class="pg-prevnext" aria-label="ページ送り">
+                        <a href="#"><i data-lucide="chevron-left" class="icn"></i> 前へ</a>
+                        <span>3 / 12</span>
+                        <a href="#">次へ <i data-lucide="chevron-right" class="icn"></i></a>
+                    </nav>
+                </div>
+                <p class="label">Prev/Next + ページ位置</p>
+                <pre class="code"><code>nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1em;
+}
+nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  padding: 0.5em 1em;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-decoration: none;
+}
+nav span {
+  font-size: 0.9rem;
+  color: #666;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 記事詳細やチュートリアルのシーケンスに。中央に位置表示</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 最終ページでは「次へ」を disabled に。<code>aria-disabled</code> 必須</p>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-demo">
+                    <nav class="pg-dots" aria-label="スライダー位置">
+                        <a href="#"></a>
+                        <a href="#"></a>
+                        <a href="#" class="active" aria-current="true"></a>
+                        <a href="#"></a>
+                        <a href="#"></a>
+                    </nav>
+                </div>
+                <p class="label">ドットインジケータ</p>
+                <pre class="code"><code>nav {
+  display: flex;
+  gap: 0.5em;
+  justify-content: center;
+}
+nav a {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ccc;
+  transition: background 0.2s, transform 0.2s;
+}
+nav a.active {
+  background: #6b4423;
+  transform: scale(1.3);
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> アクティブ時 <code>scale(1.3)</code> で控えめに強調。横長にして「━●━」風も</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> カルーセルやオンボーディングで使う。5個以上は数字型に切り替えを</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- グループ5: ステッパー -->
+    <section class="group">
+        <h2>グループ5: ステッパー（手順）</h2>
+        <div class="nav-grid">
+
+            <div class="nav-item" data-knobs='[{"label":"丸直径","prop":"width","target":".step-h .step-num","unit":"px","min":20,"max":48,"step":1,"value":30}]'>
+                <div class="nav-demo">
+                    <ol class="step-h">
+                        <li class="done"><span class="step-num"><i data-lucide="check" class="icn"></i></span><span class="step-label">情報入力</span></li>
+                        <li class="current"><span class="step-num">2</span><span class="step-label">確認</span></li>
+                        <li><span class="step-num">3</span><span class="step-label">完了</span></li>
+                    </ol>
+                </div>
+                <p class="label">横ステッパー</p>
+                <pre class="code"><code>ol {
+  list-style: none;
+  display: flex;
+  gap: 0;
+  padding: 0;
+}
+ol li {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+.step-num {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #ddd;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.done .step-num { background: #4caf50; color: white; }
+.current .step-num { background: #6b4423; color: white; }</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 丸の直径 24〜40px。高さに合わせて <code>height</code> も同時変更を</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> チェックアウトや登録フローで定番。完了は緑、現在は主色で差別化</p>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-demo">
+                    <ol class="step-v">
+                        <li class="done"><span class="step-num"><i data-lucide="check" class="icn"></i></span><span class="step-label">予約確定</span></li>
+                        <li class="current"><span class="step-num">2</span><span class="step-label">来店</span></li>
+                        <li><span class="step-num">3</span><span class="step-label">支払い</span></li>
+                    </ol>
+                </div>
+                <p class="label">縦ステッパー（タイムライン風）</p>
+                <pre class="code"><code>ol {
+  list-style: none;
+  padding: 0;
+}
+ol li {
+  display: flex;
+  gap: 0.8em;
+  padding-bottom: 1em;
+  position: relative;
+}
+ol li:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 14px;
+  top: 30px;
+  bottom: 0;
+  border-left: 2px solid #ddd;
+}
+.step-num { /* 横と同じ */ }</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 接続線は <code>::before</code> で引く。完了済みの線を色付きにすると進捗が見える</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 注文履歴・配送状況・審査進捗に向く。横スクロール不要でモバイル◎</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- グループ6: メニュー・サイドバー -->
+    <section class="group">
+        <h2>グループ6: サイドバー・メニュー</h2>
+        <div class="nav-grid">
+
+            <div class="nav-item" data-knobs='[{"label":"項目padding","prop":"padding","target":".sidenav a","unit":"","min":0,"max":24,"step":1,"value":10,"template":"{v}px 14px"}]'>
+                <div class="nav-demo">
+                    <nav class="sidenav">
+                        <a href="#"><i data-lucide="home" class="icn"></i> ホーム</a>
+                        <a href="#" class="active"><i data-lucide="coffee" class="icn"></i> メニュー</a>
+                        <a href="#"><i data-lucide="map-pin" class="icn"></i> 店舗情報</a>
+                        <a href="#"><i data-lucide="settings" class="icn"></i> 設定</a>
+                    </nav>
+                </div>
+                <p class="label">サイドバーナビ（縦）</p>
+                <pre class="code"><code>nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+}
+nav a {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 10px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #333;
+}
+nav a:hover { background: #f0e6d8; }
+nav a.active {
+  background: #6b4423;
+  color: white;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 項目 padding で密度調整。詰めすぎ=見づらい、広すぎ=スクロール増</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 管理画面・ドキュメントサイトの王道。アイコン+ラベルで情報量と可読性を両立</p>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-demo">
+                    <nav class="dropmenu">
+                        <div class="dm-group">
+                            <button class="dm-trigger">メニュー <i data-lucide="chevron-down" class="icn"></i></button>
+                            <ul class="dm-list">
+                                <li><a href="#">ホット</a></li>
+                                <li><a href="#">アイス</a></li>
+                                <li><a href="#">フード</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+                <p class="label">ドロップダウンメニュー（CSS hover）</p>
+                <pre class="code"><code>.dm-group { position: relative; }
+.dm-list {
+  position: absolute;
+  top: 100%; left: 0;
+  min-width: 140px;
+  list-style: none;
+  padding: 0.3em 0;
+  margin: 0;
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s;
+}
+.dm-group:hover .dm-list,
+.dm-group:focus-within .dm-list {
+  opacity: 1;
+  visibility: visible;
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> <code>:focus-within</code> でキーボード操作にも対応。JS不要で本格派</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> タッチ環境では hover が効きづらい → <code>aria-expanded</code> でJS制御推奨</p>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-demo">
+                    <nav class="anchor-nav" aria-label="目次">
+                        <p class="anchor-title">目次</p>
+                        <a href="#s1">1. はじめに</a>
+                        <a href="#s2" class="active">2. 注文方法</a>
+                        <a href="#s3">3. 支払い</a>
+                        <a href="#s4">4. 受け取り</a>
+                    </nav>
+                </div>
+                <p class="label">ジャンプリンク（目次）</p>
+                <pre class="code"><code>nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+  border-left: 2px solid #eee;
+  padding-left: 1em;
+}
+nav a {
+  font-size: 0.9rem;
+  color: #555;
+  text-decoration: none;
+  padding: 0.2em 0;
+}
+nav a.active {
+  color: #6b4423;
+  font-weight: bold;
+  border-left: 2px solid #6b4423;
+  margin-left: -1em;
+  padding-left: calc(1em - 2px);
+}</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> アクティブ時のボーダー位置を親の border と重ねるとインセット風に</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 長文記事やヘルプドキュメントのサイド目次。<code>scroll-behavior: smooth</code> 併用</p>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-demo">
+                    <nav class="bottom-nav" aria-label="主要メニュー">
+                        <a href="#"><i data-lucide="home" class="icn"></i><span>ホーム</span></a>
+                        <a href="#" class="active"><i data-lucide="coffee" class="icn"></i><span>メニュー</span></a>
+                        <a href="#"><i data-lucide="calendar" class="icn"></i><span>予約</span></a>
+                        <a href="#"><i data-lucide="user" class="icn"></i><span>マイ</span></a>
+                    </nav>
+                </div>
+                <p class="label">ボトムナビ（モバイル風）</p>
+                <pre class="code"><code>nav {
+  display: flex;
+  justify-content: space-around;
+  background: white;
+  border-top: 1px solid #eee;
+  padding: 0.4em 0;
+}
+nav a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-size: 0.7rem;
+  color: #888;
+  text-decoration: none;
+  padding: 0.3em 0.8em;
+}
+nav a.active { color: #6b4423; }
+nav a .icn { width: 22px; height: 22px; }</code></pre>
+                <div class="tuning">
+                    <p class="tuning-row"><i data-lucide="sliders" class="icn"></i> <strong>つまみ:</strong> 項目は 3〜5個に。増やすと誤タップが増える</p>
+                    <p class="tuning-row"><i data-lucide="smartphone" class="icn"></i> <strong>実機:</strong> 親指が届く画面下に固定。<code>position: fixed; bottom: 0</code> で配置</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 教えるポイント -->
+    <section class="lesson">
+        <h2>教える時のポイント</h2>
+        <ul>
+            <li><strong>現在位置を示すのは義務</strong>。<code>aria-current="page"</code> と視覚的active状態を必ずセットで</li>
+            <li>タップ領域 <strong>44×44px</strong> 以上。リンク文字だけでなく周囲のpaddingも押せる範囲にする</li>
+            <li><code>&lt;nav&gt;</code> タグには <code>aria-label</code> を付与する（パンくず・主要・補助を区別）</li>
+            <li>ホバーだけで現れるメニューは<strong>タッチで使えない</strong>。<code>:focus-within</code> や JS の <code>aria-expanded</code> で補う</li>
+            <li>区切り文字（/・›・»）やドット・ピルは<strong>ブランドトーンで選ぶ</strong>。高級感→細線、親しみ→丸</li>
+            <li>ページネーションは Prev/Next だけより <strong>番号＋Prev/Next</strong> のほうがジャンプしやすい</li>
+        </ul>
+    </section>
+
+</main>
+
+<footer class="page-footer">
+    <p><a href="index.html">← ポータルに戻る</a></p>
+</footer>
+
+</body>
+</html>
