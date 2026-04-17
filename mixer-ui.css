@@ -1,0 +1,507 @@
+/*
+ * Mixable CSS: ミキサー共通 UI スタイル
+ * - トップナビ / カート追加ボタン / サイドバー / つまみパネル / モバイルトグル
+ * - mixer.js に全 showcase ページが読み込む共通スタイルを分離
+ *   以前は JS 内の injectStyles で <style> を注入していたが
+ *   保守性とキャッシュ効率のため外部 CSS として管理する
+ */
+
+/* Lucideアイコン共通 */
+.icn {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: -0.2em;
+    stroke-width: 2;
+}
+
+/* トップナビゲーション（ダーク背景で視認性向上） */
+body.has-top-nav {
+    padding-top: 56px !important;
+}
+#mixable-top-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    background: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.2em;
+    z-index: 1001;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    font-family: sans-serif;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+}
+#mixable-top-nav .tn-home {
+    color: #ffd700;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1rem;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+}
+#mixable-top-nav .tn-home .icn {
+    width: 18px;
+    height: 18px;
+}
+#mixable-top-nav .tn-links {
+    display: flex;
+    gap: 0.3em;
+    flex-wrap: wrap;
+    align-items: center;
+}
+#mixable-top-nav .tn-links a {
+    color: #e0e0e0;
+    padding: 0.4em 0.9em;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+}
+#mixable-top-nav .tn-links a:hover {
+    background: rgba(255, 215, 0, 0.15);
+    color: #ffd700;
+}
+#mixable-top-nav .tn-links a.tn-active {
+    background: #ffd700;
+    color: #1a1a1a;
+    font-weight: bold;
+}
+#mixable-top-nav .tn-note {
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+    padding-left: 0.9em !important;
+    margin-left: 0.2em;
+}
+#mixable-top-nav .tn-cta {
+    background: #c44;
+    color: white !important;
+}
+#mixable-top-nav .tn-cta:hover {
+    background: #e55 !important;
+    color: white !important;
+}
+#mixable-top-nav .tn-cta.tn-active {
+    background: #ffd700 !important;
+    color: #1a1a1a !important;
+}
+@media (max-width: 720px) {
+    #mixable-top-nav {
+        height: auto;
+        padding: 0.5em 0.8em;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.3em;
+    }
+    #mixable-top-nav .tn-links a {
+        font-size: 0.8rem;
+        padding: 0.3em 0.5em;
+    }
+    body.has-top-nav {
+        padding-top: 100px !important;
+    }
+}
+
+/* 追加ボタン */
+.add-to-mixer {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 2px solid #6b4423;
+    background: white;
+    color: #6b4423;
+    font-size: 1.3rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    z-index: 10;
+    padding: 0;
+    line-height: 1;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+.add-to-mixer:hover {
+    transform: scale(1.15);
+    background: #f5efe6;
+}
+.add-to-mixer.added {
+    background: #6b4423;
+    color: white;
+}
+.mixer-selected {
+    outline: 3px solid #ffd700 !important;
+    outline-offset: 2px;
+}
+
+/* デスクトップ: サイドバー分のpadding */
+@media (min-width: 1000px) {
+    body.has-mixer-sidebar {
+        padding-right: 360px;
+    }
+    body.has-mixer-sidebar .mixer-sidebar {
+        transform: none !important;
+    }
+}
+
+/* サイドバー */
+.mixer-sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 340px;
+    height: 100vh;
+    background: white;
+    border-left: 2px solid #6b4423;
+    padding: 1.5em 1.2em;
+    overflow-y: auto;
+    z-index: 900;
+    box-shadow: -6px 0 20px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    transform: translateX(100%);
+    transition: transform 0.3s;
+    font-family: sans-serif;
+}
+.mixer-sidebar.open {
+    transform: translateX(0);
+}
+
+.sb-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.sb-head h2 {
+    margin: 0;
+    color: #6b4423;
+    font-size: 1.2rem;
+}
+.sb-close {
+    background: none;
+    border: none;
+    font-size: 1.3rem;
+    cursor: pointer;
+    color: #999;
+    padding: 0 0.4em;
+}
+@media (min-width: 1000px) {
+    .sb-close { display: none; }
+}
+
+.sb-status {
+    background: #f5efe6;
+    padding: 0.6em 0.9em;
+    border-radius: 6px;
+    font-size: 0.95rem;
+}
+.sb-status strong {
+    color: #6b4423;
+    font-size: 1.4rem;
+}
+
+.sb-preview-block h3,
+.sb-list-block h3 {
+    margin: 0 0 0.5em;
+    font-size: 0.95rem;
+    color: #6b4423;
+}
+
+.sb-input-label {
+    display: block;
+    margin-bottom: 0.5em;
+}
+.sb-input-label span {
+    display: block;
+    font-size: 0.8rem;
+    color: #555;
+    margin-bottom: 0.2em;
+}
+.sb-input-label input {
+    width: 100%;
+    padding: 0.45em 0.6em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.sb-preview-area {
+    position: relative;           /* absolute 子要素を閉じ込める */
+    min-height: 120px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.8em;
+    background: #fafafa;
+    border: 1px dashed #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    contain: layout paint;
+}
+.sb-preview-area > * {
+    max-width: 100% !important;
+    max-height: 100% !important;
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    object-fit: contain;
+}
+#sb-preview-el {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #6b4423;
+}
+.sb-preview-area button {
+    padding: 0.6em 1.2em;
+    border: none;
+    background: #6b4423;
+    color: white;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+/* つまみパネル */
+.knob-panel {
+    background: #eff6ff;
+    border-left: 3px solid #4a90e2;
+    border-radius: 4px;
+    padding: 0.55em 0.75em;
+    font-size: 0.75rem;
+    margin: 0;
+    font-family: sans-serif;
+}
+.knob-panel-title {
+    margin: 0 0 0.45em;
+    font-size: 0.78rem;
+    color: #2c5282;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+}
+.knob-panel-title .icn {
+    color: #4a90e2;
+}
+.knob-row {
+    display: grid;
+    grid-template-columns: minmax(60px, 90px) 1fr minmax(48px, 62px);
+    align-items: center;
+    gap: 0.45em;
+    margin: 0.3em 0;
+    cursor: pointer;
+}
+.knob-label {
+    font-family: 'Courier New', monospace;
+    font-size: 0.7rem;
+    color: #2c5282;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.knob-input {
+    width: 100%;
+    accent-color: #4a90e2;
+    cursor: pointer;
+    margin: 0;
+}
+.knob-value {
+    text-align: right;
+    font-family: 'Courier New', monospace;
+    font-size: 0.7rem;
+    color: #2c5282;
+    font-weight: bold;
+}
+
+.sb-preview-area .preview-layout .demo-box {
+    background: #6b4423;
+    color: white;
+    padding: 0.3em 0.6em;
+    border-radius: 3px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    display: inline-block;
+}
+.sb-preview-area .preview-card {
+    width: 100%;
+    padding: 0.8em;
+    background: white;
+    font-family: sans-serif;
+}
+.sb-preview-area .preview-card h4 {
+    margin: 0 0 0.3em;
+    font-size: 0.95rem;
+    color: #6b4423;
+}
+.sb-preview-area .preview-card p {
+    margin: 0;
+    font-size: 0.78rem;
+    color: #555;
+}
+.sb-preview-area .preview-anim {
+    background: #6b4423;
+    color: white;
+    padding: 0.6em 1.2em;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    display: inline-block;
+}
+.sb-preview-area .preview-form {
+    padding: 0.6em 0.9em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    width: 90%;
+    background: white;
+}
+.sb-preview-hint {
+    margin: 0.5em 0 0;
+    font-size: 0.8rem;
+    color: #888;
+    font-style: italic;
+}
+
+.sb-list {
+    max-height: 220px;
+    overflow-y: auto;
+}
+.sb-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+    padding: 0.4em 0.6em;
+    background: #fafafa;
+    border-radius: 4px;
+    margin-bottom: 0.3em;
+    font-size: 0.85rem;
+}
+.sb-item-cat {
+    background: #6b4423;
+    color: white;
+    padding: 0.1em 0.4em;
+    border-radius: 3px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    white-space: nowrap;
+}
+.sb-item-name {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.85rem;
+}
+.sb-item-remove {
+    background: none;
+    border: none;
+    color: #999;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0 0.2em;
+}
+.sb-item-remove:hover { color: #c44; }
+
+.empty-note {
+    text-align: center;
+    color: #999;
+    font-style: italic;
+    font-size: 0.9rem;
+    margin: 1em 0;
+}
+
+.sb-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    margin-top: auto;
+}
+.sb-btn {
+    padding: 0.8em 1em;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: all 0.2s;
+    display: block;
+}
+.sb-btn-primary {
+    background: #6b4423;
+    color: white;
+}
+.sb-btn-primary:hover {
+    background: #8a5a30;
+    transform: translateY(-2px);
+}
+.sb-btn-ghost {
+    background: transparent;
+    color: #c44;
+    border: 1px solid #c44;
+}
+.sb-btn-ghost:hover {
+    background: #fff0f0;
+}
+
+/* モバイル用トグル */
+.mixer-sb-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #6b4423;
+    color: white;
+    padding: 0.8em 1.3em;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: bold;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    z-index: 1000;
+    font-family: inherit;
+}
+@media (min-width: 1000px) {
+    .mixer-sb-toggle { display: none; }
+}
+
+.mixer-badge {
+    background: white;
+    color: #6b4423;
+    border-radius: 999px;
+    min-width: 1.5em;
+    height: 1.5em;
+    padding: 0 0.5em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+}
+.mixer-badge.has-items {
+    background: #ffd700;
+    color: #333;
+}
