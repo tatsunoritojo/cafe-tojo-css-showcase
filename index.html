@@ -157,5 +157,9 @@
     <p>&copy; 2026 東城立憲</p>
 </footer>
 
+<script>
+    if (window.lucide) lucide.createIcons();
+    else window.addEventListener('load', () => { if (window.lucide) lucide.createIcons(); });
+</script>
 </body>
 </html>
