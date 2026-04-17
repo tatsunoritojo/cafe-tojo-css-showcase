@@ -116,6 +116,32 @@ body {
     flex-direction: column;
     gap: 0.5em;
     font-size: 0.9rem;
+    position: relative;
+    scroll-margin-top: 110px;
+}
+
+/* 番号バッジ（右上） */
+.ref-card .ref-num {
+    position: absolute;
+    top: 0.4em;
+    right: 0.5em;
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: 0.7rem;
+    color: #a08560;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+}
+
+/* レジからジャンプしてきた時のハイライト */
+.ref-card:target {
+    border-color: #6b4423;
+    box-shadow: 0 0 0 3px rgba(107, 68, 35, 0.25);
+    animation: refTargetFlash 1.4s ease-out;
+}
+
+@keyframes refTargetFlash {
+    0%   { background: #fff2d6; }
+    100% { background: #fffdf7; }
 }
 
 .ref-card .ref-name {

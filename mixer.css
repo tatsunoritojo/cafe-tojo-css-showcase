@@ -1325,6 +1325,73 @@ input[type="color"].param-control {
     white-space: pre;
 }
 
+/* 参考リファレンス（生成CSSのプロパティ逆引き） */
+.ref-lookup {
+    margin-top: 1.5em;
+    padding: 1em 1.2em;
+    background: #fdfaf4;
+    border: 1px solid #e5ddd0;
+    border-radius: 6px;
+}
+
+.ref-lookup h3 {
+    color: #6b4423;
+    margin: 0 0 0.5em;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+}
+
+.ref-lookup .note {
+    color: #666;
+    font-size: 0.85rem;
+    margin: 0 0 0.8em;
+}
+
+.ref-lookup-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+}
+
+.ref-lookup-list li a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    padding: 0.3em 0.7em;
+    background: #fff;
+    border: 1px solid #e5ddd0;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #2a2a2a;
+    font-size: 0.85rem;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.ref-lookup-list li a:hover {
+    background: #fff8e7;
+    border-color: #6b4423;
+}
+
+.ref-lookup-list li a code {
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    color: #2e7d32;
+    background: none;
+    padding: 0;
+}
+
+.ref-lookup-list .ref-lookup-badge {
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: 0.7rem;
+    color: #a08560;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
 /* ==========================================
    注意書き
    ========================================== */

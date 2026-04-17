@@ -33,6 +33,8 @@
     <link rel="stylesheet" href="sample_image_effects.css">
     <link rel="stylesheet" href="mixer.css">
     <script src="mixer.js" defer></script>
+    <!-- リファレンスデータ (window.REF_MAP として公開される) -->
+    <script src="sample_css_reference.js" defer></script>
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
@@ -128,6 +130,13 @@
         <p class="note">以下のCSSをあなたのプロジェクトに貼り付けて使ってください。</p>
         <pre class="combined-code"><code id="combined-code">/* 何も選択されていません */</code></pre>
         <button id="btn-copy-combined" class="btn-action"><i data-lucide="clipboard" class="icn"></i> このコードをコピー</button>
+
+        <!-- 参考リファレンス: 生成CSSで使われているプロパティを逆引き表示 -->
+        <div class="ref-lookup" id="ref-lookup" style="display:none;">
+            <h3><i data-lucide="book-marked" class="icn"></i> 参考: 使われているCSSプロパティ</h3>
+            <p class="note">各プロパティをクリックすると CSS Reference の該当項目にジャンプします。</p>
+            <ul class="ref-lookup-list" id="ref-lookup-list"></ul>
+        </div>
     </section>
 
     <!-- 使い方 -->
@@ -507,7 +516,7 @@
             });
         });
 
-        document.getElementById('combined-code').textContent = getCombinedCSS() || '/* 何も選択されていません */';
+        updateCombinedSection();
 
         if (hasItems) {
             renderPreviews(selections);
@@ -753,7 +762,7 @@
         if (copyBtn) copyBtn.dataset.copyCss = newCSS;
 
         // 組み合わせコードとプレビューも更新
-        document.getElementById('combined-code').textContent = getCombinedCSS() || '/* 何も選択されていません */';
+        updateCombinedSection();
         renderPreviews(getSelections());
     }
 
@@ -1143,6 +1152,43 @@
         const selections = getSelections();
         if (selections.length === 0) return '';
         return selections.map(s => `/* ${s.category}: ${s.name} */\n${s.css}`).join('\n\n');
+    }
+
+    /* 組み合わせコード + 参考リファレンスを一括更新 */
+    function updateCombinedSection() {
+        const css = getCombinedCSS();
+        document.getElementById('combined-code').textContent = css || '/* 何も選択されていません */';
+        renderRefLookup(css);
+    }
+
+    /* 生成CSS内のプロパティ名を REF_MAP で逆引きして、参考リンクを表示 */
+    function renderRefLookup(css) {
+        const lookup = document.getElementById('ref-lookup');
+        const list = document.getElementById('ref-lookup-list');
+        if (!lookup || !list) return;
+        if (!css || !window.REF_MAP) {
+            lookup.style.display = 'none';
+            return;
+        }
+        // CSSコード内のプロパティ宣言のみ抽出（コメント/セレクタ行を除外）
+        const props = new Set();
+        css.split('\n').forEach(line => {
+            const t = line.trim();
+            if (!t || t.startsWith('/*') || t.startsWith('//')) return;
+            const m = t.match(/^(-?[a-z][a-z0-9-]*)\s*:/i);
+            if (m) props.add(m[1].toLowerCase());
+        });
+        const hits = [...props].filter(p => window.REF_MAP[p]).sort();
+        if (hits.length === 0) {
+            lookup.style.display = 'none';
+            return;
+        }
+        list.innerHTML = hits.map(p => {
+            const e = window.REF_MAP[p];
+            return `<li><a href="sample_css_reference.html#${e.anchor}" target="_blank" rel="noopener"><code>${escapeHtml(p)}</code> <span class="ref-lookup-badge">${e.label}</span></a></li>`;
+        }).join('');
+        lookup.style.display = 'block';
+        if (window.lucide && typeof window.lucide.createIcons === 'function') window.lucide.createIcons();
     }
 
     function escapeHtml(str) {

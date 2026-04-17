@@ -1009,10 +1009,21 @@ function renderCards(sectionId, items) {
   if (!sec) return;
   const grid = sec.querySelector(".ref-grid");
   if (!grid) return;
+  const letter = sectionId.replace(/^sec-/, "");
   const frag = document.createDocumentFragment();
-  for (const it of items) {
+  items.forEach((it, idx) => {
+    const seq = idx + 1;
     const card = document.createElement("div");
     card.className = "ref-card" + (it.p ? "" : " no-preview");
+    card.id = `ref-${letter}-${seq}`;
+    card.dataset.n = it.n;
+
+    // 番号バッジ（レター別連番）
+    const num = document.createElement("span");
+    num.className = "ref-num";
+    num.textContent = `${letter}-${seq}`;
+    card.appendChild(num);
+
     const kind = document.createElement("span");
     kind.className = "ref-kind " + it.k;
     kind.textContent = kindLabel(it.k);
@@ -1043,9 +1054,29 @@ function renderCards(sectionId, items) {
     card.appendChild(code);
 
     frag.appendChild(card);
-  }
+  });
   grid.appendChild(frag);
 }
+
+/* ==========================================
+   プロパティ名→アンカーのマップ
+   レジ(mixer.html)からの逆引き用に window.REF_MAP を公開
+   property 種別のみ収録（擬似クラス等は逆引き対象外）
+   ========================================== */
+(function buildRefMap() {
+  const map = {};
+  const letters = ["sym", ..."ABCDEFGHIJKLMNOPQRSTUVWZ"];
+  for (const L of letters) {
+    const items = REF[L] || [];
+    items.forEach((it, idx) => {
+      if (it.k !== "property") return;
+      if (!map[it.n]) {
+        map[it.n] = { anchor: `ref-${L}-${idx + 1}`, label: `${L}-${idx + 1}` };
+      }
+    });
+  }
+  if (typeof window !== "undefined") window.REF_MAP = map;
+})();
 
 document.addEventListener("DOMContentLoaded", () => {
   renderCards("sec-sym", REF.sym);
