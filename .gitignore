@@ -14,4 +14,5 @@ package-lock.json
 # Vercel
 .vercel
 
-.vercel
+# Claude Code 開発ツール (npm 不使用規約の個人環境例外)
+.mcp.json
