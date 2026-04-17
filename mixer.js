@@ -295,6 +295,7 @@ function injectTopNav() {
             <a href="sample_color_showcase.html" class="${path.includes('color') ? 'tn-active' : ''}"><i data-lucide="palette" class="icn"></i> 色</a>
             <a href="sample_animation_showcase.html" class="${path.includes('animation') ? 'tn-active' : ''}"><i data-lucide="zap" class="icn"></i> アニメ</a>
             <a href="sample_form_showcase.html" class="${path.includes('form') ? 'tn-active' : ''}"><i data-lucide="text-cursor-input" class="icn"></i> フォーム</a>
+            <a href="sample_nav_showcase.html" class="${path.includes('nav_showcase') ? 'tn-active' : ''}"><i data-lucide="compass" class="icn"></i> ナビ</a>
             <a href="sample_css_showcase.html" class="tn-note ${path.includes('css_showcase') ? 'tn-active' : ''}"><i data-lucide="book-open" class="icn"></i> Notes</a>
             <a href="sample_css_reference.html" class="tn-note ${path.includes('css_reference') ? 'tn-active' : ''}"><i data-lucide="book-marked" class="icn"></i> Reference</a>
             <a href="mixer.html" class="tn-cta ${path.includes('mixer') ? 'tn-active' : ''}"><i data-lucide="shopping-cart" class="icn"></i> レジ</a>
